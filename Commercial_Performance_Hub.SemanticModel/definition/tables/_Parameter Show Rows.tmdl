@@ -1,0 +1,48 @@
+table '_Parameter Show Rows'
+	lineageTag: b1037ed1-2e32-4dba-ac77-638f72756cc5
+
+	column Rows
+		formatString: 0
+		lineageTag: b59aa190-3ea4-4dc5-b7a7-468cf8f37f04
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Rows]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sort Order'
+		formatString: 0
+		lineageTag: 1e3407e2-7ad6-4eb1-abed-044bf4d4dc31
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sort Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Display
+		lineageTag: a028f3a0-8f19-4a3f-b729-1a2530853de8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Display]
+		sortByColumn: 'Sort Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '_Parameter Show Rows' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Sort Order", INTEGER,
+				    "Display", STRING,
+				    "Rows", INTEGER,
+				    {
+				        {1, "Top 5", 5},
+				        {2, "Top 10", 10},
+				        {3, "Top 15", 15},
+				        {4, "Top 20", 20}
+				    }
+				)
+
+	annotation PBI_Id = 2465eb9a4df34dd7b8778f4c44cd21e4
+

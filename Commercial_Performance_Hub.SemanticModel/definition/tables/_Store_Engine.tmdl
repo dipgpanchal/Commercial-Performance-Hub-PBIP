@@ -1,0 +1,514 @@
+table _Store_Engine
+	lineageTag: 89b59145-0ac3-4db4-bb0e-84d3a7b081bb
+
+	measure 'Top 10 Stores Contribution Value' =
+			
+			VAR Store_TopN = 10
+			VAR TopStores =
+			    TOPN(
+			        Store_TopN,
+			        ALLSELECTED(dim_stores[store_name Visual]),
+			        [Contribution Value - Store],
+			        DESC
+			    )
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    [Selected KPI] = "Trading Margin %",
+			        DIVIDE(
+			            SUMX(TopStores, CALCULATE([Trading Profit])),
+			            SUMX(TopStores, CALCULATE([Revenue]))
+			        ),
+			    SUMX(TopStores, [Contribution Value - Store])
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 90c9a29b-7624-4ee3-bb6a-dced0f03e5f6
+
+		formatStringDefinition =
+				VAR SelectedKPI = [Selected KPI]
+				RETURN
+				SWITCH(
+				    SelectedKPI,
+				    "Total Revenue", "$#,##0;($#,##0)",
+				    "Trading Profit $", "$#,##0;($#,##0)",
+				    "Trading Margin %", "0.0%;-0.0%",
+				    "Units Sold", "#,##0",
+				    "Transactions", "#,##0",
+				    "Average Selling Price", "$#,##0.00;($#,##0.00)",
+				    "Average Cost", "$#,##0.00;($#,##0.00)",
+				    "#,##0"
+				)
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Contribution Value - Store' =
+			
+			[Selected KPI Current]
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: b6cc8afa-632f-4374-b800-001317da2ff4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top 10 Stores Contribution %' =
+			
+			SWITCH(
+			    TRUE(),
+			    [Selected KPI] = "Trading Margin %",
+			        ([Top 10 Stores Contribution Value] - [Selected KPI Current]) * 100,
+			    DIVIDE(
+			        [Top 10 Stores Contribution Value],
+			        CALCULATE(
+			            [Contribution Value - Store],
+			            ALLSELECTED(dim_stores[store_name Visual])
+			        )
+			    )
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: d874aa10-933b-423e-9672-cfc9dac5731f
+
+		formatStringDefinition =
+				SWITCH(
+				    TRUE(),
+				    [Selected KPI] = "Trading Margin %", "0.0 pp;-0.0 pp;0.0 pp",
+				    "0.0%;-0.0%;0.0%"
+				)
+
+	measure 'Top 10 Subtitle - Store' = [Selected KPI]
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: c41e7336-b24e-4e17-9bc8-6cc1bafe04e9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top N Footer - Store' =
+			
+			IF(
+			    [Selected KPI] = "Trading Margin %",
+			    "vs Overall Margin",
+			    "of " & [Selected KPI]
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: a758ba6b-b89e-4822-84f2-24a9cd655cdf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top 20 Stores Contribution Value' =
+			
+			VAR Store_TopN = 20
+			VAR TopStores =
+			    TOPN(
+			        Store_TopN,
+			        ALLSELECTED(dim_stores[store_name Visual]),
+			        [Contribution Value - Store],
+			        DESC
+			    )
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    [Selected KPI] = "Trading Margin %",
+			        DIVIDE(
+			            SUMX(TopStores, CALCULATE([Trading Profit])),
+			            SUMX(TopStores, CALCULATE([Revenue]))
+			        ),
+			    SUMX(TopStores, [Contribution Value - Store])
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 7fcb4345-2528-47ff-ba34-962d05dd6a79
+
+		formatStringDefinition =
+				VAR SelectedKPI = [Selected KPI]
+				RETURN
+				SWITCH(
+				    SelectedKPI,
+				    "Total Revenue", "$#,##0;($#,##0)",
+				    "Trading Profit $", "$#,##0;($#,##0)",
+				    "Trading Margin %", "0.0%;-0.0%",
+				    "Units Sold", "#,##0",
+				    "Transactions", "#,##0",
+				    "Average Selling Price", "$#,##0.00;($#,##0.00)",
+				    "Average Cost", "$#,##0.00;($#,##0.00)",
+				    "#,##0"
+				)
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top 20 Stores Contribution %' =
+			
+			SWITCH(
+			    TRUE(),
+			    [Selected KPI] = "Trading Margin %",
+			        ([Top 20 Stores Contribution Value] - [Selected KPI Current]) * 100,
+			    DIVIDE(
+			        [Top 20 Stores Contribution Value],
+			        CALCULATE(
+			            [Contribution Value - Store],
+			            ALLSELECTED(dim_stores[store_name Visual])
+			        )
+			    )
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 6795b560-0926-40a4-8054-5794ec1032f4
+
+		formatStringDefinition =
+				SWITCH(
+				    TRUE(),
+				    [Selected KPI] = "Trading Margin %", "0.0 pp;-0.0 pp;0.0 pp",
+				    "0.0%;-0.0%;0.0%"
+				)
+
+	measure 'Stores Analysed' =
+			
+			DISTINCTCOUNT(dim_stores[store_name Visual])
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 4c0d83d3-dbb2-4131-8017-d25f16dd0b80
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'A Stores' =
+			
+			COALESCE(
+			    COUNTROWS(
+			        FILTER(
+			            ALLSELECTED(dim_stores[store_name Visual]),
+			            [Store ABC] = "A"
+			        )
+			    ),
+			    0
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 839ddd98-0cd0-4b0b-953a-f42e6aae7e5e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cumulative Contribution % - Store' =
+			
+			DIVIDE(
+			    [Cumulative Contribution - Store],
+			    CALCULATE(
+			        [Contribution Base - Store],
+			        REMOVEFILTERS(dim_stores[store_name Visual])
+			    )
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: fa731ad6-9224-4424-aab5-5435d272bbc7
+
+		formatStringDefinition = "0%;-0%;0%"
+
+	measure 'Store ABC' =
+			
+			SWITCH(
+			    TRUE(),
+			    [Cumulative Contribution % - Store] <= .80, "A",
+			    [Cumulative Contribution % - Store] <= .95, "B",
+			    "C"
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: e3d2d48b-7d76-4688-b377-bba0bd3b2d1b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cumulative Contribution - Store' =
+			
+			VAR CurrentRank = [Contribution Rank - Store]
+			
+			RETURN
+			CALCULATE(
+			    [Contribution Base - Store],
+			    FILTER(
+			        ALL(dim_stores[store_name Visual]),
+			        [Contribution Rank - Store] <= CurrentRank
+			    )
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: bc13e55f-3e96-4467-8557-4c982e9199ef
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Contribution Rank - Store' =
+			
+			VAR CurrentValue = [Contribution Base - Store]
+			
+			RETURN
+			RANKX(
+			    ALL(dim_stores[store_name Visual]),
+			    CALCULATE([Contribution Base - Store]),
+			    CurrentValue,
+			    DESC,
+			    DENSE
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: f2520609-ae35-4ce7-a90f-6465661587bd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'A Stores Contribution %' =
+			
+			COALESCE(
+			    MAXX(
+			        FILTER(
+			            ALLSELECTED(dim_stores[store_name Visual]),
+			            [Store ABC] = "A"
+			        ),
+			        [Cumulative Contribution % - Store]
+			    ),
+			    0
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 0d7c8acf-3710-4069-abe2-4ca22d4feb8e
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	/// Additive contribution base for Store Pareto logic. Uses profit when KPI is Trading Margin % to avoid summing ratio values.
+	measure 'Contribution Base - Store' =
+			
+			SWITCH(
+			    TRUE(),
+			    [Selected KPI] = "Trading Margin %", [Trading Profit],
+			    [Contribution Value - Store]
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 6662e6ca-dcc7-4784-a939-b89a3b715bdc
+
+	measure 'Store Trend Title' = ```
+			
+			VAR _Gap = REPT(UNICHAR(160), 3)
+			
+			RETURN
+			UPPER([Selected KPI]) & " " & " TREND" & _Gap & "|" & _Gap &  [Current Period Label] & " vs " & [Previous Period Label]
+			
+			```
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: d6dd99a2-0614-4bac-b995-02c4c5dbb698
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trend Headline Current Label' =
+			
+			[Selected KPI]
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 625fe978-6b1e-4082-9815-8f8aa42e6fb1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trend Headline Change Label' =
+			
+			"vs Previous Period"
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 52e9ecff-d355-4379-8448-b0e691063d79
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Store Change Analysis Title' =
+			
+			UPPER([Selected KPI]) & " CHANGE BY STORE"
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: d2c17556-1899-43e3-bc18-bc7bb28c5747
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Store Contribution Value' =
+			
+			[Selected KPI Current]
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: d665a350-06aa-4304-ac07-9decc428571a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pareto Classification - Store' = IF([Cumulative Contribution % - Store] <= _Pareto_Engine[Pareto Threshold], "Top 80%", "Remaining 20%")
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: e9786f21-180c-4514-9aec-c99cb775d6e2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pareto Bar Colour - Store' = ```
+			
+			SWITCH(
+			    [Pareto Classification - Store],
+			    "Top 80%", "#2E7D32",        -- Dark Green
+			    "Remaining 20%", "#BDBDBD"   -- Light Grey
+			)
+			
+			```
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: ddf46298-5035-441d-9a7d-9a973a62ef07
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tooltip ABC - Store' =
+			
+			SWITCH(
+			    [Store ABC],
+			    "A","🟢 A - High Value",
+			    "B","🟡 B - Medium Value",
+			    "🔴 C - Low Value"
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 4b0f2fb0-1df3-4e97-8add-1184cd00a0d9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tooltip Rank - Store' =
+			
+			"#" & [Contribution Rank - Store]
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 874f23b5-5be3-41c0-90d3-b69459198722
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tooltip Title - Store' =
+			
+			SELECTEDVALUE(dim_stores[store_name Visual])
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: f463b901-3ec8-4b40-9c5e-829156dccbb9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Contribution % - Store' =
+			
+			VAR OverallMetric =
+			    CALCULATE(
+			        [Selected KPI Current],
+			        REMOVEFILTERS(dim_stores[store_name Visual])
+			    )
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    [Selected KPI] = "Trading Margin %",
+			        ([Contribution Value - Store] - OverallMetric) * 100,
+			    DIVIDE(
+			        [Contribution Base - Store],
+			        CALCULATE(
+			            [Contribution Base - Store],
+			            REMOVEFILTERS(dim_stores[store_name Visual])
+			        )
+			    )
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: b3ffbcdc-eb92-40a1-b49d-a882b57b1b26
+
+		formatStringDefinition =
+				IF(
+				    [Selected KPI] = "Trading Margin %",
+				    "0.0 pp;-0.0 pp;0.0 pp",
+				    "0.0%;-0.0%;0.0%"
+				)
+
+	measure 'Details Matrix Title - Store' =
+			
+			UPPER([Selected KPI]) & " STORE DETAILS"
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: a6ebe9b5-6b86-43ec-b113-cd3ec31becbd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Individual store contribution share within current selection context.
+	measure 'Contribution Share - Store' =
+			
+			DIVIDE(
+			    [Contribution Base - Store],
+			    CALCULATE(
+			        [Contribution Base - Store],
+			        REMOVEFILTERS(dim_stores[store_name Visual])
+			    )
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 9a3e2680-f52d-4cef-8d77-46a44c050f56
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	/// Cumulative contribution by displayed growth rank (for Store Details matrix alignment).
+	measure 'Cumulative Contribution % - Store (Display Rank)' =
+			
+			VAR CurrentDisplayRank = [Rank Store]
+			
+			RETURN
+			SUMX(
+			    FILTER(
+			        ALLSELECTED(dim_stores[store_name Visual]),
+			        [Rank Store] <= CurrentDisplayRank
+			    ),
+			    [Contribution Share - Store]
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 1821d9da-cf78-43a1-a8f4-535716f0a6e3
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	/// ABC class aligned to display rank order for Store Details matrix.
+	measure 'ABC - Store (Display Rank)' =
+			
+			VAR CumPct = [Cumulative Contribution % - Store (Display Rank)]
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    CumPct <= 0.80, "A",
+			    CumPct <= 0.95, "B",
+			    "C"
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 15272122-5593-4f50-bbef-d41ba949514f
+
+	/// Optional label band aligned to display rank.
+	measure 'Contribution Band - Store' =
+			
+			VAR CumPct = [Cumulative Contribution % - Store (Display Rank)]
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    CumPct <= 0.80, "Top 80%",
+			    CumPct <= 0.95, "Next 15%",
+			    "Remaining 5%"
+			)
+		isHidden
+		displayFolder: 08 Store Contribution
+		lineageTag: 6473eee1-fef6-4531-bdb5-3cc393d6aa24
+
+	column Value
+		formatString: 0
+		lineageTag: 3cc5bd17-888d-4ee8-a090-8c99da7cb76b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Store_Engine = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = 129c92751e36401eae980d28e6ca9a1c
+

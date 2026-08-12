@@ -1,0 +1,28 @@
+table Price_Change_pct
+	lineageTag: 09f0aac3-c0ae-49f8-8c36-66379fb8dc9b
+
+	measure 'Price Change % Value' = SELECTEDVALUE('Price_Change_pct'[Price Change %], 0)
+		displayFolder: 12 Parameters
+		lineageTag: 515dd011-3840-488d-9759-4cf66c727d76
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Price Change %'
+		formatString: 0
+		lineageTag: 78666f30-586e-48c4-aaf7-0e609daae5ba
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Price_Change_pct = calculated
+		mode: import
+		source = GENERATESERIES(-20, 20, 1)
+
+	annotation PBI_Id = b7b678c248034315ab0f344644d6ad06
+

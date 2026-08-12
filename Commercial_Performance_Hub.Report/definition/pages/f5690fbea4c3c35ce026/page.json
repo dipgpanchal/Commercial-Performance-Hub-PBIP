@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "f5690fbea4c3c35ce026",
+  "displayName": "Tooltip - Pareto",
+  "displayOption": "ActualSize",
+  "height": 220,
+  "width": 180,
+  "visibility": "HiddenInViewMode",
+  "type": "Tooltip"
+}

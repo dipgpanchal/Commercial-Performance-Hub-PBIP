@@ -1,0 +1,393 @@
+table _Visual_Measures
+	lineageTag: 656875ab-cf93-4645-a705-6e1adcf9a359
+
+	measure 'Selected KPI' = SELECTEDVALUE('_MetricCatalog'[KPI],"Total Revenue")
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 4c25e6bf-b3f3-472f-ba90-03fbbb0fbe71
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected KPI Base' =
+			
+			VAR SelectedKPI = [Selected KPI]
+			
+			RETURN
+			SWITCH (
+			    TRUE(),
+			    SelectedKPI = "Total Revenue",           [Revenue],
+			    SelectedKPI = "Trading Profit $",        [Trading Profit],
+			    SelectedKPI = "Trading Margin %",        [Trading Margin %],
+			    SelectedKPI = "Units Sold",              [Units Sold],
+			    SelectedKPI = "Transactions",            [Transactions],
+			    SelectedKPI = "Average Selling Price",   [Average Selling Price],
+			    SelectedKPI = "Average Cost",            [Average Cost],
+			    BLANK()
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: c4c15215-fb3c-47bf-81a4-62011d4f8dbb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected KPI Current' =
+			
+			CALCULATE (
+			    [Selected KPI Base],
+			    'Comparison'[Calculation group column] = "Current Period"
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 1e31dca1-f391-4442-8003-8be17658062d
+
+		formatStringDefinition =
+				VAR SelectedKPI =
+				    [Selected KPI]
+				
+				RETURN
+				SWITCH(
+				    SelectedKPI,
+				    "Total Revenue", "$#,##0;($#,##0)",
+				    "Trading Profit $", "$#,##0;($#,##0)",
+				    "Trading Margin %", "0.0%;-0.0%",
+				    "Units Sold", "#,##0",
+				    "Transactions", "#,##0",
+				    "#,##0"
+				)
+
+	measure 'Selected KPI Previous' =
+			
+			CALCULATE (
+			    [Selected KPI Base],
+			    'Comparison'[Calculation group column] = "Previous Period"
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 54ce779a-109b-49ed-92eb-e3729323f8fe
+
+		formatStringDefinition =
+				VAR SelectedKPI =
+				    [Selected KPI]
+				
+				RETURN
+				SWITCH(
+				    SelectedKPI,
+				    "Total Revenue", "$#,##0;($#,##0)",
+				    "Trading Profit $", "$#,##0;($#,##0)",
+				    "Trading Margin %", "0.0%;-0.0%",
+				    "Units Sold", "#,##0",
+				    "Transactions", "#,##0",
+				    "#,##0"
+				)
+
+	measure 'Selected KPI Variance' =
+			
+			VAR VarianceValue =
+			    CALCULATE(
+			        [Selected KPI Base],
+			        'Comparison'[Calculation group column] = "Variance"
+			    )
+			
+			VAR MarginVariancePP =
+			    ( [Selected KPI Current] - [Selected KPI Previous] ) * 100
+			
+			RETURN
+			IF(
+			    [Selected KPI] = "Trading Margin %",
+			    MarginVariancePP,
+			    VarianceValue
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: f9505e45-a951-47cb-a598-657c71056e03
+
+		formatStringDefinition =
+				VAR SelectedKPI = [Selected KPI]
+				
+				RETURN
+				SWITCH(
+				    SelectedKPI,
+				    "Total Revenue", "$#,##0;($#,##0)",
+				    "Trading Profit $", "$#,##0;($#,##0)",
+				    "Trading Margin %", "0.0 pp;-0.0 pp;0.0 pp",
+				    "Units Sold", "#,##0;(#,##0)",
+				    "Transactions", "#,##0;(#,##0)",
+				    "Average Selling Price", "$#,##0.00;($#,##0.00)",
+				    "Average Cost", "$#,##0.00;($#,##0.00)",
+				    "#,##0"
+				)
+
+	measure 'Selected KPI Variance %' =
+			
+			VAR RelativeVariance =
+			    CALCULATE(
+			        [Selected KPI Base],
+			        'Comparison'[Calculation group column] = "Variance %"
+			    )
+			
+			RETURN
+			IF(
+			    [Selected KPI] = "Trading Margin %",
+			    BLANK(),
+			    RelativeVariance
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 35de7bdc-9662-4e67-8efa-09a02a312ace
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	measure 'Selected KPI Title' =
+			
+			FORMAT([Selected KPI], "")
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 5de2abfd-d438-44d9-a366-693581144d9c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected KPI Format' =
+			
+			SELECTEDVALUE(
+			    '_MetricCatalog'[Format String],
+			    "#,##0"
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: cf647610-a9e1-41b7-8f3c-9f3e5c2eee4f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue Selected' =
+			
+			IF(
+			    [Selected KPI] = "Total Revenue",
+			    "#5fb9a9",
+			    "#FFFFFF"
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 1fc22700-d5fa-497a-9eb1-5727b8a93a18
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trading Profit Selected' =
+			
+			IF(
+			    [Selected KPI] = "Trading Profit $",
+			    "#5fb9a9",
+			    "#FFFFFF"
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: d862d685-f793-48f7-a33d-7d07b82794e3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'TM% Selected' =
+			
+			IF(
+			    [Selected KPI] = "Trading Margin %",
+			    "#5fb9a9",
+			    "#FFFFFF"
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 5de6f675-064b-46f5-9bf2-01552bd2326d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Units Sold Selected' =
+			
+			IF(
+			    [Selected KPI] = "Units Sold",
+			    "#5fb9a9",
+			    "#FFFFFF"
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 005a756b-6bae-4f20-9856-054340a5f6a6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Transactions Selected' =
+			
+			IF(
+			    [Selected KPI] = "Transactions",
+			    "#5fb9a9",
+			    "#FFFFFF"
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: e9b5294c-8a90-4faa-8471-0d0c7a588c2f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'KPI Direction' =
+			
+			VAR Delta =
+			    IF(
+			        [Selected KPI] = "Trading Margin %",
+			        [Selected KPI Variance],
+			        [Selected KPI Variance %]
+			    )
+			
+			RETURN
+			SWITCH (
+			    TRUE(),
+			    Delta > 0, "▲",
+			    Delta < 0, "▼",
+			    "▢"
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: eb8bca12-cb26-4c50-a256-b13b34f307cb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'KPI Colour' =
+			
+			VAR Delta =
+			    IF(
+			        [Selected KPI] = "Trading Margin %",
+			        [Selected KPI Variance],
+			        [Selected KPI Variance %]
+			    )
+			
+			RETURN
+			SWITCH (
+			    TRUE(),
+			    Delta > 0, "#2E7D32",   // Green
+			    Delta < 0, "#C62828",   // Red
+			    "#757575"               // Grey
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 9a0e3a20-95ee-42d8-ab86-e49539efd1db
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'KPI Subtitle' =
+			
+			[Current Period Label]
+			    & " vs "
+			    & [Previous Period Label]
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: f6b2c175-17f2-4032-b667-9a546436d916
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Current Period Label' =
+			
+			VAR StartDate = [Current Period Start Date]
+			VAR CalendarType = [Selected Calendar]
+			VAR PeriodType = [Selected Reporting Period]
+			
+			VAR CalendarMonth = FORMAT(StartDate, "MMM")
+			VAR CalendarQuarter = LOOKUPVALUE(dim_date[quarter_name],dim_date[full_date], StartDate)
+			VAR CalendarYear = LOOKUPVALUE(dim_date[year],dim_date[full_date], StartDate)
+			VAR FiscalMonth = FORMAT(StartDate, "MMM")
+			VAR FiscalQuarter = LOOKUPVALUE(dim_date[fiscal_quarter],dim_date[full_date], StartDate)
+			VAR FiscalYear = LOOKUPVALUE(dim_date[fiscal_year],dim_date[full_date], StartDate )
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			
+			    CalendarType = "Calendar Year" && PeriodType = "Month",
+			        CalendarMonth & " " & CalendarYear,
+			
+			    CalendarType = "Calendar Year" && PeriodType = "Quarter",
+			        CalendarQuarter & " " & CalendarYear,
+			
+			    CalendarType = "Calendar Year" && PeriodType = "Year",
+			        CalendarYear,
+			
+			    CalendarType = "Financial Year" && PeriodType = "Month",
+			        FiscalMonth & " " & FiscalYear,
+			
+			    CalendarType = "Financial Year" && PeriodType = "Quarter",
+			        FiscalQuarter & " " & FiscalYear,
+			
+			    CalendarType = "Financial Year" && PeriodType = "Year",
+			        FiscalYear
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 935819c6-b402-402d-85b5-850e10134820
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Previous Period Label' =
+			
+			VAR StartDate = [Previous Period Start Date]
+			VAR CalendarType = [Selected Calendar]
+			VAR PeriodType = [Selected Reporting Period]
+			
+			VAR CalendarMonth = FORMAT(StartDate, "MMM")
+			VAR CalendarQuarter = LOOKUPVALUE(dim_date[quarter_name],dim_date[full_date], StartDate)
+			VAR CalendarYear = LOOKUPVALUE(dim_date[year],dim_date[full_date], StartDate)
+			VAR FiscalMonth = FORMAT(StartDate, "MMM")
+			VAR FiscalQuarter = LOOKUPVALUE(dim_date[fiscal_quarter],dim_date[full_date], StartDate)
+			VAR FiscalYear = LOOKUPVALUE(dim_date[fiscal_year],dim_date[full_date], StartDate )
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			
+			    CalendarType = "Calendar Year" && PeriodType = "Month",
+			        CalendarMonth & " " & CalendarYear,
+			
+			    CalendarType = "Calendar Year" && PeriodType = "Quarter",
+			        CalendarQuarter & " " & CalendarYear,
+			
+			    CalendarType = "Calendar Year" && PeriodType = "Year",
+			        CalendarYear,
+			
+			    CalendarType = "Financial Year" && PeriodType = "Month",
+			        FiscalMonth & " " & FiscalYear,
+			
+			    CalendarType = "Financial Year" && PeriodType = "Quarter",
+			        FiscalQuarter & " " & FiscalYear,
+			
+			    CalendarType = "Financial Year" && PeriodType = "Year",
+			        FiscalYear
+			)
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 11374475-c89f-481b-aadf-d0320c39a9d2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected KPI Trend' =
+			
+			[Selected KPI Base]
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 2b596bf3-6f68-4337-a3a0-1028e0ff3bce
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected Measure Shape' = SELECTEDMEASURE()
+		isHidden
+		displayFolder: 03 KPI Selector & Display
+		lineageTag: 39db4eda-c000-4f2f-990f-c8dc1ea40745
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Value
+		formatString: 0
+		lineageTag: 2a55fc32-8ff3-425d-a20c-22cbb44f5b04
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Visual_Measures = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = 546db31a9ef74ea2a7e93e136c4dc115
+

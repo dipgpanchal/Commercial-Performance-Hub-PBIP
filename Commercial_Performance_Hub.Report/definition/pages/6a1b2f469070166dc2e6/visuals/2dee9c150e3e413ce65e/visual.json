@@ -1,0 +1,79 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "2dee9c150e3e413ce65e",
+  "position": {
+    "x": 103.91752577319588,
+    "y": 684.12371134020623,
+    "z": 0,
+    "height": 29.690721649484537,
+    "width": 627.8350515463917,
+    "tabOrder": 48000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "ⓘ Weeks Cover",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "DIN",
+                      "fontSize": "8pt",
+                      "color": "#666666"
+                    }
+                  },
+                  {
+                    "value": " = Stock On Hand ÷ Avg Weekly Units (8W) | ",
+                    "textStyle": {
+                      "fontFamily": "DIN",
+                      "fontSize": "8pt",
+                      "color": "#666666"
+                    }
+                  },
+                  {
+                    "value": "Health thresholds:",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "DIN",
+                      "fontSize": "8pt",
+                      "color": "#666666"
+                    }
+                  },
+                  {
+                    "value": " Low < 2 · Healthy 2–12 · Overstock 12–26 · Excess > 26 weeks",
+                    "textStyle": {
+                      "fontFamily": "DIN",
+                      "fontSize": "8pt",
+                      "color": "#666666"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

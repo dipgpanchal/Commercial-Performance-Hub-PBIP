@@ -1,0 +1,78 @@
+table fact_inventory_snapshot
+	lineageTag: 51442a32-3712-4f19-ba74-c6e9decca208
+
+	column load_dt
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6818444d-708d-4758-a9e9-694425969bb9
+		summarizeBy: none
+		sourceColumn: load_dt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column store_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5972c46e-8236-48d6-af25-d56db0d7c06f
+		summarizeBy: none
+		sourceColumn: store_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e522b421-56b0-4a5e-a009-e469e8957ffc
+		summarizeBy: none
+		sourceColumn: product_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column stock_on_hand
+		dataType: int64
+		formatString: 0
+		lineageTag: 71b9b74e-1717-492e-99df-485ca48db940
+		summarizeBy: sum
+		sourceColumn: stock_on_hand
+
+		annotation SummarizationSetBy = Automatic
+
+	column inventory_cost
+		dataType: double
+		lineageTag: 38d4d9b1-af91-41a0-b3cc-29353dde7a5d
+		summarizeBy: sum
+		sourceColumn: inventory_cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column inventory_value
+		dataType: double
+		lineageTag: 220fdc59-880b-4097-867d-9d13b36d437e
+		summarizeBy: sum
+		sourceColumn: inventory_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_inventory_snapshot = m
+		mode: import
+		source =
+				let
+				  Source = MySQL.Database("localhost:3306", "practise"),
+				  #"Navigation 1" = Source{[Schema = "practise", Item = "fact_inventory_snapshot"]}[Data]
+				in
+				  #"Navigation 1"
+
+	annotation PBI_ResultType = Table
+

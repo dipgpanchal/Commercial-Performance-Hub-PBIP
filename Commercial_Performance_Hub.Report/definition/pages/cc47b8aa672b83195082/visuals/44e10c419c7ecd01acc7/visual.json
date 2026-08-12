@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "44e10c419c7ecd01acc7",
+  "position": {
+    "x": 92.783505154639172,
+    "y": 673.60824742268039,
+    "z": 55000,
+    "height": 27.835051546391753,
+    "width": 416.90721649484533,
+    "tabOrder": 52000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Stores ranked by Trading Profit contribution, supporting the selected Trading Margin % analysis.",
+                    "textStyle": {
+                      "fontFamily": "DIN Light",
+                      "fontSize": "8pt"
+                    }
+                  }
+                ],
+                "listType": "bullet"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

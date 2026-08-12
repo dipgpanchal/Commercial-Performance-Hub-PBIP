@@ -1,0 +1,35 @@
+table '_Scenario KPI'
+	lineageTag: defce4bf-d7c0-4695-90cb-72838dfc1e9c
+
+	column KPI
+		lineageTag: acd322ce-031d-4061-a1ae-77237b421abb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [KPI]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sort Order'
+		formatString: 0
+		lineageTag: ae5c93b8-e17d-42f8-af6c-2aa073f261d8
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sort Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '_Scenario KPI' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "KPI", STRING,
+				    "Sort Order", INTEGER,
+				    {
+				        { "Revenue", 1 },
+				        { "Profit",  2 }
+				    }
+				)
+
+	annotation PBI_Id = ea96bcd31feb4a2e891b0d064bbcb9e9
+

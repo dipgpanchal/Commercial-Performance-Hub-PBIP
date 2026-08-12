@@ -1,0 +1,26 @@
+table 'Reporting Period'
+	lineageTag: 8b93c009-ba92-4d82-9574-631d21f4acb8
+
+	column Period
+		lineageTag: a15683c9-3621-46cc-bef0-b0ec7ca2679e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Period]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Reporting Period' = calculated
+		mode: import
+		source =
+				
+				DATATABLE (
+				    "Period", STRING,
+				    {
+				        { "Month" },
+				        { "Quarter" },
+				        { "Year" }
+				    }
+				)
+
+	annotation PBI_Id = f9d3f203927945689952e820f169bc50
+

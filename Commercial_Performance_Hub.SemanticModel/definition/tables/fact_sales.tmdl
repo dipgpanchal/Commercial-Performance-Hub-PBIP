@@ -1,0 +1,129 @@
+table fact_sales
+	lineageTag: 46397005-1d24-4e6f-85d7-07bf0a229ebb
+
+	column sale_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 20dc985c-b38d-41ed-9b80-5af0a15e1900
+		summarizeBy: sum
+		sourceColumn: sale_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sale_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 2ccdf9a8-ea9c-4826-80c4-0f64df2fa0c6
+		summarizeBy: none
+		sourceColumn: sale_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column store_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b3006f32-f43d-42f8-be4e-6a6d52469a37
+		summarizeBy: none
+		sourceColumn: store_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 035f581e-5a12-4927-9d35-935aaae06b15
+		summarizeBy: none
+		sourceColumn: product_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column units
+		dataType: int64
+		formatString: 0
+		lineageTag: 6b48446e-351a-49ca-92ce-7791d6fc100a
+		summarizeBy: sum
+		sourceColumn: units
+
+		annotation SummarizationSetBy = Automatic
+
+	column revenue
+		dataType: double
+		lineageTag: 5a508dbf-cef9-4234-809d-06cc7d937e51
+		summarizeBy: sum
+		sourceColumn: revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cost
+		dataType: double
+		lineageTag: 6293159c-08a2-460b-ba62-611d0cdbac4b
+		summarizeBy: sum
+		sourceColumn: cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column profit
+		dataType: double
+		lineageTag: 0b95a05b-392b-4ce5-8f99-ac35d5669b77
+		summarizeBy: sum
+		sourceColumn: profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit_price
+		dataType: double
+		lineageTag: a6541546-eaa9-4bce-9b78-5311d78dbcf8
+		summarizeBy: sum
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit_cost
+		dataType: double
+		lineageTag: db32c6a7-fa0c-46cb-a5f3-d066f7b9fbe2
+		summarizeBy: sum
+		sourceColumn: unit_cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unit_profit
+		dataType: double
+		lineageTag: b018f838-5429-4639-bf23-1fa5115443c1
+		summarizeBy: sum
+		sourceColumn: unit_profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fact_sales = m
+		mode: import
+		source =
+				let
+				  Source = MySQL.Database("localhost:3306", "practise"),
+				  #"Navigation 1" = Source{[Schema = "practise", Item = "fact_sales"]}[Data]
+				in
+				  #"Navigation 1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

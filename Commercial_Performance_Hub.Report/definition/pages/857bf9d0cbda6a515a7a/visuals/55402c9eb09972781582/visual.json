@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "55402c9eb09972781582",
+  "position": {
+    "x": 105.15463917525773,
+    "y": 95.876288659793815,
+    "z": 36000,
+    "height": 27.216494845360824,
+    "width": 200.41237113402062,
+    "tabOrder": 51000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Assumptions",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "DIN",
+                      "fontSize": "9pt"
+                    }
+                  },
+                  {
+                    "value": " (for selected Scenario)",
+                    "textStyle": {
+                      "fontFamily": "DIN",
+                      "fontSize": "9pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

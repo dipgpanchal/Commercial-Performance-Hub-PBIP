@@ -1,0 +1,20 @@
+table 'Price Sensitivity Axis'
+	lineageTag: 12ef8a8c-61b1-41bb-aa48-ae8baf309ed4
+
+	column Value
+		formatString: 0
+		lineageTag: 09e14a05-bfec-4100-bb8c-83c1e5097572
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Price Sensitivity Axis' = calculated
+		mode: import
+		source =
+				
+				GENERATESERIES(-20, 20, 1)
+
+	annotation PBI_Id = 74f1606ca9aa43818fb2015ee1a11207
+

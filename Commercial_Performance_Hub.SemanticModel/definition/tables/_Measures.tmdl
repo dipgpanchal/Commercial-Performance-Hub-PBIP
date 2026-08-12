@@ -1,0 +1,40 @@
+table _Measures
+	lineageTag: 9891b070-0f4a-43a2-bc8d-1fc04a3515d4
+
+	measure Product_Rank = RANKX(ALL(dim_products[product_name]),[Revenue],,DESC,Dense)
+		formatString: 0
+		displayFolder: 99 Legacy / Review
+		lineageTag: f3aff73b-ba79-4672-9f19-5a18ceedc76c
+
+	measure Category_Rank = RANKX(ALL(dim_products[product_category]),[Revenue],,DESC,Dense)
+		formatString: 0
+		displayFolder: 99 Legacy / Review
+		lineageTag: 0d77b65a-998e-4861-9b40-32cdc537e3f4
+
+	measure T5Product_Rank =
+			
+			Var pro_rank = RANKX(ALL(dim_products[product_name]),[Revenue],,DESC,Dense)
+			Return IF(pro_rank <= 5, "Top 5", BLANK() )
+		displayFolder: 99 Legacy / Review
+		lineageTag: b7b0e0a9-9e52-4416-97d2-e7120ec7a040
+
+	measure Category_Product_Rank = RANKX(ALLEXCEPT(dim_products,dim_products[product_category]),[Revenue],,DESC,Dense)
+		formatString: 0
+		displayFolder: 99 Legacy / Review
+		lineageTag: 3789abd4-27fe-4abd-adf1-f5677e7879bc
+
+	column Value
+		formatString: 0
+		lineageTag: 7f962014-caf8-4401-9357-e762be98a2ee
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = 70f6d4f9659b4339a56e9784c900684b
+

@@ -1,0 +1,334 @@
+table _Inventory_Engine
+	lineageTag: 2196118b-bdd4-4ef8-8d84-ebb716d8663f
+
+	measure 'Latest Sales Date' =
+			
+			CALCULATE(
+			    MAX(fact_sales[sale_date]),
+			    REMOVEFILTERS(dim_date)
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: f52e04b4-67ed-4bb1-8423-1a96a6db5c89
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Units Sold - Last 8 Weeks' =
+			
+			VAR EndDate = [Latest Sales Date]
+			
+			VAR StartDate = EndDate - 55
+			
+			RETURN
+			CALCULATE([Units Sold],
+			    REMOVEFILTERS(dim_date),
+			    DATESBETWEEN(dim_date[full_date], StartDate, EndDate)
+			)
+		formatString: 0
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: 60defac0-1de3-4034-aa50-9f2393a59828
+
+	measure 'Average Weekly Units - Last 8 Weeks' = DIVIDE([Units Sold - Last 8 Weeks], 8)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: 2f7cc52d-8beb-4e8e-a609-a6868a5f42b0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Weeks Cover' =
+			
+			VAR WeeklyVelocity = [Average Weekly Units - Last 8 Weeks]
+			
+			RETURN
+			IF([Stock On Hand] > 0 && WeeklyVelocity > 0,
+			    DIVIDE( [Stock On Hand], WeeklyVelocity )
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: 079bc393-2c24-4622-ad1f-6f56b556917b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Inventory Health' =
+			
+			IF(
+			    ISINSCOPE(dim_stores[store_name Visual]) &&
+			    ISINSCOPE(dim_products[product_name]),
+			    [Inventory Health - Engine],
+			    BLANK()
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: d9949f51-3f35-4ece-a391-7ce398ca18ca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Recommended Action' =
+			
+			IF(
+			    ISINSCOPE(dim_stores[store_name Visual]) &&
+			    ISINSCOPE(dim_products[product_name]),
+			    [Recommended Action - Engine],
+			    BLANK()
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: b54d52e2-dc63-4c38-9332-dc78f70d8cf8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Inventory Positions' =
+			
+			COUNTROWS(
+			    FILTER(
+			        CROSSJOIN(
+			            VALUES(dim_stores[store_name Visual]),
+			            VALUES(dim_products[product_name])
+			        ),
+			        CALCULATE(COUNTROWS(fact_inventory_snapshot)) > 0
+			    )
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: 465c0f16-e4b8-4317-833f-4bf93fbd5ab2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Healthy Positions' =
+			
+			COUNTROWS(
+			    FILTER(
+			        CROSSJOIN(
+			            VALUES(dim_stores[store_name Visual]),
+			            VALUES(dim_products[product_name])
+			        ),
+			        CALCULATE(COUNTROWS(fact_inventory_snapshot)) > 0
+			            &&
+			        CALCULATE([Inventory Health - Engine]) = "Healthy"
+			    )
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: ac8a1a02-90d6-440a-921e-e4f0502cc47a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Healthy Positions %' =
+			
+			DIVIDE([Healthy Positions], [Inventory Positions])
+		formatString: 0.0%;-0.0%;0.0%
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: af8165ca-54b1-4a9d-babb-04dabe6027cd
+
+	measure 'Replenishment Risk Positions' =
+			
+			COUNTROWS(
+			    FILTER(
+			        CROSSJOIN(
+			            VALUES(dim_stores[store_name Visual]),
+			            VALUES(dim_products[product_name])
+			        ),
+			        CALCULATE(COUNTROWS(fact_inventory_snapshot)) > 0
+			            &&
+			        CALCULATE([Inventory Health - Engine])
+			            IN {
+			                "Out of Stock",
+			                "Low Stock"
+			            }
+			    )
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: a5ded1af-b8dc-45cd-ba75-1387c5222863
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Replenishment Risk %' =
+			
+			DIVIDE(
+			    [Replenishment Risk Positions],
+			    [Inventory Positions]
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: 715586ad-15de-4a3d-9eba-fe09aa0db604
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Excess Dead Stock Positions' =
+			
+			COUNTROWS(
+			    FILTER(
+			        CROSSJOIN(
+			            VALUES(dim_stores[store_name Visual]),
+			            VALUES(dim_products[product_name])
+			        ),
+			        CALCULATE(COUNTROWS(fact_inventory_snapshot)) > 0
+			            &&
+			        CALCULATE([Inventory Health - Engine])
+			            IN {
+			                "Overstock",
+			                "Excess Stock",
+			                "Dead Stock"
+			            }
+			    )
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: 82eb461a-f9e1-4166-b581-f1969063bf4d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Excess Dead Stock %' =
+			
+			DIVIDE(
+			    [Excess Dead Stock Positions],
+			    [Inventory Positions]
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: 77f394ce-c874-400a-ae07-8538ff1f0633
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Inventory Health QA' =
+			
+			[Inventory Positions]
+			-
+			(
+			    [Healthy Positions]
+			    + [Replenishment Risk Positions]
+			    + [Excess Dead Stock Positions]
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: 40feef20-aa3b-401c-9833-ed7dfcf1f0fc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Inventory Health - Engine' =
+			
+			VAR HasInventoryPosition = CALCULATE(COUNTROWS(fact_inventory_snapshot)) > 0
+			VAR SOH = [Stock On Hand]
+			VAR RecentSales =  [Units Sold - Last 8 Weeks]
+			VAR Cover =  [Weeks Cover]
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			
+			    // No inventory snapshot = not an inventory position
+			    NOT HasInventoryPosition, BLANK(),
+			
+			    // Existing business logic
+			    SOH = 0 && RecentSales > 0, "Out of Stock",
+			    SOH > 0 && RecentSales = 0, "Dead Stock",
+			    Cover < 2, "Low Stock",
+			    Cover <= 12, "Healthy",
+			    Cover <= 26, "Overstock",
+			    "Excess Stock"
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: a012abed-605c-4595-98df-2cd16d7a96da
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Recommended Action - Engine' =
+			
+			SWITCH(
+			    [Inventory Health - Engine],
+			
+			    "Out of Stock", "Replenish Now",
+			    "Low Stock", "Replenish Soon",
+			    "Healthy", "No Action",
+			    "Overstock", "Reduce Purchase Orders",
+			    "Excess Stock", "Review / Markdown",
+			    "Dead Stock", "Clearance Required",
+			
+			    BLANK()
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: 705bcb52-a83b-46af-9a75-3ad674dad6d4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Inventory Health Color' = ```
+			
+			SWITCH(
+			    [Inventory Health - Engine],
+			    
+			    "Healthy",      "#2FAF9B",
+			    
+			    "Low Stock",    "#E74C3C",
+			    "Out of Stock", "#E74C3C",
+			    
+			    "Overstock",    "#F4A000",
+			    "Excess Stock", "#F4A000",
+			    "Dead Stock",   "#F4A000",
+			    
+			    "#666666"
+			)
+			```
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: 069b1c92-6068-4a66-9a96-4cd1c7997b33
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Inventory Status Icon' =
+			
+			IF(
+			    ISINSCOPE(dim_stores[store_name Visual]) &&
+			    ISINSCOPE(dim_products[product_name]),
+			
+			    SWITCH(
+			        [Inventory Health - Engine],
+			        "Healthy",      "✓",
+			        "Low Stock",    "⚠",
+			        "Out of Stock", "✕",
+			        "Overstock",    "↑",
+			        "Excess Stock", "↑↑",
+			        "Dead Stock",   "⊘",
+			        BLANK()
+			    )
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: 92c47001-78f0-4728-9cc0-82ed545b1e59
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Has Inventory Position' =
+			
+			IF(
+			    CALCULATE(
+			        COUNTROWS(fact_inventory_snapshot)
+			    ) > 0,
+			    1,
+			    0
+			)
+		isHidden
+		displayFolder: 09 Inventory Health
+		lineageTag: ee288e0a-fa14-4722-be54-8d88286817d7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Value
+		formatString: 0
+		lineageTag: a5bde5c5-84cc-475d-b557-405030d69e33
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Inventory_Engine = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = a49c4ca70ad74b47811abbe0d24fa4f0
+

@@ -1,0 +1,651 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "b6c2a8d7b430c28c0306",
+  "position": {
+    "x": 670.51546391752572,
+    "y": 458.35051546391753,
+    "z": 57000,
+    "height": 215.25773195876289,
+    "width": 585.7731958762887,
+    "tabOrder": 53000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_stores"
+                    }
+                  },
+                  "Property": "store_name Visual"
+                }
+              },
+              "queryRef": "dim_stores.store_name Visual",
+              "nativeQueryRef": "Store",
+              "active": true,
+              "displayName": "Store"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Ranking_Engine"
+                    }
+                  },
+                  "Property": "Rank Store"
+                }
+              },
+              "queryRef": "_Ranking_Engine.Rank Store",
+              "nativeQueryRef": "Rank",
+              "displayName": "Rank"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Trend_Engine"
+                    }
+                  },
+                  "Property": "Trend Current"
+                }
+              },
+              "queryRef": "_Trend_Engine.Trend Current",
+              "nativeQueryRef": "Current",
+              "displayName": "Current"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Trend_Engine"
+                    }
+                  },
+                  "Property": "Trend Previous"
+                }
+              },
+              "queryRef": "_Trend_Engine.Trend Previous",
+              "nativeQueryRef": "Previous",
+              "displayName": "Previous"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Trend_Engine"
+                    }
+                  },
+                  "Property": "Trend Variance"
+                }
+              },
+              "queryRef": "_Trend_Engine.Trend Variance",
+              "nativeQueryRef": "Variance",
+              "displayName": "Variance"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Trend_Engine"
+                    }
+                  },
+                  "Property": "Performance Change"
+                }
+              },
+              "queryRef": "_Trend_Engine.Performance Change",
+              "nativeQueryRef": "Change",
+              "displayName": "Change"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Store_Engine"
+                    }
+                  },
+                  "Property": "Contribution % - Store"
+                }
+              },
+              "queryRef": "_Store_Engine.Contribution % - Store",
+              "nativeQueryRef": "Contribution %",
+              "displayName": "Contribution %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Store_Engine"
+                    }
+                  },
+                  "Property": "ABC - Store (Display Rank)"
+                }
+              },
+              "queryRef": "_Store_Engine.ABC - Store (Display Rank)",
+              "nativeQueryRef": "ABC",
+              "displayName": "ABC"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Ranking_Engine"
+                  }
+                },
+                "Property": "Rank Store"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'wf_standard-font, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Visual_Measures"
+                        }
+                      },
+                      "Property": "KPI Colour"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "_Trend_Engine.Trend Variance"
+          }
+        },
+        {
+          "properties": {
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Visual_Measures"
+                        }
+                      },
+                      "Property": "KPI Colour"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "_Trend_Engine.Performance Change"
+          }
+        },
+        {
+          "properties": {
+            "icon": {
+              "kind": "Icon",
+              "layout": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Before'"
+                  }
+                }
+              },
+              "verticalAlignment": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'Middle'"
+                  }
+                }
+              },
+              "value": {
+                "expr": {
+                  "Conditional": {
+                    "Cases": [
+                      {
+                        "Condition": {
+                          "Comparison": {
+                            "ComparisonKind": 0,
+                            "Left": {
+                              "Measure": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Entity": "_Store_Engine"
+                                  }
+                                },
+                                "Property": "ABC - Store (Display Rank)"
+                              }
+                            },
+                            "Right": {
+                              "Literal": {
+                                "Value": "'C'"
+                              }
+                            }
+                          },
+                          "Annotations": {
+                            "PowerBI.SQExprEvaluationKind": 1,
+                            "PowerBI.SQExprTextOperatorOption": 2
+                          }
+                        },
+                        "Value": {
+                          "Literal": {
+                            "Value": "'CircleLow'"
+                          }
+                        }
+                      },
+                      {
+                        "Condition": {
+                          "Comparison": {
+                            "ComparisonKind": 0,
+                            "Left": {
+                              "Measure": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Entity": "_Store_Engine"
+                                  }
+                                },
+                                "Property": "ABC - Store (Display Rank)"
+                              }
+                            },
+                            "Right": {
+                              "Literal": {
+                                "Value": "'B'"
+                              }
+                            }
+                          },
+                          "Annotations": {
+                            "PowerBI.SQExprEvaluationKind": 1,
+                            "PowerBI.SQExprTextOperatorOption": 2
+                          }
+                        },
+                        "Value": {
+                          "Literal": {
+                            "Value": "'CircleMedium'"
+                          }
+                        }
+                      },
+                      {
+                        "Condition": {
+                          "Comparison": {
+                            "ComparisonKind": 0,
+                            "Left": {
+                              "Measure": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Entity": "_Store_Engine"
+                                  }
+                                },
+                                "Property": "ABC - Store (Display Rank)"
+                              }
+                            },
+                            "Right": {
+                              "Literal": {
+                                "Value": "'A'"
+                              }
+                            }
+                          },
+                          "Annotations": {
+                            "PowerBI.SQExprEvaluationKind": 1,
+                            "PowerBI.SQExprTextOperatorOption": 2
+                          }
+                        },
+                        "Value": {
+                          "Literal": {
+                            "Value": "'CircleHigh'"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "_Store_Engine.ABC - Store (Display Rank)"
+          }
+        },
+        {
+          "properties": {},
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 0
+                }
+              }
+            ],
+            "metadata": "_Store_Engine.ABC - Store (Display Rank)"
+          }
+        }
+      ],
+      "subTotals": [
+        {
+          "properties": {
+            "columnSubtotals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "rowSubtotals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'wf_standard-font, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0.2
+                    }
+                  }
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            },
+            "titleAlignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "rowHeaders": [
+        {
+          "properties": {
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'wf_standard-font, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "71.18992233677305D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Trend_Engine.Trend Current"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "65.01407162493614D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Trend_Engine.Trend Previous"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "64.05746442159679D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Trend_Engine.Trend Variance"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "64.02072279553855D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Trend_Engine.Performance Change"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "123.69072005950626D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "dim_stores.store_name Visual"
+          }
+        }
+      ],
+      "columnFormatting": [
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Trend_Engine.Performance Change"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Ranking_Engine.Rank Store"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Trend_Engine.Trend Current"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Trend_Engine.Trend Previous"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Trend_Engine.Trend Variance"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Store_Engine.Contribution % - Store"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "dfbbe1461ac112ae6536",
+  "position": {
+    "x": 760.82474226804118,
+    "y": 210.30927835051546,
+    "z": 48000,
+    "height": 145.36082474226805,
+    "width": 512.16494845360819,
+    "tabOrder": 56000
+  },
+  "visualGroup": {
+    "displayName": "Trend - Monthly",
+    "groupMode": "ScaleMode"
+  }
+}

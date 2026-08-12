@@ -1,0 +1,36 @@
+table _Debug_Measures
+	lineageTag: 9e59f055-4b42-473b-a31d-5c900dea5fd9
+
+	measure 'Debug Current Period' =
+			
+			FORMAT ( [Current Period Start Date], "dd-MMM-yyyy" )
+			    & " → "
+			    & FORMAT ( [Current Period End Date], "dd-MMM-yyyy" )
+		isHidden
+		displayFolder: 99 QA & Debug
+		lineageTag: ab30721d-c060-46ae-b42a-3dd1b3fb423e
+
+	measure 'Debug Previous Period' =
+			
+			FORMAT ( [Previous Period Start Date], "dd-MMM-yyyy" )
+			    & " → "
+			    & FORMAT ( [Previous Period End Date], "dd-MMM-yyyy" )
+		isHidden
+		displayFolder: 99 QA & Debug
+		lineageTag: b1faf2b1-ef1b-4ede-b85d-94e024d3e2c9
+
+	column Value
+		formatString: 0
+		lineageTag: 79ae8e6d-22de-49f3-8d06-003fcbb7abde
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Debug_Measures = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = 8efc483463e14e77a7b92e4887eee104
+

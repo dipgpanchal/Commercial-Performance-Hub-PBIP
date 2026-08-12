@@ -1,0 +1,576 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "0c69e9ffc09570a65ec9",
+  "position": {
+    "x": 878.96907216494844,
+    "y": 225.77319587628867,
+    "z": 46000,
+    "height": 174.43298969072166,
+    "width": 392.78350515463916,
+    "tabOrder": 57000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Sensitivity Elasticity"
+                    }
+                  },
+                  "Property": "Elasticity Label"
+                }
+              },
+              "queryRef": "Sensitivity Elasticity.Elasticity Label",
+              "nativeQueryRef": "Elasticity Label"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_KPI_Engine"
+                    }
+                  },
+                  "Property": "Units Sold Current"
+                }
+              },
+              "queryRef": "_KPI_Engine.Units Sold Current",
+              "nativeQueryRef": "Current Units",
+              "displayName": "Current Units",
+              "format": "#,0"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Scenario&PS_Engine"
+                    }
+                  },
+                  "Property": "Outcome Scenario Units"
+                }
+              },
+              "queryRef": "_Scenario&PS_Engine.Outcome Scenario Units",
+              "nativeQueryRef": "Scenario Units",
+              "displayName": "Scenario Units"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Scenario&PS_Engine"
+                    }
+                  },
+                  "Property": "Outcome Units Change %"
+                }
+              },
+              "queryRef": "_Scenario&PS_Engine.Outcome Units Change %",
+              "nativeQueryRef": "Units Change %",
+              "displayName": "Units Change %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Scenario&PS_Engine"
+                    }
+                  },
+                  "Property": "Outcome Scenario Revenue"
+                }
+              },
+              "queryRef": "_Scenario&PS_Engine.Outcome Scenario Revenue",
+              "nativeQueryRef": "Revenue $",
+              "displayName": "Revenue $"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Scenario&PS_Engine"
+                    }
+                  },
+                  "Property": "Outcome Scenario Profit"
+                }
+              },
+              "queryRef": "_Scenario&PS_Engine.Outcome Scenario Profit",
+              "nativeQueryRef": "Profit $",
+              "displayName": "Profit $"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Scenario&PS_Engine"
+                    }
+                  },
+                  "Property": "Outcome Profit vs Current %"
+                }
+              },
+              "queryRef": "_Scenario&PS_Engine.Outcome Profit vs Current %",
+              "nativeQueryRef": "Profit Vs Current %",
+              "displayName": "Profit Vs Current %"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "grid": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "4.5D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'wf_standard-font, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'wf_standard-font, helvetica, arial, sans-serif'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnFormatting": [
+        {
+          "properties": {
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "0L"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Scenario&PS_Engine.Outcome Scenario Units"
+          }
+        },
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1000000D"
+                }
+              }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Scenario&PS_Engine.Outcome Scenario Revenue"
+          }
+        },
+        {
+          "properties": {
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1000000D"
+                }
+              }
+            },
+            "labelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Scenario&PS_Engine.Outcome Scenario Profit"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_KPI_Engine.Units Sold Current"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Scenario&PS_Engine.Outcome Units Change %"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Scenario&PS_Engine.Outcome Profit vs Current %"
+          }
+        },
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Left'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sensitivity Elasticity.Elasticity Label"
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "53.555431323757375D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_KPI_Engine.Units Sold Current"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "49.485544777218536D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Scenario&PS_Engine.Outcome Scenario Units"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "53.27992625925922D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Scenario&PS_Engine.Outcome Units Change %"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "54.26805775329442D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Scenario&PS_Engine.Outcome Profit vs Current %"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "48.63528497338768D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Scenario&PS_Engine.Outcome Scenario Revenue"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "40.36512194452386D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Scenario&PS_Engine.Outcome Scenario Profit"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "76.381443622471D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Sensitivity Elasticity.Elasticity Label"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'OUTCOME COMPARISON AT SELECTED PRICE CHANGE'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "null"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "4D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": -0.1
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "5D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylePreset": [
+        {
+          "properties": {
+            "name": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Default'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,20 @@
+table Elasticity
+	lineageTag: 0be7347e-56bc-4fb8-9706-cdaac421fa74
+
+	column Value
+		formatString: 0.0
+		lineageTag: 03a87be7-08e6-42a6-8472-b8fc59767727
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Elasticity = calculated
+		mode: import
+		source =
+				
+				GENERATESERIES(-2, 0.01, 0.1)
+
+	annotation PBI_Id = 1337169533b64001b2cdfbea508ebc85
+

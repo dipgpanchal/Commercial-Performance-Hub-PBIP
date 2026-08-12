@@ -1,0 +1,61 @@
+table dim_products
+	lineageTag: eca3c3a6-ab22-49f9-b597-98a4920143a2
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		lineageTag: d1479766-fdf2-4ed2-809a-42cec6cd6444
+		summarizeBy: none
+		sourceColumn: product_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name
+		dataType: string
+		lineageTag: fa81c882-86d9-4b96-86b5-d530e00ecec1
+		summarizeBy: none
+		sourceColumn: product_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category
+		dataType: string
+		lineageTag: 123b3204-d61b-45b9-81ad-a773d989b0b8
+		summarizeBy: none
+		sourceColumn: product_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_cost
+		dataType: double
+		lineageTag: 180475e0-15d5-4272-98fa-7b3ed7ba67f4
+		summarizeBy: sum
+		sourceColumn: product_cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column product_price
+		dataType: double
+		lineageTag: 6dc26cc9-ea5f-40b5-8142-ad92b59b9584
+		summarizeBy: sum
+		sourceColumn: product_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition dim_products = m
+		mode: import
+		source =
+				let
+				  Source = MySQL.Database("localhost:3306", "practise"),
+				  #"Navigation 1" = Source{[Schema = "practise", Item = "dim_products"]}[Data]
+				in
+				  #"Navigation 1"
+
+	annotation PBI_ResultType = Table
+

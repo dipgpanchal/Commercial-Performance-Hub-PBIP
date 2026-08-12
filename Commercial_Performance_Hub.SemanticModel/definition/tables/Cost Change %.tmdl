@@ -1,0 +1,27 @@
+table 'Cost Change %'
+	lineageTag: 22068e1e-7c88-400b-b96a-e4de6abe146c
+
+	measure 'Cost Change % Value' = SELECTEDVALUE('Cost Change %'[Cost Change %], 0)
+		formatString: 0
+		displayFolder: 12 Parameters
+		lineageTag: 940f93d6-3b61-423e-8623-0a61264ebed4
+
+	column 'Cost Change %'
+		formatString: 0
+		lineageTag: 059d0c77-996c-4eae-9c63-66bfeb3a38cd
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'Cost Change %' = calculated
+		mode: import
+		source = GENERATESERIES(-20, 20, 1)
+
+	annotation PBI_Id = 7f1bde8885864e02aa72a0695beeac3c
+

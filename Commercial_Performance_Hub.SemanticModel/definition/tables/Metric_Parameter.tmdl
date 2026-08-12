@@ -1,0 +1,50 @@
+table Metric_Parameter
+	lineageTag: 4c323308-c5d3-43b5-ade8-b214ee9784e1
+
+	column Metric_Parameter
+		lineageTag: b045a83c-645b-46e1-a48f-494780fad3af
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Metric_Parameter Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Metric_Parameter Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Metric_Parameter Fields'
+		isHidden
+		lineageTag: b0589c16-95f1-4a86-bd43-2cc7072ac382
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Metric_Parameter Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Metric_Parameter Order'
+		isHidden
+		formatString: 0
+		lineageTag: 2c28ae5e-0c1f-421b-904a-67c783b5bdfc
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Metric_Parameter = calculated
+		mode: import
+		source =
+				{
+				    ("Total Revenue", NAMEOF('_Base_Measures'[Revenue]), 0),
+				    ("Total Profit", NAMEOF('_Base_Measures'[Trading Profit]), 1),
+				    ("Total Units", NAMEOF('_Base_Measures'[Units Sold]), 4),
+				    ("Profit Margin %", NAMEOF('_Base_Measures'[Trading Margin %]), 3)
+				}
+
+	annotation PBI_Id = 1206ef1f029e4224ae36e185a6d4163c
+

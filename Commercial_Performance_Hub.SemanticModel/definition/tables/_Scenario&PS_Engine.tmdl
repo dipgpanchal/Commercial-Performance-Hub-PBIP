@@ -1,0 +1,917 @@
+table _Scenario&PS_Engine
+	lineageTag: 729ec7d7-ba6a-4018-9d3b-9d49dcdf14a6
+
+	measure 'Cost Impact %' = DIVIDE([Cost Impact $],[Cost Current],0)
+		formatString: 0.0%;-0.0%;0.0%
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: a415ccb5-0ee7-4426-8558-94ee4d283e43
+
+	measure 'Cost Impact $' = [Scenario Cost] - [Cost Current]
+		formatString: \$#,0;(\$#,0);\$#,0
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 821b5812-e118-4fd9-96d1-b0fffa4805a3
+
+	measure 'Elasticity Volume Change %' = [Selected Price Change %]* [Selected Elasticity]
+		formatString: 0.0%;-0.0%;0.0%
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 9f1669b2-75ca-48c9-a600-5f725e66d29b
+
+	measure 'Margin Impact pp' = ```
+			
+			([Scenario Margin %] - [Trading Margin Current]) * 100 
+			```
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 32b5e73e-eb51-4a84-b160-3a09753258bb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Impact %' = DIVIDE([Profit Impact $],[Trading Profit Current],0)
+		formatString: 0.0%;-0.0%;0.0%
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 2cb05f2d-a363-45ac-a6a6-ca7877de435d
+
+	measure 'Profit Impact $' = [Scenario Profit] - [Trading Profit Current]
+		formatString: \$#,0;(\$#,0);\$#,0
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: b8d0ad2a-bef1-4608-8d9f-8477798e23ed
+
+	measure 'Revenue Impact %' = DIVIDE([Revenue Impact $],[Revenue Current],0)
+		formatString: 0.0%;-0.0%;0.0%
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 06d3bf75-f84f-4bd2-8b80-894125825b83
+
+	measure 'Revenue Impact $' = [Scenario Revenue] - [Revenue Current]
+		formatString: \$#,0;(\$#,0);\$#,0
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: dadba195-997b-4001-baa5-f1559905b986
+
+	measure 'Scenario Cost' =
+			
+			VAR BaseCost =   [Cost Current]
+			VAR VolumeChange = [Scenario Volume Change %]
+			VAR CostChange = [Selected Cost Change %]
+			
+			RETURN
+			    BaseCost * (1 + VolumeChange) * (1 + CostChange)
+		formatString: \$#,0;(\$#,0);\$#,0
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: add57fd8-4077-4cc7-98cd-477589ed846f
+
+	measure 'Scenario Margin %' =
+			
+			DIVIDE(
+			    [Scenario Profit],
+			    [Scenario Revenue]
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 73626802-083f-4bb1-a891-b3355711a4d1
+
+	measure 'Scenario Profit' = [Scenario Revenue] - [Scenario Cost]
+		formatString: \$#,0;(\$#,0);\$#,0
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 48823ed6-8c99-4f84-8fae-81c3b9556737
+
+	measure 'Scenario Revenue' =
+			
+			VAR BaseRevenue =  [Revenue Current]
+			VAR VolumeChange = [Scenario Volume Change %]
+			VAR PriceChange =  [Selected Price Change %]
+			
+			RETURN
+			 BaseRevenue * (1 + VolumeChange) * (1 + PriceChange)
+		formatString: \$#,0;(\$#,0);\$#,0
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 0ea0253e-b527-4630-a904-fbc477f13f42
+
+	measure 'Scenario Summary' = ```
+			
+			VAR PriceChange = [Selected Price Change %]
+			VAR CostChange = [Selected Cost Change %]
+			VAR VolumeChange = [Selected Volume Change %]
+			VAR Elasticity = [Selected Elasticity]
+			VAR _Gap = REPT(UNICHAR(160), 3)
+			
+			RETURN
+			     "🛈    " &
+			    "Price : " & FORMAT(PriceChange, "+0%;-0%;0%") & _Gap 
+			        & "   |   Cost : "  & FORMAT(CostChange, "+0%;-0%;0%") & _Gap 
+			        & "   |   Volume : " & FORMAT(VolumeChange, "+0%;-0%;0%") & _Gap 
+			        & "   |   Elasticity : "  & FORMAT(Elasticity, "0.0")
+			```
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: fb1690d5-c6c6-402d-b9dc-173255c54d15
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Scenario Units' =
+			
+			VAR BaseUnits = [Units Sold Current]
+			VAR VolumeChange =  [Scenario Volume Change %]
+			
+			RETURN
+			BaseUnits * (1 + VolumeChange)
+		formatString: #,0
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 78298ca6-9ea2-45af-90ec-5e55ad46a359
+
+	measure 'Selected Cost Change %' =
+			
+			DIVIDE(
+			    SELECTEDVALUE(
+			        'Cost Change %'[Cost Change %],
+			        0
+			    ),
+			    100
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 59cb2191-2116-4ae0-976c-fc30781e927d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected Elasticity' = ```
+			
+			    SELECTEDVALUE(Elasticity[Value],0)
+			```
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: ccb66509-dac2-4180-a860-f7edcf7c6e71
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected Price Change %' =
+			
+			DIVIDE(
+			    SELECTEDVALUE(
+			        Price_Change_pct[Price Change %],
+			        0
+			    ),
+			    100
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 191227b6-c7a1-4a62-9871-b5d2bb147cd8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected Volume Change %' =
+			
+			DIVIDE(
+			    SELECTEDVALUE(
+			        'Volume Change %'[Volume Change %],
+			        0
+			    ),
+			    100
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 7cf845c3-16c2-4aa5-99f6-d5c7ae5f99b1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Scenario Volume Change %' =
+			
+			VAR BaseVolumeChange =
+			    [Selected Volume Change %]
+			
+			VAR ElasticityVolumeChange =
+			    [Elasticity Volume Change %]
+			
+			RETURN
+			    BaseVolumeChange + ElasticityVolumeChange
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 13066391-67e4-47a5-96cd-d4f756b21d13
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cost Current' =
+			
+			[Revenue Current] - [Trading Profit Current]
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 512682fe-943e-4a44-8d3a-2c95894b9f17
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Units Impact' =
+			
+			[Scenario Units] - [Units Sold Current]
+		formatString: 0
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 589dab69-8703-4cc5-9e5e-04ba08fed603
+
+	measure 'Units Impact %' =
+			
+			DIVIDE(
+			    [Units Impact],
+			    [Units Sold Current],
+			    0
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: b423d2d1-17a8-4e55-8115-be7891a87b30
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Scenario Chart - Current' =
+			
+			SWITCH(
+			    SELECTEDVALUE('_Scenario KPI'[KPI]),
+			    "Revenue", [Revenue Current],
+			    "Profit",  [Trading Profit Current],
+			    BLANK()
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 9a70fc79-0c4b-477f-9c65-45cd7918b4a1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Scenario Chart - Scenario' =
+			
+			SWITCH(
+			    SELECTEDVALUE('_Scenario KPI'[KPI]),
+			    "Revenue", [Scenario Revenue],
+			    "Profit",  [Scenario Profit],
+			    BLANK()
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 29597cc0-fc46-447d-83ee-ba21e246de62
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Bridge - Price Impact' =
+			
+			[Revenue Current] * [Selected Price Change %]
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 7048dd5c-734c-4a25-8f0f-63b650ab595d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Bridge - Volume Impact' =
+			
+			IF(ABS([Trading Profit Current] * [Scenario Volume Change %]) < 0.01,0,([Trading Profit Current] * [Scenario Volume Change %]))
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 6915c453-0b24-4d09-9a58-1b28253f47c1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Bridge - Cost Impact' =
+			
+			- [Cost Current] * [Selected Cost Change %]
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: d0b6ec5a-b13c-4c6d-b3dd-82f5a9b74757
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Bridge - Interaction' =
+			
+			VAR ExplainedImpact =
+			      [Profit Bridge - Price Impact]
+			    + [Profit Bridge - Volume Impact]
+			    + [Profit Bridge - Cost Impact]
+			
+			VAR TotalProfitImpact =
+			    [Scenario Profit] - [Trading Profit Current]
+			
+			RETURN
+			    IF(ABS(TotalProfitImpact - ExplainedImpact) < 0.01,0,(TotalProfitImpact - ExplainedImpact) )
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 72c59e92-89d8-4cd4-999b-3da2f006e25e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Bridge Value' =
+			
+			SWITCH(
+			    SELECTEDVALUE('_Scenario Profit Bridge'[Bridge]),
+			
+			    "Current Profit", [Trading Profit Current],
+			    "Price Impact",   [Profit Bridge - Price Impact],
+			    "Volume Impact",  [Profit Bridge - Volume Impact],
+			    "Cost Impact",    [Profit Bridge - Cost Impact],
+			    "Interaction",    [Profit Bridge - Interaction],
+			
+			    BLANK()
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 9a33c845-74b6-474e-b4f3-9fe0bd9e03bc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Impact Rank - Top (Product)' =
+			
+			RANKX(
+			    ALLSELECTED(dim_products[product_name]),
+			    [Profit Impact $],
+			    ,
+			    DESC,
+			    DENSE
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 6d96c6c0-9392-494f-8957-6a738836109a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Impact Rank - Bottom (Product)' =
+			
+			RANKX(
+			    ALLSELECTED(dim_products[product_name]),
+			    [Profit Impact $],
+			    ,
+			    ASC,
+			    DENSE
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 80785cc9-1ce8-4eb3-9c2a-e898ed659c6b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Impact Top Bottom Flag' =
+			
+			VAR Impact = [Profit Impact $]
+			VAR TopRank = [Profit Impact Rank - Top (Product)]
+			VAR BottomRank = [Profit Impact Rank - Bottom (Product)]
+			
+			RETURN
+			IF(
+			    NOT ISBLANK(Impact)
+			        &&
+			        ABS(Impact) >= 0.01
+			        &&
+			        (
+			            TopRank <= 3
+			            || BottomRank <= 3
+			        ),
+			    1,
+			    0
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: f0ceee1f-bfd0-4d05-bdf3-ab0613e3b5b2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue Impact Direction' = ```
+			
+			SWITCH (
+			    TRUE(),
+			    [Revenue Impact $] > 0, "▲",
+			    [Revenue Impact $] < 0, "▼",
+			    "⏹"
+			)
+			
+			```
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 2d263404-21d3-4f63-aa3f-f914008a0b2b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Profit Impact Direction' = ```
+			
+			SWITCH (
+			    TRUE(),
+			    [Profit Impact $] > 0, "▲",
+			    [Profit Impact $] < 0, "▼",
+			    "⏹"
+			)
+			
+			```
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 30a82032-7a2c-44d2-b167-41aeaba05d6d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Margin Impact Direction' = ```
+			
+			SWITCH (
+			    TRUE(),
+			    [Margin Impact pp] > 0, "▲",
+			    [Margin Impact pp] < 0, "▼",
+			    "⏹"
+			)
+			
+			```
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 31d59a45-2ea0-4dc8-b23e-9d368e045314
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Unit Impact Direction' = ```
+			
+			SWITCH (
+			    TRUE(),
+			    [Units Impact] > 0, "▲",
+			    [Units Impact] < 0, "▼",
+			    "⏹"
+			)
+			
+			```
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 9b300579-700b-4e35-acfa-f618364bc1b8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Scenario Rating' =
+			
+			VAR RevenueThreshold = 0
+			VAR ProfitThreshold = 0
+			VAR DemandThreshold = -0.05
+			
+			VAR Revenue = [Revenue Impact %]
+			VAR Profit = [Profit Impact %]
+			VAR Demand = [Elasticity Volume Change %]
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			
+			    // Strong Opportunity
+			    Revenue > RevenueThreshold && Profit > ProfitThreshold && Demand >= DemandThreshold, "Strong Opportunity",
+			
+			    // Mixed Outcome
+			    Revenue > RevenueThreshold && Profit > ProfitThreshold && Demand < DemandThreshold, "Mixed Outcome",
+			
+			    Revenue > RevenueThreshold && Profit <= ProfitThreshold, "Mixed Outcome",
+			
+			    // Margin-led Strategy
+			    Revenue <= RevenueThreshold && Profit > ProfitThreshold, "Margin-led Strategy",
+			
+			    // High Risk
+			    Revenue < RevenueThreshold && Profit < ProfitThreshold,  "High Risk",
+			
+			    // Default
+			    "Minimal Impact"
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 81f1f72a-16e9-4e88-8a38-162fd2c66c7b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Commercial Insight' = ```
+			
+			
+			VAR Price = [Selected Price Change %]
+			VAR Elasticity = [Selected Elasticity]
+			
+			VAR Demand = [Elasticity Volume Change %]
+			VAR Revenue = [Revenue Impact %]
+			VAR Profit = [Profit Impact %]
+			
+			VAR Rating = [Scenario Rating]
+			
+			/*-----------------------------------------
+			Scenario Description
+			-----------------------------------------*/
+			
+			VAR ScenarioText =
+			SWITCH(
+			    TRUE(),
+			
+			    Price > 0, "A " &   FORMAT(Price,"0%") & " price increase with an elasticity of " &  FORMAT(Elasticity,"0.0"),
+			    Price < 0, "A " &   FORMAT(ABS(Price),"0%") &  " price reduction with an elasticity of " &  FORMAT(Elasticity,"0.0"),
+			    "No price change with an elasticity of " & FORMAT(Elasticity,"0.0"))
+			
+			/*-----------------------------------------
+			Demand Impact
+			-----------------------------------------*/
+			
+			VAR DemandText =
+			SWITCH(
+			    TRUE(),
+			
+			    Demand > 0, "is expected to increase demand by approximately " &  FORMAT(Demand,"0.0%") & ".",
+			    Demand < 0,  "is expected to reduce demand by approximately " &  FORMAT(ABS(Demand),"0.0%") & ".",
+			    "is expected to have no material impact on demand.")
+			
+			/*-----------------------------------------
+			Revenue Impact
+			-----------------------------------------*/
+			
+			VAR RevenueText =
+			SWITCH(
+			    TRUE(),
+			
+			    Revenue > 0, "Revenue is projected to increase by " & FORMAT(Revenue,"0.0%") & ".",
+			    Revenue < 0,  "Revenue is projected to decrease by " & FORMAT(ABS(Revenue),"0.0%") & ".",
+			    "Revenue is expected to remain stable.")
+			
+			/*-----------------------------------------
+			Profit Impact
+			-----------------------------------------*/
+			
+			VAR ProfitText =
+			SWITCH(
+			    TRUE(),
+			
+			    Profit > 0, "Profit is expected to improve by " & FORMAT(Profit,"0.0%") & ".",
+			    Profit < 0, "Profit is expected to decline by " & FORMAT(ABS(Profit),"0.0%") & ".",
+			    "Profit is expected to remain stable.")
+			
+			/*-----------------------------------------
+			Commercial Recommendation
+			-----------------------------------------*/
+			
+			VAR Recommendation =
+			SWITCH(
+			    Rating,
+			
+			    "Strong Opportunity",  "🟢 Strong Opportunity - Higher revenue and profit with limited demand risk.",
+			    "Mixed Outcome",  "🟡 Mixed Outcome - Financial gains are offset by weaker demand or profitability.",
+			    "Margin-led Strategy", "🟡 Margin-led Strategy - Lower sales are accepted to improve margins.",
+			    "High Risk", "🔴 High Risk - Revenue and profit are both expected to decline.",
+			    "⚪ Minimal Impact - Current assumptions produce little commercial change."
+			)
+			
+			RETURN
+			Recommendation & " " & UNICHAR(10) & UNICHAR(10) & ScenarioText & UNICHAR(10) & DemandText & UNICHAR(10) & RevenueText & UNICHAR(10) & ProfitText
+			
+			
+			```
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: d4c58f40-2f7b-4d04-918b-a0ad2f85b61b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sensitivity Units' =
+			
+			VAR PriceChange =
+			    DIVIDE(
+			        SELECTEDVALUE(
+			            Price_Change_pct[Price Change %]
+			        ),
+			        100
+			    )
+			
+			VAR Elasticity =
+			    [Selected Elasticity]
+			
+			VAR BaseUnits =
+			    [Units Sold Current]
+			
+			RETURN
+			    BaseUnits *
+			    (
+			        1 +
+			        PriceChange * Elasticity
+			    )
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: 72cca7c2-c0a5-4c6e-8c2e-c12a8b1980df
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected Sensitivity Units' =
+			
+			VAR PriceChange =
+			    [Selected Price Change %]
+			
+			VAR Elasticity =
+			    [Selected Elasticity]
+			
+			VAR BaseUnits =
+			    [Units Sold Current]
+			
+			RETURN
+			    BaseUnits *
+			    (
+			        1 +
+			        PriceChange * Elasticity
+			    )
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: 3f245c9d-d51a-4b1b-a6bb-75ad6107e3a2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected Sensitivity Point' =
+			
+			VAR AxisPrice =
+			    DIVIDE(
+			        SELECTEDVALUE(
+			            Price_Change_pct[Price Change %]
+			        ),
+			        100
+			    )
+			
+			VAR SelectedPrice =
+			    [Selected Price Change %]
+			
+			RETURN
+			    IF(
+			        AxisPrice = SelectedPrice,
+			        [Sensitivity Units],
+			        BLANK()
+			    )
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: 6bc1615e-af56-49c3-94cb-bee7287a44df
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Sensitivity Units %' =
+			
+			VAR PriceChange =
+			    DIVIDE(
+			        SELECTEDVALUE('Price Sensitivity Axis'[Value], 0),
+			        100
+			    )
+			
+			VAR Elasticity =
+			    SELECTEDVALUE(
+			        'Sensitivity Elasticity'[Elasticity],
+			        0
+			    )
+			
+			RETURN
+			    PriceChange * Elasticity
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: 003a4eba-1038-4a16-bcd5-8c9483e331b8
+
+		formatStringDefinition = "0%;-0%;0%"
+
+	measure 'Selected Sensitivity Units %' =
+			
+			VAR PriceChange =
+			    DIVIDE(
+			        SELECTEDVALUE(
+			            'Price Sensitivity Axis'[Value],
+			            0
+			        ),
+			        100
+			    )
+			
+			VAR SelectedElasticity =
+			    [Selected Elasticity]
+			
+			RETURN
+			    PriceChange * SelectedElasticity
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: a3011585-f484-4a8e-a06c-fb0ceaea7bf2
+
+		formatStringDefinition = "0%;-0%;0%"
+
+	measure 'Selected Elasticity & Price Change Label' =
+			
+			"Selected Elasticity : " & FORMAT([Selected Elasticity], "0.0;-0.0") & " | " & "Selected Price Change : " & FORMAT([Selected Price Change %], "0.0%;-0.0%")
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Scenario Planner
+		lineageTag: 80ef3b1d-b912-4e43-b2e8-37335f485324
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outcome Current Units' =
+			
+			[Units Sold Current]
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: fe812efe-0310-47f6-95c0-7e440ec02311
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outcome Scenario Units' =
+			
+			VAR PriceChange =
+			    [Selected Price Change %]
+			
+			VAR BaseVolumeChange =
+			    [Selected Volume Change %]
+			
+			VAR RowElasticity =
+			    SELECTEDVALUE(
+			        'Sensitivity Elasticity'[Elasticity],
+			        0
+			    )
+			
+			VAR ElasticityVolumeChange =
+			    PriceChange * RowElasticity
+			
+			VAR NetVolumeChange =
+			    BaseVolumeChange + ElasticityVolumeChange
+			
+			RETURN
+			    [Units Sold Current] * (1 + NetVolumeChange)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: c5a70d57-3267-4e01-bb87-8a5007d6d7e9
+
+		formatStringDefinition = "#,##0;-#.##0"
+
+	measure 'Outcome Units Change %' =
+			
+			DIVIDE(
+			    [Outcome Scenario Units] - [Outcome Current Units],
+			    [Outcome Current Units]
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: c220da89-c696-4e00-a1e6-47f4ffe93bc3
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	measure 'Outcome Scenario Revenue' =
+			
+			VAR PriceChange =
+			    [Selected Price Change %]
+			
+			VAR BaseVolumeChange =
+			    [Selected Volume Change %]
+			
+			VAR RowElasticity =
+			    SELECTEDVALUE(
+			        'Sensitivity Elasticity'[Elasticity],
+			        0
+			    )
+			
+			VAR NetVolumeChange =
+			    BaseVolumeChange
+			        + (PriceChange * RowElasticity)
+			
+			VAR ScenarioUnits =
+			    [Units Sold Current] * (1 + NetVolumeChange)
+			
+			VAR CurrentUnitRevenue =
+			    DIVIDE(
+			        [Revenue Current],
+			        [Units Sold Current]
+			    )
+			
+			RETURN
+			    ScenarioUnits
+			        * CurrentUnitRevenue
+			        * (1 + PriceChange)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: eb00905a-81af-4be9-bb97-c132743412f9
+
+		formatStringDefinition = "$#,##0;($#,##0)"
+
+	measure 'Outcome Scenario Profit' =
+			
+			[Outcome Scenario Revenue]
+			    - [Outcome Scenario Cost]
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: 5e5ddb9b-f443-49b6-b775-fd27f4f488f2
+
+		formatStringDefinition = "$#,##0;($#,##0)"
+
+	measure 'Outcome Scenario Cost' =
+			
+			VAR BaseCost =
+			    [Cost Current]
+			
+			VAR BaseVolumeChange =
+			    [Selected Volume Change %]
+			
+			VAR PriceChange =
+			    [Selected Price Change %]
+			
+			VAR RowElasticity =
+			    SELECTEDVALUE(
+			        'Sensitivity Elasticity'[Elasticity],
+			        0
+			    )
+			
+			VAR NetVolumeChange =
+			    BaseVolumeChange
+			        + (PriceChange * RowElasticity)
+			
+			VAR CostChange =
+			    [Selected Cost Change %]
+			
+			RETURN
+			    BaseCost
+			        * (1 + NetVolumeChange)
+			        * (1 + CostChange)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: 2ed83b49-cbb6-4008-8fbc-e635d7799520
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Outcome Profit vs Current %' =
+			
+			DIVIDE(
+			    [Outcome Scenario Profit] - [Trading Profit Current],
+			    [Trading Profit Current],
+			    0
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: d6838bdf-df4f-4556-aa7d-cd4965f94cd9
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	measure 'Current Product Price' =
+			
+			SELECTEDVALUE(
+			    dim_products[product_price]
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: 37fb55ee-7a79-4909-8f76-3c766693914a
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Scenario Product Price' =
+			
+			VAR CurrentPrice =
+			    [Current Product Price]
+			
+			VAR PriceChange =
+			    [Selected Price Change %]
+			
+			RETURN
+			   CurrentPrice * (1 + PriceChange)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: 72f529fb-76c7-4e8c-b216-fb1ec4f4317f
+
+		formatStringDefinition = "\$#,0.00;(\$#,0.00);\$#,0.00"
+
+	measure 'Current Product Margin %' =
+			
+			DIVIDE(
+			    [Trading Profit Current],
+			    [Revenue Current],
+			    0
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: f6595ae1-36b1-4bae-b10b-fb158fe15482
+
+	measure 'Product Profit Impact $' =
+			
+			[Outcome Scenario Profit]
+			    - [Trading Profit Current]
+		formatString: \$#,0;(\$#,0);\$#,0
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: 1d3d5c7c-910f-4297-a2fb-bbc6fa366352
+
+	measure 'Product Profit Impact $ Icon' =
+			
+			IF(
+			    ISINSCOPE(dim_products[product_name]),
+			    [Product Profit Impact $],
+			    BLANK()
+			)
+		isHidden
+		displayFolder: 11 Scenario & Sensitivity\Price Sensitivity
+		lineageTag: 2eccf928-99fb-44df-be7d-24bef79df0dc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		formatString: 0
+		lineageTag: 71f3e5cc-3dcb-4314-893d-fb6444dcf357
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Scenario&PS_Engine = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = e4920e46deb8495ab4044c4d4de53187
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

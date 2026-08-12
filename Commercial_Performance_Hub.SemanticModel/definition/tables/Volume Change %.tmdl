@@ -1,0 +1,27 @@
+table 'Volume Change %'
+	lineageTag: 66e96671-afc5-4a40-a6f2-8068f7f1f5af
+
+	measure 'Volume Change % Value' = SELECTEDVALUE('Volume Change %'[Volume Change %], 0)
+		formatString: 0
+		displayFolder: 12 Parameters
+		lineageTag: b9273ae8-48f4-45c7-91d0-c535032f8aaf
+
+	column 'Volume Change %'
+		formatString: 0
+		lineageTag: 2e6f31f6-4bde-4ede-b0d7-5981aa95bb42
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'Volume Change %' = calculated
+		mode: import
+		source = GENERATESERIES(-50, 50, 1)
+
+	annotation PBI_Id = 9b8ef1deaf8a419ca25304c5d7685fbb
+

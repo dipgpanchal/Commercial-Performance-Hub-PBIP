@@ -1,0 +1,74 @@
+table dim_stores
+	lineageTag: 1fd46e8e-842b-4153-b770-85d0f9193e2a
+
+	column store_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5a5a2ac4-726f-44e5-8a05-efb28d77bf5c
+		summarizeBy: none
+		sourceColumn: store_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_name
+		dataType: string
+		lineageTag: 2e1e143f-84e5-4b95-b65e-10bafb6b334a
+		summarizeBy: none
+		sourceColumn: store_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_city
+		dataType: string
+		lineageTag: 5e6ed155-c5bb-4661-8ae5-92b8de6562f4
+		summarizeBy: none
+		sourceColumn: store_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_location
+		dataType: string
+		lineageTag: c8655015-ad6d-4619-9c51-25bca2825eae
+		summarizeBy: none
+		sourceColumn: store_location
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_open_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b45f7015-8a5c-43dc-9d3d-5badafc715cd
+		summarizeBy: none
+		sourceColumn: store_open_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'store_name Visual'
+		dataType: string
+		lineageTag: a33da552-5f81-435e-bae6-876aceef9973
+		summarizeBy: none
+		sourceColumn: store_name Visual
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_stores = m
+		mode: import
+		source =
+				let
+				  Source = MySQL.Database("localhost:3306", "practise"),
+				  #"Navigation 1" = Source{[Schema = "practise", Item = "dim_stores"]}[Data],
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Navigation 1", "store_name", "store_name - Copy"),
+				    #"Replaced Value" = Table.ReplaceValue(#"Duplicated Column","Maven Toys ","",Replacer.ReplaceText,{"store_name - Copy"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Replaced Value",{{"store_name - Copy", "store_name Visual"}})
+				in
+				  #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

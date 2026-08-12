@@ -1,0 +1,54 @@
+model Model
+	culture: en-AU
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-AU
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["dim_products","dim_stores","fact_inventory_snapshot","dim_date","fact_sales","vw_fact_product_weekly","vw_fact_product_rolling"]
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","CalcGroup","MCP-PBIModeling","DevMode"]
+
+ref table dim_products
+ref table dim_stores
+ref table fact_inventory_snapshot
+ref table _Base_Measures
+ref table dim_date
+ref table _Measures
+ref table Metric_Parameter
+ref table ABC_Cateogory
+ref table Price_Change_pct
+ref table fact_sales
+ref table 'Cost Change %'
+ref table 'Volume Change %'
+ref table Elasticity
+ref table vw_fact_product_weekly
+ref table vw_fact_product_rolling
+ref table Comparison
+ref table 'Reporting Period'
+ref table 'Reporting Calendar'
+ref table _Model_Measures
+ref table _Debug_Measures
+ref table _Visual_Measures
+ref table _MetricCatalog
+ref table _KPI_Engine
+ref table _Trend_Engine
+ref table _Ranking_Engine
+ref table '_Paramter Rank Direction'
+ref table '_Parameter Show Rows'
+ref table _Exec_Summary_Page
+ref table _Pareto_Engine
+ref table _Store_Engine
+ref table _Inventory_Engine
+ref table _Scenario&PS_Engine
+ref table '_Scenario KPI'
+ref table '_Scenario Profit Bridge'
+ref table 'Price Sensitivity Axis'
+ref table 'Sensitivity Elasticity'
+
+ref cultureInfo en-AU
+

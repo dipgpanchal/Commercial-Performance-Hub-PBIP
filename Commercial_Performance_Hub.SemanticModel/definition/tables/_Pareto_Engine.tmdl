@@ -1,0 +1,456 @@
+table _Pareto_Engine
+	lineageTag: 4fdd5199-d866-476e-b38a-3835cd8ff9d0
+
+	measure 'Contribution Rank - Product' =
+			
+			VAR CurrentMetric =
+			    SWITCH(
+			        TRUE(),
+			        [Selected KPI] = "Trading Margin %", [Contribution Value],
+			        [Contribution Base - Product]
+			    )
+			
+			RETURN
+			RANKX(
+			    ALL(dim_products[product_name]),
+			    SWITCH(
+			        TRUE(),
+			        [Selected KPI] = "Trading Margin %", CALCULATE([Contribution Value]),
+			        CALCULATE([Contribution Base - Product])
+			    ),
+			    CurrentMetric,
+			    DESC,
+			    DENSE
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: ea4a0c5c-891c-40c5-823c-e3523e7deccc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cumulative Contribution' =
+			
+			VAR CurrentRank = [Contribution Rank - Product]
+			
+			RETURN
+			SUMX(
+			    FILTER(
+			        ALL(dim_products[product_name]),
+			        [Contribution Rank - Product] <= CurrentRank
+			    ),
+			    MAX(0, CALCULATE([Contribution Base - Product]))
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 3dfeffbc-652e-48c7-b40a-d6e6a32cf240
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Cumulative Contribution %' =
+			
+			VAR TotalPositiveBase =
+			    SUMX(
+			        ALL(dim_products[product_name]),
+			        MAX(0, CALCULATE([Contribution Base - Product]))
+			    )
+			
+			RETURN
+			DIVIDE(
+			    [Cumulative Contribution],
+			    TotalPositiveBase
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: c8b9fabd-e8b1-497b-ada4-a943c39bb476
+
+	measure 'Pareto Classification' = IF([Cumulative Contribution %] <= _Pareto_Engine[Pareto Threshold], "Top 80%", "Remaining 20%")
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 473e773f-2388-438c-af3e-7d7a4d5041c7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Contribution Value' =
+			
+			[Selected KPI Current]
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 81120c9b-b2ae-4409-a2b9-c95f85ffb476
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure ABC =
+			
+			SWITCH(
+			    TRUE(),
+			    [Cumulative Contribution %] <= .80,"A",
+			    [Cumulative Contribution %] <= .95,"B",
+			    "C"
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 6293f19f-7695-451c-a59b-e8d4b4fe14d1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Contribution Chart Title' =
+			
+			VAR SelMetric = [Selected KPI]
+			
+			RETURN
+			UPPER(SelMetric) & " CONTRIBUTION (PARETO ANALYSIS)"
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 3a74356c-8be8-4b79-a8ca-84bc969c3c95
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pareto Bar Colour' =
+			
+			SWITCH(
+			    [Pareto Classification],
+			    "Top 80%", "#2E7D32",        -- Dark Green
+			    "Remaining 20%", "#BDBDBD"   -- Light Grey
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 0198de1c-832c-4176-a037-d3f554b07419
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Pareto Threshold' =
+			
+			0.8
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 6f4a6e0e-1620-4eb0-995d-118196f8ad75
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tooltip Title - Product' =
+			
+			SELECTEDVALUE(dim_products[product_name])
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 8c9c97ae-ce86-4e35-b6ea-9beb89a658db
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tooltip Rank - Product' =
+			
+			"#" & [Contribution Rank - Product]
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 7f9c0cbf-bba1-463d-b03c-87a09a4b2488
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Contribution %' =
+			
+			VAR OverallMetric =
+			    CALCULATE(
+			        [Selected KPI Current],
+			        REMOVEFILTERS(dim_products[product_name])
+			    )
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    [Selected KPI] = "Trading Margin %",
+			        ([Contribution Value] - OverallMetric) * 100,
+			    DIVIDE(
+			        [Contribution Base - Product],
+			        CALCULATE(
+			            [Contribution Base - Product],
+			            REMOVEFILTERS(dim_products[product_name])
+			        )
+			    )
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 419c6789-bf85-4418-9e4b-dbd9a20bb407
+
+		formatStringDefinition =
+				SWITCH(
+				    TRUE(),
+				    [Selected KPI] = "Trading Margin %", "0.0 pp;-0.0 pp;0.0 pp",
+				    "0.0%;-0.0%;0.0%"
+				)
+
+	measure 'Tooltip ABC' =
+			
+			SWITCH(
+			    [ABC],
+			    "A","🟢 A - High Value",
+			    "B","🟡 B - Medium Value",
+			    "🔴 C - Low Value"
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 85d0b5e0-76c3-48c5-8d6a-444cb71fc3fc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'A Product Count' =
+			
+			COALESCE(
+			    CALCULATE(
+			        DISTINCTCOUNT(dim_products[product_name]),
+			        FILTER(
+			            ALLSELECTED(dim_products[product_name]),
+			            [ABC] = "A"
+			        )
+			    ),
+			    0
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 0700955f-5b8e-4c2d-97e4-a4c8e91bb3cb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'A Product Contribution %' =
+			
+			COALESCE(
+			    MAXX(
+			        FILTER(
+			            ALLSELECTED(dim_products[product_name]),
+			            [ABC] = "A"
+			        ),
+			        [Cumulative Contribution %]
+			    ),
+			    0
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: b03e42de-2ebd-49e6-8ee5-72fed7388f58
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	measure 'Top N Contribution Value' =
+			
+			VAR Top_N = [Selected Row Count]
+			VAR TopProducts =
+			    TOPN(
+			        Top_N,
+			        ALLSELECTED(dim_products[product_name]),
+			        [Contribution Value],
+			        DESC
+			    )
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    [Selected KPI] = "Trading Margin %",
+			        DIVIDE(
+			            SUMX(TopProducts, CALCULATE([Trading Profit])),
+			            SUMX(TopProducts, CALCULATE([Revenue]))
+			        ),
+			    SUMX(TopProducts, [Contribution Value])
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: c30983d0-be04-43ad-92c3-ca8898b3a9e0
+
+		formatStringDefinition =
+				VAR SelectedKPI = [Selected KPI]
+				RETURN
+				SWITCH(
+				    SelectedKPI,
+				    "Total Revenue", "$#,##0;($#,##0)",
+				    "Trading Profit $", "$#,##0;($#,##0)",
+				    "Trading Margin %", "0.0%;-0.0%",
+				    "Units Sold", "#,##0",
+				    "Transactions", "#,##0",
+				    "Average Selling Price", "$#,##0.00;($#,##0.00)",
+				    "Average Cost", "$#,##0.00;($#,##0.00)",
+				    "#,##0"
+				)
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top N Contribution %' =
+			
+			SWITCH(
+			    TRUE(),
+			    [Selected KPI] = "Trading Margin %",
+			        ([Top N Contribution Value] - [Selected KPI Current]) * 100,
+			    DIVIDE(
+			        [Top N Contribution Value],
+			        CALCULATE([Contribution Value],
+			            ALLSELECTED(dim_products[product_name])
+			        )
+			    )
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 89135bb2-43ce-49d8-835d-e285c836207c
+
+		formatStringDefinition =
+				SWITCH(
+				    TRUE(),
+				    [Selected KPI] = "Trading Margin %", "0.0 pp;-0.0 pp;0.0 pp",
+				    "0.0%;-0.0%;0.0%"
+				)
+
+	measure 'Top N Title' =
+			
+			"Top " &  FORMAT([Selected Row Count], "0") & " Products"
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: ecf92330-e4cc-416a-a1bd-0d84d409b2dc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top N Subtitle' = [Selected KPI]
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 2b25f4c4-e51a-49c0-8215-044840c88136
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top N Footer' =
+			
+			IF(
+			    [Selected KPI] = "Trading Margin %",
+			    "vs Overall Margin",
+			    "of " & [Selected KPI]
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 3e886a66-dc0a-42ea-83d4-9fd51db2376e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top 20 Contribution Value' =
+			
+			VAR TopProducts =
+			    TOPN(
+			        20,
+			        ALLSELECTED(dim_products[product_name]),
+			        [Contribution Value],
+			        DESC
+			    )
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    [Selected KPI] = "Trading Margin %",
+			        DIVIDE(
+			            SUMX(TopProducts, CALCULATE([Trading Profit])),
+			            SUMX(TopProducts, CALCULATE([Revenue]))
+			        ),
+			    SUMX(TopProducts, [Contribution Value])
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 0ef95232-22e4-4097-866a-d3f15ff225d2
+
+		formatStringDefinition =
+				VAR SelectedKPI = [Selected KPI]
+				RETURN
+				SWITCH(
+				    SelectedKPI,
+				    "Total Revenue", "$#,##0;($#,##0)",
+				    "Trading Profit $", "$#,##0;($#,##0)",
+				    "Trading Margin %", "0.0%;-0.0%",
+				    "Units Sold", "#,##0",
+				    "Transactions", "#,##0",
+				    "Average Selling Price", "$#,##0.00;($#,##0.00)",
+				    "Average Cost", "$#,##0.00;($#,##0.00)",
+				    "#,##0"
+				)
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top 20 Contribution %' =
+			
+			SWITCH(
+			    TRUE(),
+			    [Selected KPI] = "Trading Margin %",
+			        ([Top 20 Contribution Value] - [Selected KPI Current]) * 100,
+			    DIVIDE(
+			        [Top 20 Contribution Value],
+			        CALCULATE(
+			            [Contribution Value],
+			            ALLSELECTED(dim_products[product_name])
+			        )
+			    )
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 93db64df-7b9f-485d-9764-031659f4ab6b
+
+		formatStringDefinition =
+				SWITCH(
+				    TRUE(),
+				    [Selected KPI] = "Trading Margin %", "0.0 pp;-0.0 pp;0.0 pp",
+				    "0.0%;-0.0%;0.0%"
+				)
+
+	measure 'Products Analysed' = DISTINCTCOUNT(dim_products[product_name])
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: d82d5a51-5876-42e3-8e93-afbb9c606644
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'A Product Footer' =
+			
+			IF(
+			    [Selected KPI] = "Trading Margin %",
+			    "vs Overall Margin",
+			    "of " & [Selected KPI]
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: cd6fba29-5d50-4e98-8cf0-c1ca604c3301
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Top N 20 Title' =
+			
+			"Top 20 Products"
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: dab33c97-de37-49d6-9f27-cc4df6f553e8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Product Title' =
+			
+			"Products Analysed"
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: e9779856-60ce-4ae1-b9fd-bf9be67fc76c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Additive contribution base for Product Pareto logic. Uses profit when KPI is Trading Margin % to avoid summing ratio values.
+	measure 'Contribution Base - Product' =
+			
+			SWITCH(
+			    TRUE(),
+			    [Selected KPI] = "Trading Margin %", [Trading Profit],
+			    [Contribution Value]
+			)
+		isHidden
+		displayFolder: 07 Product Contribution
+		lineageTag: 429a7ab5-17b6-4b6f-a495-9e17ac2de4cc
+
+	column Value
+		formatString: 0
+		lineageTag: 5e1e0d84-5882-430e-a926-7661ef6051cb
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Pareto_Engine = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = 7ffc1a5e5a814ab3b835a957c2553e20
+

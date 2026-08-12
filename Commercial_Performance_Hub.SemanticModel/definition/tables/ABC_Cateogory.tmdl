@@ -1,0 +1,17 @@
+table ABC_Cateogory
+	lineageTag: f48908f8-7ca8-46cd-afdf-dc49b1235153
+
+	column ABC
+		lineageTag: 953d4ed9-b99f-4399-99c7-a7379f7ea5c4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ABC]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ABC_Cateogory = calculated
+		mode: import
+		source = DATATABLE("ABC",STRING,{{"A"},{"B"},{"C"}})
+
+	annotation PBI_Id = 86ac8796ea324b85869e946648ec09c6
+

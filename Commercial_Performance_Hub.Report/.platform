@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Commercial_Performance_Hub"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f60bc978-df72-483c-a14e-e387b8cd5019"
+  }
+}

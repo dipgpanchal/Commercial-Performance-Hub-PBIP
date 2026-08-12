@@ -1,0 +1,36 @@
+relationship 9018f8d8-2e61-30a2-0865-c17181a9a0ff
+	fromColumn: fact_inventory_snapshot.product_id
+	toColumn: dim_products.product_id
+
+relationship 369b6932-761f-12ec-da95-ca2b72b25182
+	fromColumn: fact_inventory_snapshot.store_id
+	toColumn: dim_stores.store_id
+
+relationship 2637f97a-9850-fb8e-1a50-e7a531801958
+	fromColumn: fact_sales.store_id
+	toColumn: dim_stores.store_id
+
+relationship ab2832bb-54d6-3d24-ef1b-f053ee2f0d37
+	fromColumn: fact_sales.product_id
+	toColumn: dim_products.product_id
+
+relationship 4f1cab50-c57f-0a1c-6d4f-c84df5dd1188
+	fromColumn: fact_sales.sale_date
+	toColumn: dim_date.full_date
+
+relationship AutoDetected_a24c5f57-eaf0-4f41-b697-3f1f785eda35
+	fromColumn: vw_fact_product_weekly.product_id
+	toColumn: dim_products.product_id
+
+relationship AutoDetected_8404fa06-630c-4ff1-bd78-622952fc20df
+	fromColumn: vw_fact_product_rolling.product_id
+	toColumn: dim_products.product_id
+
+relationship 76856f2a-eda3-7126-6a5e-6e081b885c2b
+	fromColumn: vw_fact_product_rolling.week_end_key
+	toColumn: dim_date.date_key
+
+relationship 32f28d3b-c1b8-f1c8-d908-73f6a1eeea3c
+	fromColumn: vw_fact_product_weekly.week_end_key
+	toColumn: dim_date.date_key
+

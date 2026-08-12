@@ -1,0 +1,25 @@
+table 'Reporting Calendar'
+	lineageTag: 9de9af47-b67f-4583-b2d3-c85cf7bf8c95
+
+	column 'Calendar Type'
+		lineageTag: 42e6dbda-c89a-4fa7-a822-37aa3234928b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Calendar Type]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Reporting Calendar' = calculated
+		mode: import
+		source =
+				
+				DATATABLE (
+				    "Calendar Type", STRING,
+				    {
+				        { "Calendar Year" },
+				        { "Financial Year" }
+				    }
+				)
+
+	annotation PBI_Id = a8d2127348e84c6eab315b0481d03e10
+

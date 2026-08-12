@@ -1,0 +1,62 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "eb844225ee4a2bbde256",
+  "position": {
+    "x": 98.969072164948457,
+    "y": 189.27835051546393,
+    "z": 65000,
+    "height": 29.690721649484537,
+    "width": 394.63917525773195,
+    "tabOrder": 65000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "ⓘ ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "DIN",
+                      "fontSize": "8pt",
+                      "color": "#666666"
+                    }
+                  },
+                  {
+                    "value": "Elasticity is a user-defined assumption used to estimate demand response to price changes.",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "DIN Light",
+                      "fontSize": "8pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

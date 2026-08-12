@@ -1,0 +1,202 @@
+table vw_fact_product_weekly
+	lineageTag: 5d3252be-d6dd-4418-b0bf-612aa8266959
+
+	column week_end_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d49b335-711a-4d40-94aa-b39377c5fa41
+		summarizeBy: none
+		sourceColumn: week_end_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: af415bfa-86af-411f-bea9-8d3719dd5469
+		summarizeBy: none
+		sourceColumn: product_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column units_sold
+		dataType: double
+		lineageTag: 957af8bd-4828-4030-a282-18fe87c565ab
+		summarizeBy: sum
+		sourceColumn: units_sold
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column revenue
+		dataType: double
+		lineageTag: 8fcfe76e-bcfb-4eac-a66d-2cfdd9310895
+		summarizeBy: sum
+		sourceColumn: revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cost
+		dataType: double
+		lineageTag: 8ac98b4a-3a5a-43ce-9af6-b3a082027499
+		summarizeBy: sum
+		sourceColumn: cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column profit
+		dataType: double
+		lineageTag: 8fa30eb4-b85e-46c6-a030-c2f4f57067a6
+		summarizeBy: sum
+		sourceColumn: profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column weighted_avg_unit_price
+		dataType: double
+		lineageTag: ff2db301-bc14-4cdc-b8da-f4f07e9d2079
+		summarizeBy: sum
+		sourceColumn: weighted_avg_unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column weighted_avg_unit_cost
+		dataType: double
+		lineageTag: 009b847c-13f5-401e-a44b-b616947eabed
+		summarizeBy: sum
+		sourceColumn: weighted_avg_unit_cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column weighted_avg_unit_profit
+		dataType: double
+		lineageTag: ce488af2-9d85-4d14-9c06-697422ea88f1
+		summarizeBy: sum
+		sourceColumn: weighted_avg_unit_profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column transaction_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 4fb9aa36-7711-4cab-a369-fcc4b7e06613
+		summarizeBy: sum
+		sourceColumn: transaction_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column previous_week_price
+		dataType: double
+		lineageTag: b73800e5-acfb-4651-b984-7834eb26e010
+		summarizeBy: sum
+		sourceColumn: previous_week_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_week_units
+		dataType: double
+		lineageTag: 7261156d-d852-458d-9e69-24da8aea3e1c
+		summarizeBy: sum
+		sourceColumn: previous_week_units
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_week_revenue
+		dataType: double
+		lineageTag: 5c4795f4-ad2a-41ec-9e83-c33be159cb7d
+		summarizeBy: sum
+		sourceColumn: previous_week_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_week_profit
+		dataType: double
+		lineageTag: 71e9db1a-86e6-4b9c-8fe6-57aee4b620c4
+		summarizeBy: sum
+		sourceColumn: previous_week_profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_week_weighted_avg_unit_cost
+		dataType: double
+		lineageTag: 16816b94-2991-4b67-b4c8-e669d3034f32
+		summarizeBy: sum
+		sourceColumn: previous_week_weighted_avg_unit_cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column price_elasticity
+		dataType: double
+		lineageTag: 8945b706-b80c-4a44-812e-bfefaf9f285f
+		summarizeBy: sum
+		sourceColumn: price_elasticity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_week_cost
+		dataType: double
+		lineageTag: c05a5c94-d4fc-4e39-813f-3654ec5007ff
+		summarizeBy: sum
+		sourceColumn: previous_week_cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column price_change_pct
+		dataType: double
+		lineageTag: 26cd2f0a-0dde-4bb3-b3f2-f1ae148a92ea
+		summarizeBy: sum
+		sourceColumn: price_change_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column volume_change_pct
+		dataType: double
+		lineageTag: f4daea1c-d48c-45a9-8a09-a0f07bde1054
+		summarizeBy: sum
+		sourceColumn: volume_change_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_fact_product_weekly = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("localhost:3306", "practise", [ReturnSingleDatabase=true]),
+				    practise_vw_fact_product_weekly = Source{[Schema="practise",Item="vw_fact_product_weekly"]}[Data]
+				in
+				    practise_vw_fact_product_weekly
+

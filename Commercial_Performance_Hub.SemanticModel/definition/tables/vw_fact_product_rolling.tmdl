@@ -1,0 +1,251 @@
+table vw_fact_product_rolling
+	lineageTag: dc2a61e2-99cb-4fce-8c02-600bc0ccb4e0
+
+	column product_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 27faf7eb-f61c-491e-b43a-789eaac8d339
+		summarizeBy: none
+		sourceColumn: product_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_end_key
+		dataType: int64
+		formatString: 0
+		lineageTag: a8085649-bfb0-4238-b90e-2823db850845
+		summarizeBy: none
+		sourceColumn: week_end_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column rolling_window
+		dataType: int64
+		formatString: 0
+		lineageTag: 44ddc673-69ae-42ff-a031-1e417bf4ea6e
+		summarizeBy: sum
+		sourceColumn: rolling_window
+
+		annotation SummarizationSetBy = Automatic
+
+	column rolling_revenue
+		dataType: double
+		lineageTag: b40f8892-ea9f-46fd-9dfe-4d1705ad92aa
+		summarizeBy: sum
+		sourceColumn: rolling_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rolling_units
+		dataType: double
+		lineageTag: 278f5861-74c3-4858-80cc-395e0023ef34
+		summarizeBy: sum
+		sourceColumn: rolling_units
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rolling_cost
+		dataType: double
+		lineageTag: df96de50-94ee-4f96-bd50-67de606d0c2b
+		summarizeBy: sum
+		sourceColumn: rolling_cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rolling_profit
+		dataType: double
+		lineageTag: 02bff355-a58c-4073-a7f2-4d1d16cbec9c
+		summarizeBy: sum
+		sourceColumn: rolling_profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rolling_transactions
+		dataType: double
+		lineageTag: fb528767-7300-49bf-a9a4-9888408824cf
+		summarizeBy: sum
+		sourceColumn: rolling_transactions
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rolling_weighted_avg_unit_price
+		dataType: double
+		lineageTag: 99018e37-5ac2-4a74-8cd0-8c0f0865e542
+		summarizeBy: sum
+		sourceColumn: rolling_weighted_avg_unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rolling_weighted_avg_unit_cost
+		dataType: double
+		lineageTag: ff1eab02-fd5d-4923-b217-12f79055430d
+		summarizeBy: sum
+		sourceColumn: rolling_weighted_avg_unit_cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rolling_weighted_avg_unit_profit
+		dataType: double
+		lineageTag: 3d95c821-bf26-472b-98d7-2f47498de9d1
+		summarizeBy: sum
+		sourceColumn: rolling_weighted_avg_unit_profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_rolling_weighted_avg_unit_price
+		dataType: double
+		lineageTag: 57c941b0-4a14-411b-b8a7-44821dec37c8
+		summarizeBy: sum
+		sourceColumn: previous_rolling_weighted_avg_unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_rolling_weighted_avg_unit_cost
+		dataType: double
+		lineageTag: 57788f44-4c1c-40b7-b9e9-fb3e8a980341
+		summarizeBy: sum
+		sourceColumn: previous_rolling_weighted_avg_unit_cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_rolling_weighted_avg_unit_profit
+		dataType: double
+		lineageTag: cfdd87ad-4b2c-4326-9fe1-f8f7534e509d
+		summarizeBy: sum
+		sourceColumn: previous_rolling_weighted_avg_unit_profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_rolling_units
+		dataType: double
+		lineageTag: 5e8f1518-f06e-4818-9091-154629222b7b
+		summarizeBy: sum
+		sourceColumn: previous_rolling_units
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_rolling_revenue
+		dataType: double
+		lineageTag: 37abbfb6-1bf6-4461-9903-417c738e7ebf
+		summarizeBy: sum
+		sourceColumn: previous_rolling_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_rolling_cost
+		dataType: double
+		lineageTag: 1c37f1c5-816a-4a98-9759-7eda480cfc89
+		summarizeBy: sum
+		sourceColumn: previous_rolling_cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_rolling_profit
+		dataType: double
+		lineageTag: 216cd7d5-f8b2-4077-9350-8b5def5ebf46
+		summarizeBy: sum
+		sourceColumn: previous_rolling_profit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column previous_rolling_transactions
+		dataType: double
+		lineageTag: eea1f81a-ab29-4843-8209-38aea53cb201
+		summarizeBy: sum
+		sourceColumn: previous_rolling_transactions
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rolling_price_change_pct
+		dataType: double
+		lineageTag: bf139a41-eea5-40ac-866f-dbc91d8f2adb
+		summarizeBy: sum
+		sourceColumn: rolling_price_change_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rolling_volume_change_pct
+		dataType: double
+		lineageTag: f0ad431c-fdd1-40fc-a780-a4382332c5a8
+		summarizeBy: sum
+		sourceColumn: rolling_volume_change_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rolling_price_elasticity
+		dataType: double
+		lineageTag: c2a7fb98-1902-42b7-9325-54997ea6913c
+		summarizeBy: sum
+		sourceColumn: rolling_price_elasticity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rolling_history_weeks
+		dataType: int64
+		formatString: 0
+		lineageTag: 05deab21-b497-412b-b163-60de6cab5e01
+		summarizeBy: sum
+		sourceColumn: rolling_history_weeks
+
+		annotation SummarizationSetBy = Automatic
+
+	column rolling_history_pct
+		dataType: double
+		lineageTag: 0cab9955-2a0e-4071-97bb-fc9add1662fd
+		summarizeBy: sum
+		sourceColumn: rolling_history_pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_fact_product_rolling = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("localhost:3306", "practise", [ReturnSingleDatabase=true]),
+				    practise_vw_fact_product_rolling = Source{[Schema="practise",Item="vw_fact_product_rolling"]}[Data]
+				in
+				    practise_vw_fact_product_rolling
+

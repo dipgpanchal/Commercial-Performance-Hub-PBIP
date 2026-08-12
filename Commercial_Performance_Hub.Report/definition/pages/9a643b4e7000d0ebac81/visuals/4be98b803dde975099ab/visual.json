@@ -1,0 +1,196 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "4be98b803dde975099ab",
+  "position": {
+    "x": 1006.2626382188206,
+    "y": 103.22809278350519,
+    "z": 62000,
+    "height": 37.5,
+    "width": 68.125,
+    "tabOrder": 63000
+  },
+  "visual": {
+    "visualType": "PBI_CV_25997FEB_F466_44FA_B562_AC4063283C4C",
+    "query": {
+      "queryState": {
+        "axis": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_date"
+                    }
+                  },
+                  "Property": "yr_month"
+                }
+              },
+              "queryRef": "dim_date.yr_month",
+              "nativeQueryRef": "yr_month"
+            }
+          ]
+        },
+        "measure": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Base_Measures"
+                    }
+                  },
+                  "Property": "Average Selling Price"
+                }
+              },
+              "queryRef": "_Base_Measures.Average Selling Price",
+              "nativeQueryRef": "Average Selling Price"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "line": [
+        {
+          "properties": {
+            "kind": {
+              "expr": {
+                "Literal": {
+                  "Value": "'cardinal'"
+                }
+              }
+            },
+            "axis": {
+              "expr": {
+                "Literal": {
+                  "Value": "'setToZero'"
+                }
+              }
+            },
+            "weight": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "colorBlind": [
+        {
+          "properties": {
+            "vision": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Normal'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "label": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'\"Lucida Sans Unicode\"'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "hiLoPoints": [
+        {
+          "properties": {
+            "loFill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#C62828'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'TM Sparkline'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

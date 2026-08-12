@@ -1,0 +1,378 @@
+table _Ranking_Engine
+	lineageTag: 9fab82ad-87c9-43fb-88a5-22075abdf3b4
+
+	measure 'Selected Row Count' =
+			
+			SELECTEDVALUE(
+			    '_Parameter Show Rows'[Rows],
+			    5
+			)
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 87e1f234-becf-4191-9d28-2d67df119266
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Selected Rank Direction' =
+			
+			SELECTEDVALUE(
+			    '_Paramter Rank Direction'[Direction],
+			    "Top"
+			)
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 4ca6f00c-f5a9-4850-b4e3-6a0a87fef245
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Rank Category' =
+			
+			VAR Direction = [Selected Rank Direction]
+			VAR Categories = ALLSELECTED(dim_products[product_category])
+			
+			RETURN
+			    SWITCH(
+			        Direction,
+			        "Top", RANKX( Categories, [Growth Ranking Sort Value],, DESC, DENSE),
+			        "Bottom", RANKX( Categories, [Growth Ranking Sort Value],, ASC, DENSE)
+			    )
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: ba8440b2-f2a2-4377-a8ed-6997b7e72637
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Show Category Ranking' =
+			
+			VAR RankNo = [Rank Category]
+			
+			RETURN
+			IF(RankNo <= [Selected Row Count],1)
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: f35285a7-72a8-4fe8-b55b-fe68cdb8bf4f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ranking Analysis Title - Category' =
+			
+			VAR Direction = [Selected Rank Direction]
+			VAR SelRows   = [Selected Row Count]
+			VAR SelKPI    = [Selected KPI]
+			
+			VAR KPI_Title =
+			    SWITCH(
+			        SelKPI,
+			
+			        "Total Revenue",      "REVENUE GROWTH",
+			        "Trading Profit $",   "TRADING PROFIT GROWTH",
+			
+			        // Special handling
+			        "Trading Margin %", IF(Direction = "Top", "MARGIN IMPROVEMENT", "MARGIN DECLINE" ),
+			        "Units Sold",         "UNIT GROWTH",
+			        "Transactions",       "TRANSACTION GROWTH",
+			        "Average Selling Price", IF(Direction = "Top","HIGHEST SELLING PRICE", "LOWEST SELLING PRICE"),
+			        "Average Cost", IF( Direction = "Top","HIGHEST COST", "LOWEST COST"),
+			        UPPER(SelKPI)
+			    )
+			
+			RETURN
+			UPPER(Direction) & " " & SelRows &" - CATEGORIES BY " & KPI_Title
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 53b8a576-b52e-4acc-a2cf-8cb6eef6bf5a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Growth Bar Colour' =
+			
+			VAR Delta = [Performance Change]
+			VAR HigherIsBetter = SELECTEDVALUE('_MetricCatalog'[Higher Is Better], TRUE())
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ISBLANK(Delta), "#9E9E9E",
+			    Delta = 0, "#9E9E9E",
+			    HigherIsBetter && Delta > 0, "#2E7D32",
+			    HigherIsBetter && Delta < 0, "#C62828",
+			    NOT HigherIsBetter && Delta > 0, "#C62828",
+			    NOT HigherIsBetter && Delta < 0, "#2E7D32",
+			    "#9E9E9E"
+			)
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: f815e0b1-678b-407a-91dc-32de1abcbe59
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Growth Ranking Value' =
+			
+			[Performance Change]
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 2cb824a5-3671-4fd9-953e-a9064b130847
+
+		formatStringDefinition =
+				IF(
+				    [Selected KPI] = "Trading Margin %",
+				    "0.0 pp;-0.0 pp;0.0 pp",
+				    "0.0%;-0.0%;0.0%"
+				)
+
+	measure 'Tooltip Title' =
+			
+			SELECTEDVALUE(dim_products[product_category])
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: ffd8dba2-148a-4773-8e6d-28cbf2c0a3a1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tooltip Variance Label' =
+			
+			IF(
+			    [Selected KPI] = "Trading Margin %",
+			    "Margin Variance (pp)",
+			    "Variance"
+			)
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: e4ff2873-bd72-4fee-9a36-38412fe5549c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tooltip Change Label' =
+			
+			IF(
+			    [Selected KPI] = "Trading Margin %",
+			    "Margin Change",
+			    "Change"
+			)
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 9e6c1799-1eda-4b06-ae7b-ef753ca549b9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tooltip Rank' =
+			
+			"#" & [Rank Category]
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: fba29406-0d4f-4f06-9318-91899c18f154
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tooltip Variance Direction' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Trend Variance] > 0, "▲",
+			    [Trend Variance] < 0, "▼",
+			    "▢"
+			)
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 715574d8-b38c-40b4-8c1a-c67836f3f6a0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Variance Font Colour' =
+			
+			VAR Delta = [Performance Variance]
+			VAR HigherIsBetter = SELECTEDVALUE('_MetricCatalog'[Higher Is Better], TRUE())
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ISBLANK(Delta), BLANK(),
+			    Delta = 0, "#6B6B6B",
+			    HigherIsBetter && Delta > 0, "#2E7D32",
+			    HigherIsBetter && Delta < 0, "#C62828",
+			    NOT HigherIsBetter && Delta > 0, "#C62828",
+			    NOT HigherIsBetter && Delta < 0, "#2E7D32",
+			    "#6B6B6B"
+			)
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 4b88acbf-01c2-4941-bcc9-435128b4401f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Growth Font Colour' =
+			
+			VAR Delta = [Performance Change]
+			VAR HigherIsBetter = SELECTEDVALUE('_MetricCatalog'[Higher Is Better], TRUE())
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ISBLANK(Delta), BLANK(),
+			    Delta = 0, "#6B6B6B",
+			    HigherIsBetter && Delta > 0, "#00875A",
+			    HigherIsBetter && Delta < 0, "#D92D20",
+			    NOT HigherIsBetter && Delta > 0, "#D92D20",
+			    NOT HigherIsBetter && Delta < 0, "#00875A",
+			    "#6B6B6B"
+			)
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: b297367f-f63c-4686-a39a-348dcb396d4c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Performance Title - Category' =
+			
+			VAR Direction = UPPER([Selected Rank Direction])
+			VAR Perf_Rows      = [Selected Row Count]
+			
+			RETURN
+			Direction & " " & Perf_Rows & " - CATEGORIES DETAILS"
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 82d7f806-1916-48e3-b23d-2227b292f796
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Rank Store' =
+			
+			VAR Direction = [Selected Rank Direction]
+			VAR Stores = ALLSELECTED(dim_stores[store_name Visual])
+			
+			RETURN
+			    SWITCH(
+			        Direction,
+			        "Top", RANKX( Stores, [Growth Ranking Sort Value],, DESC, DENSE),
+			        "Bottom", RANKX( Stores, [Growth Ranking Sort Value],, ASC, DENSE)
+			    )
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 4e489e51-1c10-49b5-8239-b93b8ea018ca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Show Store Ranking' =
+			
+			VAR RankNo = [Rank Store]
+			
+			RETURN
+			IF(RankNo <= [Selected Row Count],1)
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 011db67c-c86d-41d5-a88a-917311ce9f69
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Store Details Title' =
+			
+			VAR Direction = UPPER([Selected Rank Direction])
+			VAR Store_Rows = [Selected Row Count]
+			
+			RETURN
+			Direction & " " & Store_Rows & " - STORE DETAILS"
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 8ea094c8-6c8b-4feb-959f-14a118ad07d5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Rank Product' =
+			
+			VAR Direction = [Selected Rank Direction]
+			VAR Products = ALLSELECTED(dim_products[product_name])
+			
+			RETURN
+			    SWITCH(
+			        Direction,
+			        "Top", RANKX( Products, [Growth Ranking Sort Value],, DESC, DENSE),
+			        "Bottom", RANKX( Products, [Growth Ranking Sort Value],, ASC, DENSE)
+			    )
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: abe8ae67-a162-4bed-99b2-e0468d401713
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Show Product Ranking' =
+			
+			VAR RankNo = [Rank Product]
+			
+			RETURN
+			IF(RankNo <= [Selected Row Count],1)
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 1df146a3-c2d4-493b-95f5-be848beed38c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ranking Analysis Title - Product' =
+			
+			VAR Direction = [Selected Rank Direction]
+			VAR SelRows   = [Selected Row Count]
+			VAR SelKPI    = [Selected KPI]
+			
+			VAR KPI_Title =
+			    SWITCH(
+			        SelKPI,
+			
+			        "Total Revenue",      "REVENUE GROWTH",
+			        "Trading Profit $",   "TRADING PROFIT GROWTH",
+			
+			        // Special handling
+			        "Trading Margin %", IF(Direction = "Top", "MARGIN IMPROVEMENT", "MARGIN DECLINE" ),
+			        "Units Sold",         "UNIT GROWTH",
+			        "Transactions",       "TRANSACTION GROWTH",
+			        "Average Selling Price", IF(Direction = "Top","HIGHEST SELLING PRICE", "LOWEST SELLING PRICE"),
+			        "Average Cost", IF( Direction = "Top","HIGHEST COST", "LOWEST COST"),
+			        UPPER(SelKPI)
+			    )
+			
+			RETURN
+			UPPER(Direction) & " " & SelRows &" - PRODUCTS BY " & KPI_Title
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 0d561270-0d7a-467a-a53a-e75bbbd448cd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Performance Title - Product' =
+			
+			VAR Direction = UPPER([Selected Rank Direction])
+			VAR Perf_Rows      = [Selected Row Count]
+			
+			RETURN
+			Direction & " " & Perf_Rows & " - PRODUCT DETAILS"
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 6336f16f-3488-49ab-8db2-50c6d08fe2fb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Internal ranking metric: use pp variance for Trading Margin and % growth for other KPIs.
+	measure 'Growth Ranking Sort Value' =
+			
+			IF(
+			    [Selected KPI] = "Trading Margin %",
+			    [Trend Variance],
+			    [Trend Variance %]
+			)
+		isHidden
+		displayFolder: 06 Ranking & Analysis
+		lineageTag: 399477b3-7384-4f26-b27f-5314e9398b32
+
+	column Value
+		formatString: 0
+		lineageTag: b9bdd90d-b6db-4cda-a278-6d6e916ee018
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Ranking_Engine = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = 4521ee9eaa36484a895fc987a2d1937d
+

@@ -1,0 +1,169 @@
+table _Base_Measures
+	lineageTag: d844ad11-016d-447e-98ed-63793b69b6a6
+
+	measure Revenue = SUM(fact_sales[revenue])
+		displayFolder: 01 Core KPIs
+		lineageTag: bd353cda-3386-4ab5-b119-d70fb96559f3
+
+		formatStringDefinition = "\$#,0;(\$#,0);\$#,0"
+
+	measure 'Trading Profit' = SUM(fact_sales[profit])
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 01 Core KPIs
+		lineageTag: 0e300ec0-1d5f-49bd-8dad-76e1441b05e5
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Units Sold' = SUM(fact_sales[units])
+		formatString: #,0
+		displayFolder: 01 Core KPIs
+		lineageTag: e2175386-58d4-4b69-b3c6-30667769a79a
+
+	measure 'Inventory Cost' =
+			
+			SUM(fact_inventory_snapshot[inventory_cost])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		displayFolder: 01 Core KPIs
+		lineageTag: 3e22d23e-3f0b-42ba-bfcd-40301c84ec28
+
+	measure 'Trading Margin %' = DIVIDE([Trading Profit],[Revenue])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 01 Core KPIs
+		lineageTag: b3aa57aa-ca83-401f-af37-92fa1039799f
+
+	measure Pro_Ana =
+			"Top Products |
+			Bottom Products |
+			Revenue by Category |
+			Profit by Category |
+			Units by Category"
+		displayFolder: 01 Core KPIs
+		lineageTag: e1838d52-611a-4a62-b40a-9915761ddbdb
+
+	measure Store_Per =
+			"Revenue by Store |
+			Profit by Store |
+			Revenue by City"
+		displayFolder: 01 Core KPIs
+		lineageTag: 631998ab-fda5-4cb5-9c59-fc65b48e6fc5
+
+	measure Invent =
+			" Inventory Value |
+			Inventory Cost |
+			Stock on Hand |
+			Inventory by Category"
+		displayFolder: 01 Core KPIs
+		lineageTag: 38208523-baaa-4768-a007-eb691a77d522
+
+	measure 'Total Cost' = SUM(fact_sales[cost])
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 01 Core KPIs
+		lineageTag: 09f47228-0efe-4f0f-8719-d8ca545faaaf
+
+	measure 'Revenue - August 2023' =
+			
+			CALCULATE (
+			    [Revenue],
+			    DATESBETWEEN (
+			        dim_date[full_date],
+			        DATE ( 2023, 8, 1 ),
+			        DATE ( 2023, 8, 31 )
+			    )
+			)
+		displayFolder: 01 Core KPIs
+		lineageTag: c8f03990-04ee-4a31-a862-94f0c34e103f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue - September 2023' =
+			
+			CALCULATE (
+			    [Revenue],
+			    DATESBETWEEN (
+			        dim_date[full_date],
+			        DATE ( 2023, 9, 1 ),
+			        DATE ( 2023, 9, 30 )
+			    )
+			)
+		displayFolder: 01 Core KPIs
+		lineageTag: 0c41bbe5-a788-47a4-bf08-b611327993ab
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Latest Month Revenue' =
+			
+			VAR LatestDate =
+			    [Latest Transaction Date]
+			RETURN
+			CALCULATE (
+			    [Revenue],
+			    DATESBETWEEN (
+			        dim_date[full_date],
+			        DATE ( YEAR ( LatestDate ), MONTH ( LatestDate ), 1 ),
+			        EOMONTH ( LatestDate, 0 )
+			    )
+			)
+		displayFolder: 01 Core KPIs
+		lineageTag: 5a321c0e-5632-4dc2-9ddb-6a478741c054
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Transactions = DISTINCTCOUNT(fact_sales[sale_id])
+		displayFolder: 01 Core KPIs
+		lineageTag: c414ab0d-e012-4875-bae6-6e1f41c42ad8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Selling Price' =
+			
+			DIVIDE(
+			    [Revenue],
+			    [Units Sold]
+			)
+		displayFolder: 01 Core KPIs
+		lineageTag: d7d467f7-182d-4462-adf8-d3db2140ceee
+
+		formatStringDefinition = "\$#,#.00;(\$#,#.00);\$#,#.00"
+
+	measure 'Average Cost' =
+			
+			DIVIDE(
+			    [Total Cost],
+			    [Units Sold]
+			)
+		displayFolder: 01 Core KPIs
+		lineageTag: c7c2322e-7b30-45b1-8bd1-3a1cc190700c
+
+		formatStringDefinition = "\$#,#.00;(\$#,#.00);\$#,#.00"
+
+	measure 'Stock On Hand' =
+			
+			SUM(fact_inventory_snapshot[stock_on_hand])
+		displayFolder: 01 Core KPIs
+		lineageTag: fc4f4042-ee5b-4dfd-a217-3685840ce9f4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Inventory Value' =
+			
+			SUM(fact_inventory_snapshot[inventory_value])
+		displayFolder: 01 Core KPIs
+		lineageTag: d805367a-f70d-4623-a4cb-75c7e29cd893
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Value
+		formatString: 0
+		lineageTag: 5a35a0a4-7780-4922-a960-3cef8174ee54
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Base_Measures = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = 55b3ee011ade4f5392a197b10fd9dfba
+

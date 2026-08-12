@@ -1,0 +1,84 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "2ce44092a1c41b340098",
+  "position": {
+    "x": 103.91752577319588,
+    "y": 684.12371134020623,
+    "z": 2000,
+    "height": 29.690721649484537,
+    "width": 547.42268041237116,
+    "tabOrder": 44000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "ⓘ ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "DIN",
+                      "fontSize": "8pt",
+                      "color": "#666666"
+                    }
+                  },
+                  {
+                    "value": "Net Volume Change = ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "DIN Light",
+                      "fontSize": "8pt"
+                    }
+                  },
+                  {
+                    "value": "Base Volume Change + (Price Change × Elasticity) | ",
+                    "textStyle": {
+                      "fontFamily": "DIN Light",
+                      "fontSize": "8pt"
+                    }
+                  },
+                  {
+                    "value": "Margin Impact (pp) = ",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "DIN Light",
+                      "fontSize": "8pt"
+                    }
+                  },
+                  {
+                    "value": "Scenario Margin % − Current Margin %",
+                    "textStyle": {
+                      "fontFamily": "DIN Light",
+                      "fontSize": "8pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

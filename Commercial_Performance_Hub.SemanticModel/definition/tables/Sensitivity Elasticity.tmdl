@@ -1,0 +1,40 @@
+table 'Sensitivity Elasticity'
+	lineageTag: 9a890b40-836a-4410-b5e3-94c2df35b4bf
+
+	column Elasticity
+		lineageTag: d9cb302d-c496-4f8a-866d-d07213d5a7b8
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Elasticity]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Elasticity Label'
+		lineageTag: 0bb9452f-95b4-4450-b340-9d603ac2ff38
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Elasticity Label]
+		sortByColumn: Elasticity
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Sensitivity Elasticity' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Elasticity", DOUBLE,
+				    "Elasticity Label", STRING,
+				    {
+				        {-2.0, "-2.0 (Very High)"},
+				        {-1.0, "-1.0 (High)"},
+				        {-0.5, "-0.5 (Moderate)"},
+				        { 0.0, "0.0 (No Impact)"},
+				        { 0.5, "+0.5 (Inverse)"}
+				    }
+				)
+
+	annotation PBI_Id = 8de28c54b2824852ac508059a779254e
+

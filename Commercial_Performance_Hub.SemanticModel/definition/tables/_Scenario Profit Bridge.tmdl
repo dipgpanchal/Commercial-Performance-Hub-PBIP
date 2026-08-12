@@ -1,0 +1,39 @@
+table '_Scenario Profit Bridge'
+	lineageTag: 2bb25bde-7d15-4ad0-b9e9-85c7e3c02883
+
+	column Bridge
+		lineageTag: 22b9bcb6-1541-4730-a512-06defb7794b5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Bridge]
+		sortByColumn: 'Sort Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sort Order'
+		formatString: 0
+		lineageTag: caf56d77-8a48-4018-8d43-c1bd38e2336c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sort Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '_Scenario Profit Bridge' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Bridge", STRING,
+				    "Sort Order", INTEGER,
+				    {
+				        { "Current Profit", 1 },
+				        { "Price Impact", 2 },
+				        { "Volume Impact", 3 },
+				        { "Cost Impact", 4 },
+				        { "Interaction", 5 }
+				    }
+				)
+
+	annotation PBI_Id = f441bb3113d347c5a35cdd74be52f5e7
+

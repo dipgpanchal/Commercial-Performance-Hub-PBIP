@@ -1,0 +1,36 @@
+table '_Paramter Rank Direction'
+	lineageTag: bdc1f43a-5ff6-429a-9a75-a4bd43d61540
+
+	column Direction
+		lineageTag: 7d6427c1-74c9-445b-bdae-9402395d86d6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Direction]
+		sortByColumn: 'Sort Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sort Order'
+		formatString: 0
+		lineageTag: febb8082-53eb-47ca-9772-b95fa4ffc13a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sort Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition '_Paramter Rank Direction' = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Sort Order", INTEGER,
+				    "Direction", STRING,
+				    {
+				        {1, "Top"},
+				        {2, "Bottom"}
+				    }
+				)
+
+	annotation PBI_Id = 91268b8c418a44a280205d99ccdfa2ab
+

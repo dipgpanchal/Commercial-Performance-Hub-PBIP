@@ -1,0 +1,470 @@
+table _KPI_Engine
+	lineageTag: bb04fa3b-86c0-402f-8401-379f92c4eefe
+
+	measure 'Revenue Current' =
+			
+			CALCULATE(
+			    [Revenue],
+			    'Comparison'[Calculation group column] = "Current Period"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 0ece7f62-d3c9-4151-a42a-a8706668ee86
+
+		formatStringDefinition = "\$#,0;(\$#,0);\$#,0"
+
+	measure 'Revenue Variance' =
+			
+			CALCULATE(
+			    [Revenue],
+			    'Comparison'[Calculation group column] = "Variance"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 83b5feb6-5c95-4502-aa8b-2f850ec75ada
+
+		formatStringDefinition = "$#,##0;($#,##0)"
+
+	measure 'Revenue Variance %' =
+			
+			CALCULATE(
+			    [Revenue],
+			    'Comparison'[Calculation group column] = "Variance %"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: f1df7f1f-7382-4c5d-a9a4-6e97019c5bd0
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	measure 'Trading Profit Current' =
+			
+			CALCULATE(
+			    [Trading Profit],
+			    'Comparison'[Calculation group column] = "Current Period"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 6b12d7d1-e202-4b29-9037-008838ec8131
+
+		formatStringDefinition = "\$#,0;(\$#,0);\$#,0"
+
+	measure 'Trading Profit Variance' =
+			
+			CALCULATE(
+			    [Trading Profit],
+			    'Comparison'[Calculation group column] = "Variance"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: cbc490e7-3d28-43d8-ab47-1fa2262fcb24
+
+		formatStringDefinition = "$#,##0;($#,##0)"
+
+	measure 'Trading Profit Variance %' =
+			
+			CALCULATE(
+			    [Trading Profit],
+			    'Comparison'[Calculation group column] = "Variance %"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: f151d1d2-d906-49a3-bf46-576f40432789
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	measure 'Trading Margin Current' =
+			
+			CALCULATE(
+			    [Trading Margin %],
+			    'Comparison'[Calculation group column] = "Current Period"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: a21b428a-38c2-41d7-ba39-ad3074700df2
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	measure 'Trading Margin Variance' =
+			
+			(
+			    CALCULATE(
+			        [Trading Margin %],
+			        'Comparison'[Calculation group column] = "Current Period"
+			    )
+			    -
+			    CALCULATE(
+			        [Trading Margin %],
+			        'Comparison'[Calculation group column] = "Previous Period"
+			    )
+			) * 100
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 70cadaf1-b4cc-43d1-a308-1a63013bb3e1
+
+		formatStringDefinition = "0.0 pp;-0.0 pp;0.0 pp"
+
+	measure 'Trading Margin Variance %' =
+			
+			BLANK()
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 52f2c37c-573e-473c-be8d-c0e21d8c43e1
+
+		formatStringDefinition = "0.0 pp;-0.0 pp;0.0 pp"
+
+	measure 'Units Sold Current' =
+			
+			CALCULATE(
+			    [Units Sold],
+			    'Comparison'[Calculation group column] = "Current Period"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 664e4a71-3fcf-4b07-a01f-c1110f9540ee
+
+		formatStringDefinition = "#,##0"
+
+	measure 'Units Sold Variance' =
+			
+			CALCULATE(
+			    [Units Sold],
+			    'Comparison'[Calculation group column] = "Variance"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: ecc931cb-979b-4b07-a5ec-ce98448f745d
+
+		formatStringDefinition = "#,##0;(#,##0)"
+
+	measure 'Units Sold Variance %' =
+			
+			CALCULATE(
+			    [Units Sold],
+			    'Comparison'[Calculation group column] = "Variance %"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 7b4a7ee9-006d-4e4a-8209-8e55d447f60d
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	measure 'Transactions Current' =
+			
+			CALCULATE(
+			    [Transactions],
+			    'Comparison'[Calculation group column] = "Current Period"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 837941b5-ca83-4357-8141-8e2ab24401f2
+
+		formatStringDefinition = "#,##0;(#,##0)"
+
+	measure 'Transactions Variance' =
+			
+			CALCULATE(
+			    [Transactions],
+			    'Comparison'[Calculation group column] = "Variance"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 08405dd5-40a8-4f58-a3c0-b5c0dfa8d7ca
+
+		formatStringDefinition = "#,##0;(#,##0)"
+
+	measure 'Transactions Variance %' =
+			
+			CALCULATE(
+			    [Transactions],
+			    'Comparison'[Calculation group column] = "Variance %"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: d81bd9ad-b9c0-4933-8fcb-9a9408f68896
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	measure 'Revenue Direction' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Revenue Variance %] > 0, "▲",
+			    [Revenue Variance %] < 0, "▼",
+			    "▢"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 6e760dca-4ca2-42c3-b40f-c4855432032f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trading Profit Direction' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Trading Profit Variance %] > 0, "▲",
+			    [Trading Profit Variance %] < 0, "▼",
+			    "▢"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: f7feb814-aac0-43a5-8c0f-0167c3599b70
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trading Margin Direction' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Trading Margin Variance] > 0, "▲",
+			    [Trading Margin Variance] < 0, "▼",
+			    "▢"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 069e29c1-e031-4b7d-8f39-8912d666485d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Units Sold Direction' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Units Sold Variance %] > 0, "▲",
+			    [Units Sold Variance %] < 0, "▼",
+			    "▢"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 709c5b3b-f6d4-421f-8b15-0adad412fe9f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Transactions Direction' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Transactions Variance %] > 0, "▲",
+			    [Transactions Variance %] < 0, "▼",
+			    "▢"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 9a97598c-18f4-43b7-8c83-49d65f587bf8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Revenue Direction Colour' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Revenue Variance %] > 0, "#008000",   -- Green
+			    [Revenue Variance %] < 0, "#C62828",   -- Red
+			    "#FFA500"                              -- Orange
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: cd4ce625-d934-4cb7-94f8-07caa336b704
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trading Profit Direction Colour' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Trading Profit Variance %] > 0, "#008000",   -- Green
+			    [Trading Profit Variance %] < 0, "#C62828",   -- Red
+			    "#FFA500"                              -- Orange
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: f0d7113d-793c-42f9-8ae1-1b3407509674
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trading Margin Direction Colour' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Trading Margin Variance] > 0, "#008000",   -- Green
+			    [Trading Margin Variance] < 0, "#C62828",   -- Red
+			    "#FFA500"                                     -- Orange
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 00a66c78-3db6-4ad7-bf29-a3b412a6266a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Units Sold Direction Colour' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Units Sold Variance %] > 0, "#008000",   -- Green
+			    [Units Sold Variance %] < 0, "#C62828",   -- Red
+			    "#FFA500"                              -- Orange
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 159b904f-7fdb-4baf-bb7f-7891cdd9f57c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Transactions Direction Colour' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Transactions Variance %] > 0, "#008000",   -- Green
+			    [Transactions Variance %] < 0, "#C62828",   -- Red
+			    "#FFA500"                              -- Orange
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 655c3a3f-6716-4736-a4b6-333a9e0ac000
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Selling Price Current' =
+			
+			CALCULATE(
+			    [Average Selling Price],
+			    'Comparison'[Calculation group column] = "Current Period"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: e237eb1a-44c4-46da-a74a-aaa332ea8410
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Selling Price Variance' =
+			
+			CALCULATE(
+			    [Average Selling Price],
+			    'Comparison'[Calculation group column] = "Variance"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 92d1bc1e-e296-4f98-ba8a-224009b3b495
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Selling Price Variance %' =
+			
+			CALCULATE(
+			    [Average Selling Price],
+			    'Comparison'[Calculation group column] = "Variance %"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 83911e31-4f82-4765-9af4-8bb608060ead
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	measure 'Avg Selling Price Direction' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Avg Selling Price Variance %] > 0, "▲",
+			    [Avg Selling Price Variance %] < 0, "▼",
+			    "▢"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: d8016b6a-eb41-41ff-ac93-f25393e4dc9d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Selling Price Direction Color' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Avg Selling Price Variance %] > 0, "#008000",   -- Green
+			    [Avg Selling Price Variance %] < 0, "#C62828",   -- Red
+			    "#FFA500"                              -- Orange
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: ce44867d-2909-4db2-9f86-8283c4e743f9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Cost Current' =
+			
+			CALCULATE(
+			    [Average Cost],
+			    'Comparison'[Calculation group column] = "Current Period"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 05d70406-3e0d-437a-bc18-36163fad12a9
+
+		formatStringDefinition = "\$#,#.00;(\$#,#.00);\$#,#.00"
+
+	measure 'Avg Cost Variance' =
+			
+			CALCULATE(
+			    [Average Cost],
+			    'Comparison'[Calculation group column] = "Variance"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 5224c84f-00c0-469d-9444-68a1378871fd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Cost Variance %' =
+			
+			CALCULATE(
+			    [Average Cost],
+			    'Comparison'[Calculation group column] = "Variance %"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: b35723b1-5697-43f9-9257-89c8849c5e88
+
+		formatStringDefinition = "0.0%;-0.0%;0.0%"
+
+	measure 'Avg Cost Direction' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Avg Cost Variance %] > 0, "▲",
+			    [Avg Cost Variance %] < 0, "▼",
+			    "▢"
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: a9dc526d-b2c0-44d3-8c54-a330c4f95ece
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Cost Direction Color' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Avg Cost Variance %] < 0, "#008000",   -- Green
+			    [Avg Cost Variance %] > 0, "#C62828",   -- Red
+			    "#FFA500"                              -- Orange
+			)
+		isHidden
+		displayFolder: 04 KPI Comparison
+		lineageTag: 77de5587-d2bb-44b1-9d84-81ff689a7da3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Value
+		formatString: 0
+		lineageTag: cd6fb597-d194-47d9-abf9-833713a05c81
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _KPI_Engine = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = a646bc92c94a4cec9222fef5b22048f3
+

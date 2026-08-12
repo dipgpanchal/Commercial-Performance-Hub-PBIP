@@ -1,0 +1,119 @@
+table _MetricCatalog
+	lineageTag: 7873ab06-a73d-4cd0-89c9-751337d99364
+
+	column KPI
+		lineageTag: 1c59f8cd-194b-42eb-a340-70250580fc5c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [KPI]
+		sortByColumn: 'Sort Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sort Order'
+		formatString: 0
+		lineageTag: 7e4e9f84-654f-4b69-9e69-7fc66e0a634e
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sort Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Higher Is Better'
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 93263435-47ef-4a79-9386-fdf6c79e5072
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Higher Is Better]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Executive
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: aa076bad-1c88-4710-9593-926c56e73139
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Executive]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 036c6362-d539-4a8c-b9fc-d38fa961014e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Product]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 8408abc9-062a-4c4a-a1fe-77fec0f92f2e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Store]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Inventory
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c1ef8e11-fe30-493e-b8bc-3ee6996d05e7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Inventory]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Elasticity
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3b6fa0f7-cbb7-4828-830c-3fb495440aff
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Elasticity]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Format Type'
+		lineageTag: c90d88cc-9552-4aca-8775-bd402d272f44
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Format Type]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Format String'
+		lineageTag: bf2f5d64-09df-45f8-b7f0-5933b4bc473e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Format String]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _MetricCatalog = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "KPI", STRING,
+				    "Sort Order", INTEGER,
+				    "Higher Is Better", BOOLEAN,
+				    "Format Type", STRING,
+				    "Format String", STRING,
+				    "Executive", BOOLEAN,
+				    "Product", BOOLEAN,
+				    "Store", BOOLEAN,
+				    "Inventory", BOOLEAN,
+				    "Elasticity", BOOLEAN,
+				    {
+				        { "Total Revenue", 1, TRUE(), "Currency", "$#,##0;($#,##0)", TRUE(), TRUE(), TRUE(), FALSE(), FALSE() },
+				        { "Trading Profit $", 2, TRUE(), "Currency", "$#,##0;($#,##0)", TRUE(), TRUE(), TRUE(), FALSE(), FALSE() },
+				        { "Trading Margin %", 3, TRUE(), "Percentage", "0.0%;-0.0%", TRUE(), TRUE(), TRUE(), FALSE(), FALSE() },
+				        { "Units Sold", 4, TRUE(), "Whole Number", "#,##0", TRUE(), TRUE(), FALSE(), FALSE(), TRUE() },
+				        { "Transactions", 5, TRUE(), "Whole Number", "#,##0", TRUE(), TRUE(), TRUE(), FALSE(), FALSE() },
+				        { "Average Selling Price", 6, TRUE(), "Currency", "$#,##0.00;($#,##0.00)", FALSE(), TRUE(), FALSE(), FALSE(), TRUE() },
+				        { "Average Cost", 7, FALSE(), "Currency", "$#,##0.00;($#,##0.00)", FALSE(), TRUE(), FALSE(), TRUE(), FALSE() }
+				 }
+				)
+
+	annotation PBI_Id = 6b5d5d55b0364856860235999eb75dd9
+

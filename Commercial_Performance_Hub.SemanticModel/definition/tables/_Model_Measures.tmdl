@@ -1,0 +1,256 @@
+table _Model_Measures
+	lineageTag: 5f7b896b-0eda-4315-9e98-91923cc8499c
+
+	measure 'Latest Transaction Date' =
+			
+			CALCULATE (
+			    MAX ( fact_sales[sale_date] ),
+			    REMOVEFILTERS ( fact_sales )
+			)
+		formatString: Short Date
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: b25cfa08-5cb7-4551-842f-b85470081c41
+
+	measure 'Selected Calendar' =
+			
+			SELECTEDVALUE (
+			    'Reporting Calendar'[Calendar Type],
+			    "Calendar Year"
+			)
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: a3b9280a-0239-4614-a34b-24ddee456482
+
+	measure 'Selected Reporting Period' = SELECTEDVALUE('Reporting Period'[Period],"Month")
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: 61186dc6-deba-4b66-bdfa-bfd59c909470
+
+	measure 'Current Period Start Date' = ```
+			
+			VAR CalendarType = [Selected Calendar]
+			VAR PeriodType = [Selected Reporting Period]
+			
+			RETURN
+			SWITCH (
+			    CalendarType,
+			
+			    "Calendar Year",
+			        SWITCH (
+			            PeriodType,
+			            "Month",   DATE ( [Calendar Year], [Calendar Month], 1 ),
+			            "Quarter", DATE ([Calendar Year],( [Calendar Quarter] - 1 ) * 3 + 1, 1),
+			            "Year",    DATE ( [Calendar Year], 1, 1 ),
+			            BLANK()
+			        ),
+			        
+			    "Financial Year",
+			        SWITCH (
+			            PeriodType,
+			            "Month",   DATE ( [Calendar Year], [Calendar Month], 1 ),
+			            "Quarter", DATE ( [Calendar Year], ( [Calendar Quarter] - 1 ) * 3 + 1, 1 ),
+			            "Year",    DATE ( [Financial Start Year], 7, 1 ),
+			            BLANK()
+			        ),
+			
+			    BLANK()
+			)
+			```
+		formatString: General Date
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: 24779ac2-4a71-4d79-adf3-0a5c0a2dbbf1
+
+	measure 'Current Period End Date' = ```
+			
+			VAR CalendarType = [Selected Calendar]
+			VAR PeriodType = [Selected Reporting Period]
+			
+			RETURN
+			SWITCH (
+			    CalendarType,
+			
+			    "Calendar Year",
+			        SWITCH (
+			            PeriodType,
+			            "Month",   EOMONTH ( DATE ( [Calendar Year], [Calendar Month], 1 ), 0 ),
+			            "Quarter", EOMONTH ( DATE ( [Calendar Year], [Calendar Quarter] * 3, 1 ), 0 ),
+			            "Year",    DATE ( [Calendar Year], 12, 31 ),
+			            BLANK()
+			        ),
+			        
+			    "Financial Year",
+			        SWITCH (
+			            PeriodType,
+			            "Month",   EOMONTH ( DATE ( [Calendar Year], [Calendar Month], 1 ), 0 ),
+			            "Quarter", EOMONTH ( DATE ( [Calendar Year], [Calendar Quarter] * 3, 1 ), 0 ),
+			            "Year",    DATE ( [Financial End Year], 6, 30 ),
+			            BLANK()
+			        ),
+			
+			    BLANK()
+			)
+			```
+		formatString: General Date
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: 99a9c2e0-97fb-4037-8e83-4ff46b49e270
+
+	measure 'Previous Period Start Date' =
+			
+			VAR StartDate = [Current Period Start Date]
+			VAR PeriodType = [Selected Reporting Period]
+			
+			RETURN
+			SWITCH (
+			    PeriodType,
+			    "Month", EDATE ( StartDate, -1 ),
+			    "Quarter", EDATE ( StartDate, -3 ),
+			    "Year", EDATE ( StartDate, -12 )
+			)
+		formatString: General Date
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: efdf8bd5-b376-4bc6-9978-66cb47c7a88c
+
+	measure 'Previous Period End Date' =
+			
+			VAR EndDate = [Current Period End Date]
+			VAR PeriodType = [Selected Reporting Period]
+			
+			RETURN
+			SWITCH (
+			    PeriodType,
+			    "Month", EDATE ( EndDate, -1 ),
+			    "Quarter", EOMONTH ( EndDate, -3 ),
+			    "Year", EDATE ( EndDate, -12 )
+			)
+		formatString: General Date
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: 5536d6f2-c82a-4f33-93ce-b2b6f544642e
+
+	measure 'Reporting Quarter' =
+			
+			VAR ReportingMonth = [Reporting Month]
+			
+			RETURN
+			INT((ReportingMonth - 1) / 3) + 1
+		formatString: 0
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: 1f889148-f89c-4d7b-a641-68924a456908
+
+	measure 'Reporting Year' = ```
+			
+			Var LatestDate = [Latest Transaction Date]
+			
+			RETURN
+			SWITCH([Selected Calendar],
+			"Calendar Year", YEAR(LatestDate),
+			"Financial Year", 
+			IF(MONTH( LatestDate ) >=7,
+			YEAR( LatestDate ) + 1,
+			YEAR( LatestDate))
+			)
+			```
+		formatString: 0
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: 959ad04f-146c-40b1-b4bf-60f777e9e69d
+
+	measure 'Reporting Month' =
+			
+			VAR LatestDate = [Latest Transaction Date]
+			VAR CalendarMonth = MONTH(LatestDate)
+			
+			RETURN
+			SWITCH([Selected Calendar],
+			
+			    "Calendar Year", CalendarMonth,
+			    "Financial Year",
+			        IF(
+			            CalendarMonth >= 7,
+			            CalendarMonth - 6,
+			            CalendarMonth + 6
+			        )
+			)
+		formatString: 0
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: 373b3632-fa51-4120-89e8-a258edd100ed
+
+	measure 'Calendar Year' =
+			
+			YEAR ( [Latest Transaction Date] )
+		formatString: 0
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: 2aeced8e-f3c0-47ed-a3b6-ececb7b5a70f
+
+	measure 'Calendar Month' =
+			
+			MONTH ( [Latest Transaction Date] )
+		formatString: 0
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: a21f9451-d0f4-4b11-8f0c-b92437fc889c
+
+	measure 'Calendar Quarter' =
+			
+			QUARTER ( [Latest Transaction Date] )
+		formatString: 0
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: 87412f86-0c80-499b-8bf6-03c0dfa1c648
+
+	measure 'Financial Start Year' =
+			
+			IF (
+			    [Calendar Month] >= 7,
+			    [Calendar Year],
+			    [Calendar Year] - 1
+			)
+		formatString: 0
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: 556fe25a-fcff-46fd-9c05-9cabe163c90f
+
+	measure 'Financial End Year' =
+			
+			[Financial Start Year] + 1
+		formatString: 0
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: 0193d4f1-4ab0-45de-92ca-7cbebd5840d5
+
+	measure 'Reporting Context Label' =
+			
+			Var _Store = IF(ISFILTERED(dim_stores[store_name Visual]), IF(HASONEVALUE(dim_stores[store_name Visual]),SELECTEDVALUE(dim_stores[store_name Visual]),"Multiple"),"All")
+			Var _Category = IF(ISFILTERED(dim_products[product_category]), IF(HASONEVALUE(dim_products[product_category]),SELECTEDVALUE(dim_products[product_category]),"Multiple"),"All")
+			VAR _Gap = REPT(UNICHAR(160), 10)
+			
+			Return
+			"🛈          " & "Current Period: " & "Start - " & FORMAT([Current Period Start Date],"MMM YYYY") & " ~ End - " & FORMAT([Current Period End Date],"MMM YYYY")  & _Gap & "|" & _Gap &  "Previous Period: " & "Start - " & FORMAT([Previous Period Start Date],"MMM YYYY") & " ~ End - " & FORMAT([Previous Period End Date],"MMM YYYY")   & _Gap & "|" & _Gap & "Calender: " & SELECTEDVALUE('Reporting Calendar'[Calendar Type]) & _Gap & "|" & _Gap & "Period: " & [Selected Reporting Period] & _Gap & "|" & _Gap &  "Store: " & _Store & _Gap & "|" & _Gap &  "Category: " & _Category
+		isHidden
+		displayFolder: 02 Period & Calendar
+		lineageTag: 408b4409-d2af-4d2d-a9ee-239b723ce219
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Value
+		formatString: 0
+		lineageTag: 0e9ebb94-2f17-4182-a513-a02b90d7cc71
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Model_Measures = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = a7c6bbc2c0934890a99133ed612d7cba
+

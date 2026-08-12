@@ -1,0 +1,289 @@
+table _Trend_Engine
+	lineageTag: cd8282a3-c636-48c0-8f46-01122591eb07
+
+	measure 'Trend Current' =
+			
+			VAR CurrentStart = [Current Period Start Date]
+			VAR CurrentEnd = [Current Period End Date]
+			
+			RETURN
+			CALCULATE([Selected KPI Base], KEEPFILTERS(DATESBETWEEN(dim_date[full_date],CurrentStart, CurrentEnd)))
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: 4d6c6946-6389-4a86-a3db-d6a5e494930a
+
+		formatStringDefinition =
+				VAR SelectedKPI = [Selected KPI]
+				
+				RETURN
+				SWITCH(
+				    SelectedKPI,
+				    "Total Revenue", "$#,##0;($#,##0)",
+				    "Trading Profit $", "$#,##0;($#,##0)",
+				    "Trading Margin %", "0.0%;-0.0%",
+				    "Units Sold", "#,##0",
+				    "Transactions", "#,##0",
+				    "#,##0"
+				)
+
+	measure 'Trend Previous' =
+			
+			VAR PrevStart = [Previous Period Start Date]
+			VAR PrevEnd = [Previous Period End Date]
+			
+			RETURN
+			CALCULATE([Selected KPI Base], KEEPFILTERS(DATESBETWEEN(dim_date[full_date],PrevStart, PrevEnd)))
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: 53d64514-c403-4858-b3c9-3ee963e1ed87
+
+		formatStringDefinition =
+				VAR SelectedKPI =
+				    [Selected KPI]
+				
+				RETURN
+				SWITCH(
+				    SelectedKPI,
+				    "Total Revenue", "$#,##0;($#,##0)",
+				    "Trading Profit $", "$#,##0;($#,##0)",
+				    "Trading Margin %", "0.0%;-0.0%",
+				    "Units Sold", "#,##0",
+				    "Transactions", "#,##0",
+				    "#,##0"
+				)
+
+	measure 'Show Trend Period' =
+			
+			VAR CurrentStart = [Current Period Start Date]
+			VAR CurrentEnd   = [Current Period End Date]
+			
+			RETURN
+			IF(
+			    MAX(dim_date[full_date]) >= CurrentStart &&
+			    MAX(dim_date[full_date]) <= CurrentEnd,
+			    1
+			)
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: 6b762be9-6286-456e-b9d1-fb6989173243
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trend Title - Current vs Previous' =
+			
+			VAR _Gap = REPT(UNICHAR(160), 3)
+			
+			RETURN
+			UPPER([Selected KPI Title]) & " " & "ANALYSIS" & _Gap & "|" & _Gap &  [Current Period Label] & " vs " & [Previous Period Label]
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: 47682e9c-a5b0-4712-bfb3-3fbed4016e27
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trend Variance' =
+			
+			VAR RawVariance = [Trend Current] - [Trend Previous]
+			
+			RETURN
+			IF(
+			    [Selected KPI] = "Trading Margin %",
+			    RawVariance * 100,
+			    RawVariance
+			)
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: 8c3e5303-c6ce-4be5-9ccd-8ef43d7cfd60
+
+		formatStringDefinition =
+				VAR SelectedKPI = [Selected KPI]
+				
+				RETURN
+				SWITCH(
+				    SelectedKPI,
+				    "Total Revenue", "$#,##0;($#,##0)",
+				    "Trading Profit $", "$#,##0;($#,##0)",
+				    "Trading Margin %", "0.0 pp;-0.0 pp;0.0 pp",
+				    "Units Sold", "#,##0;(#,##0)",
+				    "Transactions", "#,##0;(#,##0)",
+				    "Average Selling Price", "$#,##0.00;($#,##0.00)",
+				    "Average Cost", "$#,##0.00;($#,##0.00)",
+				    "#,##0"
+				)
+
+	measure 'Trend Variance %' =
+			
+			IF(
+			    [Selected KPI] = "Trading Margin %",
+			    BLANK(),
+			    DIVIDE([Trend Current] - [Trend Previous], [Trend Previous])
+			)
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: f38800df-0d3d-4a68-9d85-694a2a85abfc
+
+		formatStringDefinition =
+				IF(
+				    [Selected KPI] = "Trading Margin %",
+				    "0.0 pp;-0.0 pp;0.0 pp",
+				    "0.0%;-0.0%;0.0%"
+				)
+
+	measure 'Show Year Trend' =
+			
+			INT([Selected Reporting Period] = "Year")
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: e6e39b26-bb77-45f5-803d-8b0334c54c9e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Show Quarter Trend' =
+			
+			INT([Selected Reporting Period] = "Quarter")
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: 37ded021-88af-4618-bc6f-34eab8afc725
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Show Month Trend' =
+			
+			INT([Selected Reporting Period] = "Month")
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: 68496542-6d49-4cd4-991e-1697c50b92b4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trend Direction' =
+			
+			SWITCH (
+			    TRUE(),
+			    [Trend Variance] > 0, 1,
+			    [Trend Variance] < 0, -1,
+			    0
+			)
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: c381257d-8ec9-4334-a528-f8ca789e0449
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trend Colour' =
+			
+			SWITCH (
+			    [Trend Direction],
+			    1, "#2E7D32",      -- Green
+			   -1, "#C62828",      -- Red
+			    "#6B6B6B"          -- Neutral
+			)
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: 02ca503f-a60c-4831-a5c2-d0575a227b09
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Trend Subtitle - Current vs Previous' =
+			
+			[Current Period Label] & " vs " & [Previous Period Label]
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: fe1cc0fb-8251-4313-82c6-feb8cfca0981
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Display variance: blank for Trading Margin %, absolute movement for other KPIs.
+	measure 'Performance Variance' =
+			
+			VAR SelKPI = [Selected KPI]
+			
+			RETURN
+			IF(
+			    SelKPI = "Trading Margin %",
+			    BLANK(),
+			    [Trend Variance]
+			)
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: 4ada85c7-7629-493e-ae90-81bf2620d512
+
+		formatStringDefinition =
+				VAR SelKPI = [Selected KPI]
+				
+				RETURN
+				SWITCH(
+				    SelKPI,
+				    "Total Revenue", "$#,##0;($#,##0)",
+				    "Trading Profit $", "$#,##0;($#,##0)",
+				    "Units Sold", "#,##0;(#,##0)",
+				    "Transactions", "#,##0;(#,##0)",
+				    "Average Selling Price", "$#,##0.00;($#,##0.00)",
+				    "Average Cost", "$#,##0.00;($#,##0.00)",
+				    "#,##0"
+				)
+
+	/// Display growth: uses pp movement for Trading Margin %, relative % for other KPIs.
+	measure 'Performance Growth' =
+			
+			VAR SelKPI = [Selected KPI]
+			
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    SelKPI = "Trading Margin %", [Trend Variance],
+			    [Trend Variance %]
+			)
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: 9b820c86-6f54-4d8f-9b93-38e327f9435d
+
+		formatStringDefinition =
+				IF(
+				    [Selected KPI] = "Trading Margin %",
+				    "0.0 pp;-0.0 pp;0.0 pp",
+				    "0.0%;-0.0%;0.0%"
+				)
+
+	/// Unified reusable change measure for ranking/detail visuals.
+	measure 'Performance Change' =
+			
+			[Performance Growth]
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: 85ebbd2e-a033-42ef-8fb8-480dc26a001b
+
+		formatStringDefinition =
+				IF(
+				    [Selected KPI] = "Trading Margin %",
+				    "0.0 pp;-0.0 pp;0.0 pp",
+				    "0.0%;-0.0%;0.0%"
+				)
+
+	/// Dynamic title for adaptive final column.
+	measure 'Performance Change Title' =
+			
+			IF(
+			    [Selected KPI] = "Trading Margin %",
+			    "Margin Change",
+			    "Growth"
+			)
+		isHidden
+		displayFolder: 05 Trend Analysis
+		lineageTag: 36bbd5f6-a254-4f83-81ae-455fa3dd2f04
+
+	column Value
+		formatString: 0
+		lineageTag: ec9d9cc7-e80e-49c1-ad5d-a3d2ab45ca25
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Trend_Engine = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = 00965c433bf4476697bd3fd7a285de2b
+

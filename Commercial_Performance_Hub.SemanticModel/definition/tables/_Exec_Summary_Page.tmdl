@@ -1,0 +1,312 @@
+table _Exec_Summary_Page
+	lineageTag: c71fb635-6c10-4a95-b8da-8733ea4061b6
+
+	measure 'Key Insight - Revenue & Profit' =
+			
+			VAR RevenueChange =
+			    [Revenue Variance %]
+			
+			VAR RevenueImpact =
+			    [Revenue Variance]
+			
+			VAR ProfitChange =
+			    [Trading Profit Variance %]
+			
+			VAR ProfitImpact =
+			    [Trading Profit Variance]
+			
+			VAR RevenueDirection =
+			    SWITCH(
+			        TRUE(),
+			        RevenueChange < 0, "fell",
+			        RevenueChange > 0, "up",
+			        "flat"
+			    )
+			
+			VAR ProfitDirection =
+			    SWITCH(
+			        TRUE(),
+			        ProfitChange < 0, "fell",
+			        ProfitChange > 0, "up",
+			        "flat"
+			    )
+			
+			VAR ProfitPressure =
+			    IF(
+			        ProfitChange < RevenueChange,
+			        "indicating stronger pressure on profitability.",
+			        "with profit moving broadly in line with revenue."
+			    )
+			
+			RETURN
+			    "Revenue "
+			        & RevenueDirection
+			        & " "
+			        & FORMAT(ABS(RevenueChange), "0.0%")
+			        & " ("
+			        & FORMAT(ABS(RevenueImpact), "$#,##0")
+			        & ") vs LY, while profit "
+			        & ProfitDirection
+			        & " "
+			        & FORMAT(ABS(ProfitChange), "0.0%")
+			        & " ("
+			        & FORMAT(ABS(ProfitImpact), "$#,##0")
+			        & "), "
+			        & ProfitPressure
+		isHidden
+		displayFolder: 10 Executive Insights
+		lineageTag: 676f85d7-3a01-453a-9bd3-f50182bfbe70
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Key Insight - Margin Performance' =
+			
+			VAR CurrentMargin =
+			    CALCULATE(
+			        [Trading Margin %],
+			        'Comparison'[Calculation group column] = "Current Period"
+			    )
+			
+			VAR MarginChange =
+			    [Trading Margin Variance]
+			
+			VAR MarginDirection =
+			    SWITCH(
+			        TRUE(),
+			        MarginChange < 0, "fell",
+			        MarginChange > 0, "improved",
+			        "remained stable"
+			    )
+			
+			VAR MarginInsight =
+			    SWITCH(
+			        TRUE(),
+			        MarginChange < 0,
+			            "indicating pressure on profitability.",
+			        MarginChange > 0,
+			            "indicating improved profitability.",
+			        "indicating stable profitability."
+			    )
+			
+			RETURN
+			    "Trading margin "
+			        & MarginDirection
+			        & " "
+			        & FORMAT(ABS(MarginChange), "0.0")
+			        & " pp to "
+			        & FORMAT(CurrentMargin, "0.0%")
+			        & " vs LY, "
+			        & MarginInsight
+		isHidden
+		displayFolder: 10 Executive Insights
+		lineageTag: db0a0592-54bf-4b82-81f8-03683dd65234
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Key Insight - Volume & Transactions' =
+			
+			VAR UnitsChange =
+			    [Units Sold Variance %]
+			
+			VAR UnitsImpact =
+			    [Units Sold Variance]
+			
+			VAR TransactionsChange =
+			    [Transactions Variance %]
+			
+			VAR TransactionsImpact =
+			    [Transactions Variance]
+			
+			VAR UnitsDirection =
+			    SWITCH(
+			        TRUE(),
+			        UnitsChange < 0, "fell",
+			        UnitsChange > 0, "increased",
+			        "remained flat"
+			    )
+			
+			VAR TransactionsDirection =
+			    SWITCH(
+			        TRUE(),
+			        TransactionsChange < 0, "fell",
+			        TransactionsChange > 0, "increased",
+			        "remained flat"
+			    )
+			
+			VAR ActivityInsight =
+			    SWITCH(
+			        TRUE(),
+			        UnitsChange < 0 && TransactionsChange < 0,
+			            "indicating softer customer activity.",
+			        UnitsChange > 0 && TransactionsChange > 0,
+			            "indicating stronger customer activity.",
+			        UnitsChange < 0 && TransactionsChange > 0,
+			            "indicating lower units per transaction.",
+			        UnitsChange > 0 && TransactionsChange < 0,
+			            "indicating higher units per transaction.",
+			        "indicating broadly stable customer activity."
+			    )
+			
+			RETURN
+			    "Units "
+			        & UnitsDirection
+			        & " "
+			        & FORMAT(ABS(UnitsChange), "0.0%")
+			        & " ("
+			        & FORMAT(ABS(UnitsImpact), "#,##0")
+			        & ") and transactions "
+			        & TransactionsDirection
+			        & " "
+			        & FORMAT(ABS(TransactionsChange), "0.0%")
+			        & " ("
+			        & FORMAT(ABS(TransactionsImpact), "#,##0")
+			        & ") vs LY, "
+			        & ActivityInsight
+		isHidden
+		displayFolder: 10 Executive Insights
+		lineageTag: df0ae9ff-4db8-4a3a-8cbc-15daba3028dd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Key Insight - Category Focus' =
+			
+			VAR CategoryTable =
+			    ADDCOLUMNS(
+			        ALLSELECTED(
+			            dim_products[product_category]
+			        ),
+			        "@MarginChange",
+			            CALCULATE(
+			                [Trading Margin Variance]
+			            )
+			    )
+			
+			VAR WorstCategory =
+			    TOPN(
+			        1,
+			        CategoryTable,
+			        [@MarginChange],
+			        ASC
+			    )
+			
+			VAR CategoryName =
+			    MAXX(
+			        WorstCategory,
+			        dim_products[product_category]
+			    )
+			
+			VAR CategoryChange =
+			    MAXX(
+			        WorstCategory,
+			        [@MarginChange]
+			    )
+			
+			VAR CategoryDirection =
+			    SWITCH(
+			        TRUE(),
+			        CategoryChange < 0, "declined",
+			        CategoryChange > 0, "improved",
+			        "remained stable"
+			    )
+			
+			VAR CategoryInsight =
+			    SWITCH(
+			        TRUE(),
+			        CategoryChange < 0,
+			            "making it the key category focus.",
+			        CategoryChange > 0,
+			            "making it the strongest category improvement.",
+			        "with no material change vs LY."
+			    )
+			
+			RETURN
+			    CategoryName
+			        & " margin "
+			        & CategoryDirection
+			        & " "
+			        & FORMAT(ABS(CategoryChange), "0.0")
+			        & " pp vs LY, "
+			        & CategoryInsight
+		isHidden
+		displayFolder: 10 Executive Insights
+		lineageTag: 00552421-2f9b-4489-9378-3487b73a6f19
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Key Insight - Store Focus' =
+			
+			VAR StoreTable =
+			    ADDCOLUMNS(
+			        ALLSELECTED(
+			            dim_stores[store_name Visual]
+			        ),
+			        "@MarginChange",
+			            CALCULATE(
+			                [Trading Margin Variance]
+			            )
+			    )
+			
+			VAR WorstStore =
+			    TOPN(
+			        1,
+			        StoreTable,
+			        [@MarginChange],
+			        ASC
+			    )
+			
+			VAR StoreName =
+			    MAXX(
+			        WorstStore,
+			        dim_stores[store_name Visual]
+			    )
+			
+			VAR StoreChange =
+			    MAXX(
+			        WorstStore,
+			        [@MarginChange]
+			    )
+			
+			VAR StoreInsight =
+			    SWITCH(
+			        TRUE(),
+			        StoreChange < 0,
+			            "making it the key store focus.",
+			        StoreChange > 0,
+			            "making it the strongest store improvement.",
+			        "with no material change vs LY."
+			    )
+			
+			RETURN
+			    StoreName
+			        & " store margin "
+			        & SWITCH(
+			            TRUE(),
+			            StoreChange < 0, "declined",
+			            StoreChange > 0, "improved",
+			            "remained stable"
+			        )
+			        & " "
+			        & FORMAT(ABS(StoreChange), "0.0")
+			        & " pp vs LY, "
+			        & StoreInsight
+		isHidden
+		displayFolder: 10 Executive Insights
+		lineageTag: dc50e9e4-0fd0-47e6-b972-80cb4d9995e3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Value
+		formatString: 0
+		lineageTag: 9804ca25-8073-4ef1-8b67-8773bf9a0fcd
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Exec_Summary_Page = calculated
+		mode: import
+		source = {BLANK()}
+
+	annotation PBI_Id = 0d70d18af7e040eb9ae38e7fed5d277b
+

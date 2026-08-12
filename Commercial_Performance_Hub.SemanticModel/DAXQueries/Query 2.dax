@@ -1,0 +1,7 @@
+// EVALUATE
+// FILTER(
+//     INFO.VIEW.MEASURES(),
+//     [Table] = "_Scenario_Engine"
+// )
+
+EVALUATE INFO.VIEW.MEASURES()

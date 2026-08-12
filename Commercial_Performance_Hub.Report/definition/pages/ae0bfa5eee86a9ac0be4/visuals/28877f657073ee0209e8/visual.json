@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "28877f657073ee0209e8",
+  "position": {
+    "x": 760.93314911255175,
+    "y": 210.71102136252523,
+    "z": 53000,
+    "height": 143.50515463917526,
+    "width": 512.16494845360819,
+    "tabOrder": 4000
+  },
+  "visualGroup": {
+    "displayName": "Trend - Quarter",
+    "groupMode": "ScaleMode"
+  }
+}

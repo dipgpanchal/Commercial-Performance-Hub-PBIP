@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "0e7c8aab4159671d3604",
+  "position": {
+    "x": 1097.9381443298969,
+    "y": 692.78350515463922,
+    "z": 8000,
+    "height": 26.597938144329895,
+    "width": 181.85567010309279,
+    "tabOrder": 10000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "| Designed & Developed by Dip Panchal",
+                    "textStyle": {
+                      "fontFamily": "DIN",
+                      "fontSize": "8pt",
+                      "color": "#808080"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

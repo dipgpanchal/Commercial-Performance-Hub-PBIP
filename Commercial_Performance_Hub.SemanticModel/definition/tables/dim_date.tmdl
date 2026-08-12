@@ -1,0 +1,308 @@
+table dim_date
+	lineageTag: 3018b096-bcb4-4bf0-ae6a-f62f606c9890
+	dataCategory: Time
+
+	column date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2f56d8f0-03e8-4498-b050-ef00e9a5bae1
+		summarizeBy: none
+		sourceColumn: date_key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column full_date
+		dataType: dateTime
+		isKey
+		formatString: Short Date
+		lineageTag: 62ec5d8d-c35e-47f3-b46e-7febbe1f79de
+		summarizeBy: none
+		sourceColumn: full_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: f9fa07ee-e547-4315-9259-73c138a0b3ee
+		summarizeBy: sum
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter_num
+		dataType: int64
+		formatString: 0
+		lineageTag: 72ed603d-7a9e-4b54-9062-e522cb115953
+		summarizeBy: sum
+		sourceColumn: quarter_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter_name
+		dataType: string
+		lineageTag: 3dc1fa18-5575-4dfe-af96-16024466856c
+		summarizeBy: none
+		sourceColumn: quarter_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_num
+		dataType: int64
+		formatString: 0
+		lineageTag: bc89a91a-3927-4eaf-b1c3-529cff15089b
+		summarizeBy: sum
+		sourceColumn: month_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_name
+		dataType: string
+		lineageTag: 31c0bc51-6396-4e15-bccb-c64679729c9d
+		summarizeBy: none
+		sourceColumn: month_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column yr_month
+		dataType: string
+		lineageTag: 225c47fd-0701-46b8-b384-a179af2deaab
+		summarizeBy: none
+		sourceColumn: yr_month
+		sortByColumn: month_year_sort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_year_sort
+		dataType: int64
+		formatString: 0
+		lineageTag: 928944b7-5ddd-443d-b67d-49f105b2bbb0
+		summarizeBy: sum
+		sourceColumn: month_year_sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_num
+		dataType: int64
+		formatString: 0
+		lineageTag: adbddbd9-e4ce-4b94-a294-ce6df989965a
+		summarizeBy: sum
+		sourceColumn: week_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_num
+		dataType: int64
+		formatString: 0
+		lineageTag: de3c3135-771d-4b58-bb46-065759443e76
+		summarizeBy: sum
+		sourceColumn: day_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column day_name
+		dataType: string
+		lineageTag: fe8b9466-8ade-4700-a092-c65ca1b47ad2
+		summarizeBy: none
+		sourceColumn: day_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_month_start
+		dataType: string
+		lineageTag: 0d4570aa-8245-4d82-87fa-c2abb8749d3e
+		summarizeBy: none
+		sourceColumn: is_month_start
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_month_end
+		dataType: string
+		lineageTag: 68aa9d41-96e1-489b-b4a8-231ef214efca
+		summarizeBy: none
+		sourceColumn: is_month_end
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_start_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: d34864f5-0a55-4aa3-b356-c444e26533f1
+		summarizeBy: none
+		sourceColumn: week_start_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column week_end_date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 34ce20f1-ce48-40b5-8edc-b9997a7e85b0
+		summarizeBy: none
+		sourceColumn: week_end_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column week_start_key
+		dataType: int64
+		formatString: 0
+		lineageTag: ad9888f8-2593-4ee4-b76c-d188742c7574
+		summarizeBy: sum
+		sourceColumn: week_start_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column week_end_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f2dbd69-3cae-4f63-aad0-df35dca0b3d7
+		summarizeBy: sum
+		sourceColumn: week_end_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_week_end
+		dataType: string
+		lineageTag: 21eb51f8-e9cb-4ace-a06f-c44c82b30f55
+		summarizeBy: none
+		sourceColumn: is_week_end
+
+		annotation SummarizationSetBy = Automatic
+
+	column iso_year_week
+		dataType: string
+		lineageTag: 5104818d-4568-4085-8333-97ff70f5c1d2
+		summarizeBy: none
+		sourceColumn: iso_year_week
+
+		annotation SummarizationSetBy = Automatic
+
+	column iso_year_week_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 3111c63e-0ddf-4a04-83bf-597483809bd2
+		summarizeBy: sum
+		sourceColumn: iso_year_week_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_year_num
+		dataType: int64
+		formatString: 0
+		lineageTag: f273b362-a7d7-443c-a60c-b618a280de9a
+		summarizeBy: sum
+		sourceColumn: fiscal_year_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_year
+		dataType: string
+		lineageTag: a54b3358-7f35-4716-b356-e9d60ead047f
+		summarizeBy: none
+		sourceColumn: fiscal_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_quarter_num
+		dataType: int64
+		formatString: 0
+		lineageTag: 028effcf-c75d-4379-818c-42654dfd66cf
+		summarizeBy: sum
+		sourceColumn: fiscal_quarter_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_quarter
+		dataType: string
+		lineageTag: 7c49b41b-4339-4925-8eff-587acff1a8a8
+		summarizeBy: none
+		sourceColumn: fiscal_quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_month_num
+		dataType: int64
+		formatString: 0
+		lineageTag: 2c523dfd-7fb9-4a3f-a6b3-5a93d6299f96
+		summarizeBy: sum
+		sourceColumn: fiscal_month_num
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_month_name
+		dataType: string
+		lineageTag: ad357ffe-d0df-4300-9648-40aec6878d7a
+		summarizeBy: none
+		sourceColumn: fiscal_month_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_year_month
+		dataType: string
+		lineageTag: 112b80a5-a4fd-42e6-853a-37a15546084a
+		summarizeBy: none
+		sourceColumn: fiscal_year_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_month_sort
+		dataType: int64
+		formatString: 0
+		lineageTag: 7090b58c-faa6-4aa3-b8d5-d403355e244d
+		summarizeBy: sum
+		sourceColumn: fiscal_month_sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column cl_month_year
+		dataType: string
+		lineageTag: 7d240b25-d322-461c-bc4c-f2e889d6926c
+		summarizeBy: none
+		sourceColumn: cl_month_year
+		sortByColumn: month_year_sort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_short_name
+		dataType: string
+		lineageTag: 567862d4-1dbd-402d-bb3d-1802b9e6182c
+		summarizeBy: none
+		sourceColumn: month_short_name
+		sortByColumn: month_num
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_date = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("localhost:3306", "practise", [ReturnSingleDatabase=true]),
+				    practise_dim_date = Source{[Schema="practise",Item="dim_date"]}[Data],
+				    #"Added Custom" = Table.AddColumn(practise_dim_date, "cl_month_year", each Text.Start([month_name], 3) & " " & Text.End(Text.From([year]), 2)),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Added Custom", "month_name", "month_short_name"),
+				    #"Split Column by Position" = Table.SplitColumn(#"Duplicated Column", "month_short_name", Splitter.SplitTextByPositions({0, 3}, false), {"month_short_name.1", "month_short_name.2"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Split Column by Position",{{"month_short_name.1", type text}, {"month_short_name.2", type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Changed Type", each true),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"month_short_name.2"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"month_short_name.1", "month_short_name"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
