@@ -459,3 +459,16 @@ Copilot analysis does not replace Power BI Desktop validation.
 8. Git diff is the change boundary
 
 The Git diff should be reviewed before committing significant changes.
+
+## PBIP Save-Generated Metadata
+
+Power BI may generate or modify metadata files when a PBIP project is opened or saved, even when no intentional business or semantic-model change was made.
+
+Before committing a PBIP change:
+
+1. Review every modified file.
+2. Identify whether the change is intentional.
+3. Treat known save-generated metadata separately from the requested feature.
+4. Do not automatically include unrelated metadata changes in the feature commit.
+5. If a recurring save-generated change is observed, document it as known project behaviour.
+6. Never restore or discard such changes without first reviewing the diff.
