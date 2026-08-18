@@ -148,10 +148,17 @@ The baseline was pushed to the GitHub repository.
 
 ---
 
+## 18/08/2026
+
+### Changed
+
+- Updated the Scenario Planner title icon from 📅 to 📐.
+
+---
+
 # Future Releases
 
 Future changes will be recorded using the following structure:
-
 
 ## [Version] — YYYY-MM-DD
 
