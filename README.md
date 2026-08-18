@@ -221,9 +221,28 @@ Commercial-Performance-Hub-PBIP/
 ├── docs/
 │   └── Architecture.md
 │
+├── Change Records/
+│   └── YYYY-MM-DD-<change>.md
+│
+├── Templates/
+│   ├── CHANGE_TEMPLATE.md
+│   ├── COPILOT_PROMPTS.md
+│   ├── NEW_PROJECT_CHECKLIST.md
+│   └── QA_TEMPLATE.md
+│
 ├── README.md
 ├── CHANGELOG.md
+├── QA.md
 └── .gitignore
+
+### Documentation and Workflow
+
+- `README.md` — Project overview, capabilities and development philosophy
+- `docs/` — Project-specific architecture documentation
+- `Change Records/` — Dated audit records for individual changes
+- `Templates/` — Reusable templates and prompts for future Power BI projects
+- `QA.md` — Quality assurance process and definition of done
+- `CHANGELOG.md` — High-level project change history
 
 
 ## Project Status
