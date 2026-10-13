@@ -28,7 +28,7 @@
                     }
                   },
                   {
-                    "value": "Net Volume Change = ",
+                    "value": " Volume Change % = ",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontFamily": "DIN Light",
@@ -36,7 +36,7 @@
                     }
                   },
                   {
-                    "value": "Base Volume Change + (Price Change × Elasticity) | ",
+                    "value": "Selected Volume Change % | ",
                     "textStyle": {
                       "fontFamily": "DIN Light",
                       "fontSize": "8pt"

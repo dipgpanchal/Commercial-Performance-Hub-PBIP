@@ -23,10 +23,10 @@
                       "Entity": "_Scenario&PS_Engine"
                     }
                   },
-                  "Property": "Scenario Revenue"
+                  "Property": "Outcome Scenario Revenue"
                 }
               },
-              "queryRef": "_Scenario_Engine.Scenario Revenue",
+              "queryRef": "_Scenario&PS_Engine.Outcome Scenario Revenue",
               "nativeQueryRef": "Scenario Revenue"
             }
           ]
@@ -42,7 +42,7 @@
                     "Entity": "_Scenario&PS_Engine"
                   }
                 },
-                "Property": "Scenario Revenue"
+                "Property": "Outcome Scenario Revenue"
               }
             },
             "direction": "Descending"
@@ -189,23 +189,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "9983634cae646c0cd7d6",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Scenario&PS_Engine"
-              }
-            },
-            "Property": "Scenario Revenue"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

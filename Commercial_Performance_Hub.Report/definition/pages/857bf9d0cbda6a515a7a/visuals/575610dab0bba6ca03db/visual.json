@@ -128,10 +128,10 @@
                       "Entity": "_Scenario&PS_Engine"
                     }
                   },
-                  "Property": "Scenario Margin %"
+                  "Property": "Outcome Scenario Margin %"
                 }
               },
-              "queryRef": "_Scenario&PS_Engine.Scenario Margin %",
+              "queryRef": "_Scenario&PS_Engine.Outcome Scenario Margin %",
               "nativeQueryRef": "Scenario Margin %"
             },
             {
@@ -624,7 +624,7 @@
             }
           },
           "selector": {
-            "metadata": "_Scenario&PS_Engine.Scenario Margin %"
+            "metadata": "_Scenario&PS_Engine.Outcome Scenario Margin %"
           }
         },
         {

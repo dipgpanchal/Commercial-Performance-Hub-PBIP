@@ -156,6 +156,25 @@ The baseline was pushed to the GitHub repository.
 
 ---
 
+## 13/10/2026
+
+### Fixed
+
+- Scenario Planner: Volume Change % is now applied directly and is independent of price elasticity.
+- Price Sensitivity: scenario cards and the Product Opportunities table now respond to the selected Elasticity.
+  Demand Change % = Price Change % × Selected Elasticity.
+
+### Changed
+
+- Price Sensitivity and Scenario Planner footer text updated to match the calculation logic.
+- Added the hidden measure `Outcome Scenario Margin %` (275 measures).
+
+### QA
+
+- Tested in Power BI Desktop. See `Change Records/2026-10-13-Scenario-Volume-and-Price-Sensitivity-Elasticity.md`.
+
+---
+
 # Future Releases
 
 Future changes will be recorded using the following structure:

@@ -89,6 +89,8 @@ Provides what-if analysis for commercial decisions using:
 - Scenario Impact Details
 - Top / Bottom Profit Impact
 
+Price Change %, Cost Change % and Volume Change % are independent assumptions. Scenario Units use the selected Volume Change % directly; elasticity is not applied on this page.
+
 ### Price Sensitivity
 
 Provides price-demand sensitivity analysis using user-defined price and elasticity assumptions.
@@ -106,6 +108,8 @@ Key capabilities include:
 - Product Opportunities
 - Scenario profit impact
 - Current vs scenario margin analysis
+
+Demand Change % = Price Change % × Selected Elasticity.
 
 Elasticity assumptions currently include:
 

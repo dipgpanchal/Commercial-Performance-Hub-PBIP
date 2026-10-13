@@ -23,10 +23,10 @@
                       "Entity": "_Scenario&PS_Engine"
                     }
                   },
-                  "Property": "Scenario Profit"
+                  "Property": "Outcome Scenario Profit"
                 }
               },
-              "queryRef": "_Scenario_Engine.Scenario Profit",
+              "queryRef": "_Scenario&PS_Engine.Outcome Scenario Profit",
               "nativeQueryRef": "Scenario Profit"
             }
           ]
@@ -42,7 +42,7 @@
                     "Entity": "_Scenario&PS_Engine"
                   }
                 },
-                "Property": "Scenario Profit"
+                "Property": "Outcome Scenario Profit"
               }
             },
             "direction": "Descending"
