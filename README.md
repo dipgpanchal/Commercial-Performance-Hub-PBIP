@@ -13,7 +13,9 @@ The solution is designed to move beyond descriptive reporting by helping users i
 1. Open the [Power BI Project](./Commercial_Performance_Hub.pbip) in Power BI Desktop.
 2. Browse the [report definitions](./Commercial_Performance_Hub.Report/definition) and [semantic-model definitions](./Commercial_Performance_Hub.SemanticModel/definition).
 3. Read [Architecture and setup](./docs/Architecture.md), [QA evidence and process](./QA.md), [the changelog](./CHANGELOG.md), and [dated change records](./Change%20Records/).
-4. The public repository also contains a [QA PBIX artifact](./Commercial_Performance_Hub_QA_Signed.pbix.pbix).
+4. The public repository also contains an older [QA PBIX snapshot](./Commercial_Performance_Hub_QA_Signed.pbix.pbix) (`Commercial_Performance_Hub_QA_Signed.pbix.pbix`).
+
+**PBIP and PBIX status:** The PBIP report and semantic-model source is the authoritative, current project. The QA PBIX is an older QA snapshot. It may not include the latest approved report changes, and it should not be treated as the current recruiter-facing deliverable. A current, validated recruiter-facing PBIX has not yet been published.
 
 The PBIP contains six visible report pages and three hidden tooltip pages. The six visible pages are listed below.
 
