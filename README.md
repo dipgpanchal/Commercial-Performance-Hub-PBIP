@@ -224,7 +224,7 @@ The CC0 link is a reference supplied by the project owner. It has **not** been v
 
 ### Screenshot status
 
-No dashboard screenshots are embedded in this README. Although the narrative in the separately maintained Word case study V9 (not included in this repository patch) now matches public `main`, its screenshots have not yet been verified against the current public-main report. Add screenshots only after checking them against that report.
+A six-page PDF preview of the report is published (see [Interactive Report and PDF Preview](#interactive-report-and-pdf-preview)). No separate standalone dashboard screenshots are embedded in this README or stored in the repository. Although the narrative in the separately maintained Word case study V9 (not included in this repository patch) now matches public `main`, its screenshots have not yet been verified against the current public-main report. Add screenshots only after checking them against that report.
 
 ---
 
