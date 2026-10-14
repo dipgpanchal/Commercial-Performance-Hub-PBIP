@@ -19,6 +19,29 @@ The PBIP contains six visible report pages and three hidden tooltip pages. The s
 
 ---
 
+## Interactive Report and PDF Preview
+
+[Open or download the six-page PDF preview](./docs/assets/Commercial_Performance_Hub.pdf) (about 3.5 MB).
+
+The PDF is a **static export** of the report from Power BI Desktop, taken with the Calendar Year / Year period, all stores and all categories selected. It does not include slicers, drill-through, tooltips or refresh. The interactive experience is the Power BI project itself: open [Commercial_Performance_Hub.pbip](./Commercial_Performance_Hub.pbip) in Power BI Desktop and refresh it as described in [Data and setup](#data-and-setup).
+
+| Page | Report page | What it shows |
+|---|---|---|
+| 1 | Executive Summary | Headline revenue, profit, margin, units and transactions with prior-period comparison, category and store rankings, and key business insights. |
+| 2 | Product Performance | Product KPIs, 24-month trend, top-10 product growth and details, and Pareto analysis. |
+| 3 | Store Performance | Store revenue trend, top and bottom store changes, Pareto analysis and store details. |
+| 4 | Inventory Health | Stock position, weeks cover, health classification and recommended actions by product and store. |
+| 5 | Scenario Planner | Price Change %, Cost Change %, Volume Change % and Elasticity inputs driving scenario revenue, profit, margin and units against the current period. |
+| 6 | Price Sensitivity | Elasticity-based demand, revenue and profit outcomes at a selected price change, with a sensitivity curve and product opportunities. |
+
+Notes on the preview:
+
+- **Scenario Planner and Price Sensitivity (pages 5 and 6)** are assumption-driven estimates based on the selected price, cost, volume and elasticity inputs. They are illustrative analysis, not validated forecasts.
+- **The “Sample - TOP 10 - BRAND PERFORMANCE” panel on page 2 is intentionally blank.** The dataset does not contain brand-level data, so the panel is a placeholder for a possible future visual.
+- The PDF is a visual preview only. It is not evidence of automated testing; see [QA](./QA.md) for the recorded manual QA.
+
+---
+
 ## Business Areas
 
 The solution currently contains the following analytical areas:
@@ -190,7 +213,14 @@ Both analytical views are imported, but the public-main report bindings and DAX 
 
 ### Dataset source and licence
 
-The separately maintained Word case study describes the dataset as “Mexico Toy Sales” / “Toy Sales” from Kaggle, but the exact listing URL, creator attribution, real/synthetic status, licence, and redistribution terms could not be confirmed from the repository or case-study text. Confirm these before making provenance or reuse claims. The repository includes a PBIX artifact that may contain imported data; verify its contents and reuse permissions before redistributing it.
+The separately maintained Word case study describes the dataset as “Mexico Toy Sales” / “Toy Sales” from Kaggle, but the exact listing URL, creator attribution, real/synthetic status, licence, and redistribution terms could not be confirmed from the repository or case-study text. Confirm these before making provenance or reuse claims.
+
+Source links supplied by the project owner, listed for review:
+
+- Dataset: [Toy Sales on Kaggle](https://www.kaggle.com/datasets/mysarahmadbhat/toy-sales)
+- Licence reference: [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
+
+The CC0 link is a reference supplied by the project owner. It has **not** been verified against the Kaggle listing's licence metadata, so this repository does not assert that the dataset is CC0-licensed. The dataset creator's attribution and the real/synthetic status have likewise not been confirmed, and this project is not endorsed by the dataset creator. The repository includes a PBIX artifact that may contain imported data; verify its contents and reuse permissions before redistributing it.
 
 ### Screenshot status
 
