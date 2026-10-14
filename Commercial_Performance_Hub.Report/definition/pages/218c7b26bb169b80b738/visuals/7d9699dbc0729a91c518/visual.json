@@ -6,7 +6,7 @@
     "y": 684.12371134020623,
     "z": 2000,
     "height": 29.690721649484537,
-    "width": 547.42268041237116,
+    "width": 600,
     "tabOrder": 38000
   },
   "visual": {
@@ -28,7 +28,7 @@
                     }
                   },
                   {
-                    "value": "Net Volume Change = ",
+                    "value": "Effective Volume Change = ",
                     "textStyle": {
                       "fontWeight": "bold",
                       "fontFamily": "DIN Light",
@@ -36,7 +36,7 @@
                     }
                   },
                   {
-                    "value": "Base Volume Change + (Price Change × Elasticity) | ",
+                    "value": "Selected Volume Change + (Price Change % × Selected Elasticity) | ",
                     "textStyle": {
                       "fontFamily": "DIN Light",
                       "fontSize": "8pt"
