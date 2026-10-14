@@ -8,6 +8,17 @@ The solution is designed to move beyond descriptive reporting by helping users i
 
 ---
 
+## Recruiter review route
+
+1. Open the [Power BI Project](./Commercial_Performance_Hub.pbip) in Power BI Desktop.
+2. Browse the [report definitions](./Commercial_Performance_Hub.Report/definition) and [semantic-model definitions](./Commercial_Performance_Hub.SemanticModel/definition).
+3. Read [Architecture and setup](./docs/Architecture.md), [QA evidence and process](./QA.md), [the changelog](./CHANGELOG.md), and [dated change records](./Change%20Records/).
+4. The public repository also contains a [QA PBIX artifact](./Commercial_Performance_Hub_QA_Signed.pbix.pbix).
+
+The PBIP contains six visible report pages and three hidden tooltip pages. The six visible pages are listed below.
+
+---
+
 ## Business Areas
 
 The solution currently contains the following analytical areas:
@@ -89,6 +100,8 @@ Provides what-if analysis for commercial decisions using:
 - Scenario Impact Details
 - Top / Bottom Profit Impact
 
+On public `main`, the effective scenario volume change is the selected Volume Change % plus Price Change % × selected Elasticity. That effective volume change drives the core scenario units, revenue, and cost calculations. The separately maintained Word case study V9, which is not included in this repository patch, has been revised to match this implementation.
+
 ### Price Sensitivity
 
 Provides price-demand sensitivity analysis using user-defined price and elasticity assumptions.
@@ -106,6 +119,8 @@ Key capabilities include:
 - Product Opportunities
 - Scenario profit impact
 - Current vs scenario margin analysis
+
+The elasticity-driven demand component is **Price Change % × Selected Elasticity**. Outcome measures also incorporate the selected Volume Change %; scenario revenue applies the price change, while scenario cost applies the volume and cost assumptions. These are user-defined what-if assumptions, not statistically validated causal estimates or forecasts.
 
 Elasticity assumptions currently include:
 
@@ -142,14 +157,44 @@ The report also provides a consistent current-period and previous-period compari
 
 The semantic model contains:
 
+- 36 tables
+- 9 relationships
 - 274 measures
-- Comparison calculation group
+- 1 Comparison calculation group with 4 calculation items
 - Scenario analysis measures
 - Price sensitivity calculations
 - Ranking and performance calculations
 - Reporting and presentation measures
 
 Measures have been organised into display folders to improve model maintainability and usability.
+
+These counts are from public `main` at commit `80490e6`; the measure count includes hidden/helper measures and is not the count of user-facing measures. The separately maintained Word case study V9, which is not included in this repository patch, reports 274 measures and describes the same four-input Scenario Planner and effective-volume calculation.
+
+---
+
+## Data and setup
+
+The model imports `dim_date`, `dim_products`, `dim_stores`, `fact_sales`, `fact_inventory_snapshot`, `vw_fact_product_weekly`, and `vw_fact_product_rolling` from MySQL at `localhost:3306`, database/schema `practise`.
+
+Prerequisites for opening and refreshing the report:
+
+- Power BI Desktop with PBIP support.
+- Access to a MySQL server and credentials for the expected `practise` database and imported objects.
+- Configure MySQL credentials in Power BI Desktop data source settings, then refresh.
+
+The public repository does **not** include source CSVs or SQL creation/transformation scripts. A clone alone cannot recreate the database or perform a fresh data refresh. See [Architecture](./docs/Architecture.md) for the import boundary and reproduction limitations.
+
+The local MySQL schema queried on 2026-10-14 returned 829,262 `fact_sales` rows (2022-01-01 to 2023-09-30), 1,593 `fact_inventory_snapshot` rows, 4,018 `dim_date` rows, 35 products, 50 stores, 2,761 weekly-view rows, and 11,044 rolling-view rows. These are an author-environment query snapshot, not counts verified from the checked-in PBIX; they may change after refresh. `fact_inventory_snapshot.load_dt` records data load timing, not the physical stock observation date. The 24-month trend visual has only 21 calendar months of observed sales in this snapshot.
+
+Both analytical views are imported, but the public-main report bindings and DAX definitions reviewed did not show them used by current visuals or measures. They should be described as loaded, not currently consumed.
+
+### Dataset source and licence
+
+The separately maintained Word case study describes the dataset as “Mexico Toy Sales” / “Toy Sales” from Kaggle, but the exact listing URL, creator attribution, real/synthetic status, licence, and redistribution terms could not be confirmed from the repository or case-study text. Confirm these before making provenance or reuse claims. The repository includes a PBIX artifact that may contain imported data; verify its contents and reuse permissions before redistributing it.
+
+### Screenshot status
+
+No dashboard screenshots are embedded in this README. Although the narrative in the separately maintained Word case study V9 (not included in this repository patch) now matches public `main`, its screenshots have not yet been verified against the current public-main report. Add screenshots only after checking them against that report.
 
 ---
 
@@ -166,7 +211,7 @@ The repository provides:
 - Branch-based development
 - Documentation alongside the Power BI project
 
-The QA-approved baseline is maintained on the `main` branch.
+Public `main` is the recruiter-facing source baseline; the documented QA evidence is scoped in [QA.md](./QA.md).
 
 ---
 
@@ -191,19 +236,7 @@ The `main` branch should represent a validated and usable version of the solutio
 
 ## Quality Assurance
 
-QA validation includes:
-
-- KPI reconciliation
-- Measure validation
-- Visual validation
-- Filter validation
-- Tooltip validation
-- Scenario validation
-- Calculation validation
-- Report navigation validation
-- Git working-tree validation
-
-Changes should not be considered complete until both the technical model and report experience have been validated.
+QA is documented as a risk-based manual process. The repository contains a project-authored manual QA record for the Scenario Planner title change and a QA PBIX artifact; it does not provide an automated test suite or independently reproduced test logs. See [QA.md](./QA.md).
 
 ---
 
@@ -247,9 +280,9 @@ Commercial-Performance-Hub-PBIP/
 
 ## Project Status
 
-**Status:** QA-approved baseline
+**Recruiter-facing baseline:** public `main` at `80490e6`
 
-**Version:** 1.0.0
+**Release status:** the documented `1.0.0` baseline is not backed by a Git tag.
 
 **Development approach:** Power BI Project + Git + GitHub
 

@@ -8,6 +8,15 @@ The objective is to ensure that changes are technically valid, numerically corre
 
 ---
 
+## Evidence currently available on public `main`
+
+- Public `main` is at commit `80490e6` (“PBIX QA Pass Hub”) and contains `Commercial_Performance_Hub_QA_Signed.pbix.pbix`. The PBIX file is an artifact, not a test log or proof of independently reproduced validation.
+- The [Scenario Planner title change record](./Change%20Records/2026-08-18-Scenario-Planner-Title.md) records manual visual and interaction checks for that change. The corresponding [pull request #1](https://github.com/dipgpanchal/Commercial-Performance-Hub-PBIP/pull/1) was merged.
+- These are project-recorded manual QA claims. No automated test suite or detailed automated test output is included in the repository, and the manual checks have not been independently rerun as part of this documentation update.
+- The separately maintained Word case study, which is not included in this repository patch, has since been revised as V9 to align its measure count and Scenario Planner description with public `main`.
+
+---
+
 ## QA Principles
 
 Every change should be validated according to its scope and impact.
