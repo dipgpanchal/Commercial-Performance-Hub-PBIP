@@ -286,6 +286,11 @@ Commercial-Performance-Hub-PBIP/
 ├── docs/
 │   └── Architecture.md
 │
+├── sql/
+│   ├── raw/
+│   ├── staging/
+│   └── practise/
+│
 ├── Change Records/
 │   └── YYYY-MM-DD-<change>.md
 │
@@ -304,6 +309,7 @@ Commercial-Performance-Hub-PBIP/
 
 - `README.md` — Project overview, capabilities and development philosophy
 - `docs/` — Project-specific architecture documentation
+- [`sql/`](sql/) — Current MySQL table and view definitions by schema (`raw`, `staging`, `practise`); these are not a complete, reproducible ELT pipeline
 - `Change Records/` — Dated audit records for individual changes
 - `Templates/` — Reusable templates and prompts for future Power BI projects
 - `QA.md` — Quality assurance process and definition of done
