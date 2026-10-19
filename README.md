@@ -322,7 +322,7 @@ The repository includes MySQL table and view definitions organised across three 
 - `staging` — transformation layer
 - `practise` — reporting layer, including dimensional tables and analytical views used by the Power BI project
 
-The SQL scripts document the current database objects. They are provided for code review and portfolio transparency; they do not constitute a complete, independently reproducible ELT pipeline, and the published scripts have not been tested as standalone deployment scripts.
+The SQL scripts document the current database objects. They are provided for code review and portfolio transparency; they do not constitute a complete, independently reproducible ELT pipeline.
 
 [Browse SQL scripts](sql/)
 
