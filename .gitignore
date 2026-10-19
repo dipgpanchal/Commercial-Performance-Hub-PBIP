@@ -16,3 +16,20 @@ Desktop.ini
 
 # OS files
 .DS_Store
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Local Power BI exports and generated documents
+*.pbix
+*.pdf
+
+# Logs
+*.log
+*.log.*
+
+# Accidental local audit artifacts
+tatus --short
+tatus --short * Measure-Object -Line
