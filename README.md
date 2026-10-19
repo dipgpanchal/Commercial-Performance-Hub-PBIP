@@ -187,7 +187,7 @@ The semantic model contains:
 
 - 36 tables
 - 9 relationships
-- 274 measures
+- 275 measures
 - 1 Comparison calculation group with 4 calculation items
 - Scenario analysis measures
 - Price sensitivity calculations
