@@ -2,9 +2,11 @@
 
 ## Overview
 
-Commercial Performance Hub is an interactive Power BI analytics solution designed to provide a consolidated view of commercial performance across revenue, profit, margin, products, stores, inventory and scenario analysis.
+Commercial Performance Hub is an end-to-end commercial analytics solution built with Power BI, SQL and dimensional data modelling to turn sales, margin, product, store and inventory data into actionable business insights.
 
-The solution is designed to move beyond descriptive reporting by helping users identify performance drivers, investigate opportunities and evaluate potential commercial decisions.
+Combining executive reporting, product and store performance analysis, inventory health monitoring and interactive pricing scenarios, the solution helps users investigate performance drivers, identify commercial opportunities and evaluate potential decisions.
+
+The project demonstrates practical expertise in SQL-based data preparation, Power BI semantic modelling, DAX analytics and commercial decision support — bringing data engineering and business analysis together in one solution.
 
 ---
 
