@@ -286,6 +286,11 @@ Commercial-Performance-Hub-PBIP/
 ├── docs/
 │   └── Architecture.md
 │
+├── sql/
+│   ├── raw/
+│   ├── staging/
+│   └── practise/
+│
 ├── Change Records/
 │   └── YYYY-MM-DD-<change>.md
 │
@@ -309,6 +314,19 @@ Commercial-Performance-Hub-PBIP/
 - `QA.md` — Quality assurance process and definition of done
 - `CHANGELOG.md` — High-level project change history
 
+### SQL and MySQL Data Architecture
+
+The repository includes MySQL table and view definitions organised across three schemas:
+
+- `raw` — source data / extract layer
+- `staging` — transformation layer
+- `practise` — reporting layer, including dimensional tables and analytical views used by the Power BI project
+
+The SQL scripts document the current database objects. They are provided for code review and portfolio transparency; they do not constitute a complete, independently reproducible ELT pipeline, and the published scripts have not been tested as standalone deployment scripts.
+
+[Browse SQL scripts](sql/)
+
+---
 
 ## Project Status
 
